@@ -89,8 +89,8 @@
               <!--td><?php echo $this->Form->input('project_issue_id', array('type' => 'checkbox', 'label' => '')); ?></td-->
               <td class="assignee"><?php __($issue['Assignee']['username']); ?></td>
               <td><?php echo $this->Html->link(__($issue['name'], true), array('controller'=> 'project_issues', 'action' => 'view', $issue['id'])); # __(' - '.strip_tags($text->truncate($issue['description'], 100, array('ending' => '...', 'html' => true)))); ?></td>
-              <td><?php __('Start '.$time->timeAgoInWords($issue['start_date'])); ?></td>
-              <td><?php __('Due '.$time->timeAgoInWords($issue['due_date'])); ?></td>
+              <td><?php __('Start '.$this->Time->timeAgoInWords($issue['start_date'])); ?></td>
+              <td><?php __('Due '.$this->Time->timeAgoInWords($issue['due_date'])); ?></td>
               <td><?php __($issue['done_ratio'].'%'); ?></td>
               <td><?php __($issue['ProjectIssuePriorityType']['name']); ?></td>
               <td><?php __($issue['ProjectIssueStatusType']['name']); ?></td>

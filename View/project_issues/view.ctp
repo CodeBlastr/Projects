@@ -86,7 +86,7 @@ endif;
             		<?php echo $branch['ProjectIssue']['description']; ?>
 	                <div id="extendeddetails<?php echo $branch['ProjectIssue']['id']; ?>" class="hide">
 						<p><?php __('Creator '.$branch['Creator']['username']); ?></p>
-						<p><?php __('Created '.$time->nice($branch['ProjectIssue']['created'])); ?></p>
+						<p><?php __('Created '.$this->Time->nice($branch['ProjectIssue']['created'])); ?></p>
 	                </div>
     	        	<p class="action"><?php echo $this->Html->link(__('Show Details', true), array(''), array('class' => 'toggleClick', 'name' => 'extendeddetails'.$branch['ProjectIssue']['id']));?><?php echo $this->Html->link(__('Archive', true), array('action' => 'archive', $branch['ProjectIssue']['id'], $branch['ProjectIssue']['project_id']));?><?php echo $this->Html->link(__('Reply', true), array(''), array('class' => 'toggleClick', 'name' => 'replyform'.$branch['ProjectIssue']['id'])); ?></p>
                 </div>
@@ -100,7 +100,7 @@ endif;
                             
 	               				<div id="extendeddetails<?php echo $child['ProjectIssue']['id']; ?>" class="hide">
 									<p><?php __('Creator: '.$child['Creator']['username']); ?></p>
-									<p><?php __('Created: '.$time->nice($child['ProjectIssue']['created'])); ?></p>
+									<p><?php __('Created: '.$this->Time->nice($child['ProjectIssue']['created'])); ?></p>
 				                </div>
     	        				<p class="action"><?php echo $this->Html->link(__('Show Details', true), array(''), array('class' => 'toggleClick', 'name' => 'extendeddetails'.$child['ProjectIssue']['id']));?><?php echo $this->Html->link(__('Archive', true), array('action' => 'archive', $child['ProjectIssue']['id'], $child['ProjectIssue']['project_id']));?><?php echo $this->Html->link(__('Reply', true), array(''), array('class' => 'toggleClick', 'name' => 'replyform'.$branch['ProjectIssue']['id'])); ?></p>
 	                		</div>
@@ -128,7 +128,7 @@ endif;
 	</div>
   </div> 
 </div>
-<p class="timing"><strong><?php __($projectIssue['ProjectIssue']['name']);?></strong><?php __(' was '); ?><strong><?php __('Created: '); ?></strong><?php echo $time->relativeTime($projectIssue['ProjectIssue']['created']); ?><?php __(', '); ?><strong><?php __('Last Modified: '); ?></strong><?php echo $time->relativeTime($projectIssue['ProjectIssue']['modified']); ?></p>
+<p class="timing"><strong><?php __($projectIssue['ProjectIssue']['name']);?></strong><?php __(' was '); ?><strong><?php __('Created: '); ?></strong><?php echo $this->Time->relativeTime($projectIssue['ProjectIssue']['created']); ?><?php __(', '); ?><strong><?php __('Last Modified: '); ?></strong><?php echo $this->Time->relativeTime($projectIssue['ProjectIssue']['modified']); ?></p>
 
 </div>
 <?php

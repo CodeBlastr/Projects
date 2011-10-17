@@ -14,7 +14,7 @@
 	<?php if ($viewField == 'actions') : ?>
 	<th class="actions"><?php __('Actions');?></th>
 	<?php else: ?> 
-	<th><?php echo $paginator->sort($viewField);?></th>
+	<th><?php echo $this->Paginator->sort($viewField);?></th>
 	<?php endif; ?>
 <?php endforeach; ?>
 </tr>
@@ -34,7 +34,7 @@ foreach ($ctrl_vars as $ctrl_var):
 		</td>
 		<?php elseif ($viewField == 'created' || $viewField == 'modified' || $viewField == 'start_date' || $viewField == 'due_date') : ?>
 		<td>
-			<?php echo $time->nice($ctrl_var[$model][$viewField]); ?>
+			<?php echo $this->Time->nice($ctrl_var[$model][$viewField]); ?>
 		</td>
 		<?php else : ?>
 		<td>
@@ -49,13 +49,13 @@ foreach ($ctrl_vars as $ctrl_var):
 <div class="paging">
 <p>
 <?php
-echo $paginator->counter(array(
+echo $this->Paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
+	<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+ | 	<?php echo $this->Paginator->numbers();?>
+	<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 
 
