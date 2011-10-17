@@ -6,7 +6,7 @@ class Project extends ProjectsAppModel {
 	var $validate = array(
 		'name' => array('notempty')
 		); 
-	var $actsAs = array('Users.Usable' => array('defaultRole' => 'member'));
+	#var $actsAs = array('Users.Usable' => array('defaultRole' => 'member'));
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
@@ -91,7 +91,7 @@ class Project extends ProjectsAppModel {
 			'className' => 'Users.Used',
 			'foreignKey' => 'foreign_key',
 			'dependent' => true,
-			'conditions' => array('User.model' => 'Project'),
+			'conditions' => array('Used.model' => 'Project'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
@@ -104,7 +104,7 @@ class Project extends ProjectsAppModel {
 			'className' => 'Messages.Message',
 			'foreignKey' => 'foreign_key',
 			'dependent' => true,
-			'conditions' => array('User.model' => 'Project'),
+			'conditions' => array('Message.model' => 'Project'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
