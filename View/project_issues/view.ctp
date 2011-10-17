@@ -66,16 +66,16 @@ endif;
 	<div class="subissues data">
         <div class="issue">	
 		  <div id="addthreadform<?php echo $projectIssue['ProjectIssue']['id']; ?>" class="hide">
-			<?php echo $form->create('ProjectIssue', array('action' => 'edit'));?>
+			<?php echo $this->Form->create('ProjectIssue', array('action' => 'edit'));?>
 				<?php
-					echo $form->input('name', array('label' =>  'Subject')); 
-					echo $form->input('assignee_id', array('label' =>  'Notify / Assign To'));
-					echo $form->input('ProjectIssue.description', array('type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
-					echo $form->hidden('parent_id', array('value' => $projectIssue['ProjectIssue']['id']));
-					echo $form->hidden('project_id', array('value' => $projectIssue['Project']['id']));
-					echo $form->hidden('redirect', array('value' => $this->here));
+					echo $this->Form->input('name', array('label' =>  'Subject')); 
+					echo $this->Form->input('assignee_id', array('label' =>  'Notify / Assign To'));
+					echo $this->Form->input('ProjectIssue.description', array('type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
+					echo $this->Form->hidden('parent_id', array('value' => $projectIssue['ProjectIssue']['id']));
+					echo $this->Form->hidden('project_id', array('value' => $projectIssue['Project']['id']));
+					echo $this->Form->hidden('redirect', array('value' => $this->here));
 				?>
-			<?php echo $form->end('Submit');?>
+			<?php echo $this->Form->end('Submit');?>
 		  </div>	
 		<?php
 		if ($projectTree) { 
@@ -109,16 +109,16 @@ endif;
 				<?php } ?>	
               </div>	
 			<div id="replyform<?php echo $branch['ProjectIssue']['id']; ?>" class="hide">
-				<?php echo $form->create('ProjectIssue', array('action' => 'edit'));?>
+				<?php echo $this->Form->create('ProjectIssue', array('action' => 'edit'));?>
 				<?php
-					echo $form->input('name', array('value' => 'Re: '.$branch['ProjectIssue']['name'])); 
-					echo $form->input('assignee_id', array('label' =>  'Notify / Assign To'));
-					echo $form->input('description', array('id' => 'ProjectIssueReply', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
-					echo $form->hidden('parent_id', array('value' => $branch['ProjectIssue']['id']));
-					echo $form->hidden('project_id', array('value' => $projectIssue['Project']['id']));
-					echo $form->hidden('redirect', array('value' => $this->here));
+					echo $this->Form->input('name', array('value' => 'Re: '.$branch['ProjectIssue']['name'])); 
+					echo $this->Form->input('assignee_id', array('label' =>  'Notify / Assign To'));
+					echo $this->Form->input('description', array('id' => 'ProjectIssueReply', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
+					echo $this->Form->hidden('parent_id', array('value' => $branch['ProjectIssue']['id']));
+					echo $this->Form->hidden('project_id', array('value' => $projectIssue['Project']['id']));
+					echo $this->Form->hidden('redirect', array('value' => $this->here));
 				?>
-				<?php echo $form->end('Submit');?>
+				<?php echo $this->Form->end('Submit');?>
 			</div>   
 		<?php
             }
@@ -223,7 +223,7 @@ if ($projectIssue['ProjectIssue']['archive'] == 1) {
 	$archiveAction = $this->Html->link(__('Archive Issue', true), array('controller' => 'project_issues', 'action' => 'archive', $projectIssue['ProjectIssue']['id'], $projectIssue['ProjectIssue']['project_id']));
 }
 // set the contextual menu items
-$menu->setValue(array(
+$this->Menu->setValue(array(
 	array(
 		'heading' => 'Project Manager',
 		'items' => array(

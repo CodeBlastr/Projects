@@ -61,7 +61,7 @@ echo $paginator->counter(array(
 
 <?php 
 // set the contextual menu items
-$menu->setValue(array(
+$this->Menu->setValue(array(
 	array(
 		'heading' => 'Project Manager',
 		'items' => array(

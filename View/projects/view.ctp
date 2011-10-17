@@ -47,7 +47,7 @@ echo $this->element('ajax_edit',  array('editFields' => $editFields));
 ?>
 <?php
 // set the contextual menu items
-$menu->setValue(array(
+$this->Menu->setValue(array(
 	array(
 		'heading' => 'Project',
 		'items' => array(

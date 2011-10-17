@@ -56,19 +56,19 @@
           <div class="viewForm hide" id="addIssueForm">
           	<fieldset>
             <?php 
-				echo $form->create('ProjectIssue', array('action' => 'edit'));
-				echo $form->input('ProjectIssue.project_id', array('type' => 'hidden', 'value' => $project['Project']['id']));
-				echo $form->input('ProjectIssue.contact_id', array('type' => 'hidden', 'value' => $project['Contact']['id']));				
-				#echo $form->input('ProjectIssue.project_tracker_type_id');
-				#echo $form->input('ProjectIssue.project_issue_status_type_id');
-				#echo $form->input('ProjectIssue.project_issue_priority_type_id');
-				echo $form->input('ProjectIssue.name', array('label' => 'Enter a task display name.'));
-				echo $form->input('ProjectIssue.description', array('type' => 'richtext', 'label' => 'Enter a task description.', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image', '-', 'Templates'))));
-				#echo $form->input('ProjectIssue.start_date');
-				echo $form->input('ProjectIssue.due_date', array('label' => 'When is it due?'));
-				echo $form->input('ProjectIssue.estimated_hours', array('label' => 'How long should it take?'));
-				echo $form->input('ProjectIssue.assignee_id', array('label' => __('Who\'s responsible?', true)));
-				echo $form->end('Add Task');
+				echo $this->Form->create('ProjectIssue', array('action' => 'edit'));
+				echo $this->Form->input('ProjectIssue.project_id', array('type' => 'hidden', 'value' => $project['Project']['id']));
+				echo $this->Form->input('ProjectIssue.contact_id', array('type' => 'hidden', 'value' => $project['Contact']['id']));				
+				#echo $this->Form->input('ProjectIssue.project_tracker_type_id');
+				#echo $this->Form->input('ProjectIssue.project_issue_status_type_id');
+				#echo $this->Form->input('ProjectIssue.project_issue_priority_type_id');
+				echo $this->Form->input('ProjectIssue.name', array('label' => 'Enter a task display name.'));
+				echo $this->Form->input('ProjectIssue.description', array('type' => 'richtext', 'label' => 'Enter a task description.', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image', '-', 'Templates'))));
+				#echo $this->Form->input('ProjectIssue.start_date');
+				echo $this->Form->input('ProjectIssue.due_date', array('label' => 'When is it due?'));
+				echo $this->Form->input('ProjectIssue.estimated_hours', array('label' => 'How long should it take?'));
+				echo $this->Form->input('ProjectIssue.assignee_id', array('label' => __('Who\'s responsible?', true)));
+				echo $this->Form->end('Add Task');
 			  ?>
               </fieldset>
           </div>
@@ -86,7 +86,7 @@
 			if ($project['ProjectIssue']) {
 				foreach ($project['ProjectIssue'] as $issue) { ?>
             <tr class="project-issue <?php __($issue['ProjectIssuePriorityType']['name']); ?> <?php __($issue['ProjectIssueStatusType']['name']); ?>">
-              <!--td><?php echo $form->input('project_issue_id', array('type' => 'checkbox', 'label' => '')); ?></td-->
+              <!--td><?php echo $this->Form->input('project_issue_id', array('type' => 'checkbox', 'label' => '')); ?></td-->
               <td class="assignee"><?php __($issue['Assignee']['username']); ?></td>
               <td><?php echo $this->Html->link(__($issue['name'], true), array('controller'=> 'project_issues', 'action' => 'view', $issue['id'])); # __(' - '.strip_tags($text->truncate($issue['description'], 100, array('ending' => '...', 'html' => true)))); ?></td>
               <td><?php __('Start '.$time->timeAgoInWords($issue['start_date'])); ?></td>
@@ -115,10 +115,10 @@
           <ul class="member datalist">
             <li class="hide" id="addmemberform">
               <?php 
-				echo $form->create('ProjectsMember', array('url'=> array('action'=>'add')));
-    			echo $form->input('project_id', array('type' => 'hidden', 'value' => $project['Project']['id']));
-				echo $form->input('user_id', array('label' => 'Add User'));
-				echo $form->end('Submit');
+				echo $this->Form->create('ProjectsMember', array('url'=> array('action'=>'add')));
+    			echo $this->Form->input('project_id', array('type' => 'hidden', 'value' => $project['Project']['id']));
+				echo $this->Form->input('user_id', array('label' => 'Add User'));
+				echo $this->Form->end('Submit');
 			?>
             </li>
             <?php
@@ -148,10 +148,10 @@ endif;
           <ul class="watcher datalist">
             <li class="hide" id="addwatcherform">
               <?php 
-		  	  echo $form->create('ProjectsWatcher', array('url'=> array('action'=>'add')));
-              echo $form->input('project_id', array('type' => 'hidden', 'value' => $project['Project']['id']));
-			  echo $form->input('contact_id', array('label' => 'Add Watcher'));
-			  echo $form->end('Submit');
+		  	  echo $this->Form->create('ProjectsWatcher', array('url'=> array('action'=>'add')));
+              echo $this->Form->input('project_id', array('type' => 'hidden', 'value' => $project['Project']['id']));
+			  echo $this->Form->input('contact_id', array('label' => 'Add Watcher'));
+			  echo $this->Form->end('Submit');
 		  ?>
             </li>
             <?php
@@ -232,7 +232,7 @@ echo $this->element('ajax_edit',  array('editFields' => $editFields));
 ?>
 <?php
 // set the contextual menu items
-$menu->setValue(array(
+$this->Menu->setValue(array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
