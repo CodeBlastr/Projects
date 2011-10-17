@@ -20,7 +20,7 @@
         <?php endif; ?>
         <div class="recordData">
         	<h3><?php __('Latest Activities'); ?></h3>
-	        <?php echo $this->Element('activities', array('plugin' => 'activities',  'parentForeignKey' => $project['Project']['id'])); ?>
+	        <?php echo $this->Element('activities', array('parentForeignKey' => $project['Project']['id']), array('plugin' => 'activities')); ?>
         </div>
       </div>
       

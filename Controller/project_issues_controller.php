@@ -9,8 +9,8 @@ class ProjectIssuesController extends ProjectsAppController {
 		$model = $this->modelClass;
 		$this->$model->recursive = 0;
 		$this->set('model', $model);
-		if(!empty($this->params['named']['assignee_id'])) {
-			$this->paginate = array('conditions' => array($model.'.parent_id' => null, $model.'.assignee_id' => $this->params['named']['assignee_id'])); 
+		if(!empty($this->request->params['named']['assignee_id'])) {
+			$this->paginate = array('conditions' => array($model.'.parent_id' => null, $model.'.assignee_id' => $this->request->params['named']['assignee_id'])); 
 		} else {
 			$this->paginate = array('conditions' => array($model.'.parent_id' => null)); 
 		}
@@ -61,7 +61,7 @@ class ProjectIssuesController extends ProjectsAppController {
 		$assignees = Set::combine($projectIssue, 'Project.Member.{n}.id', 'Project.Member.{n}.username');
 		$this->set(compact('assignees'));
 		
-		if (!empty($this->params['named']['archive']) && $this->params['named']['archive'] == 'show') {
+		if (!empty($this->request->params['named']['archive']) && $this->request->params['named']['archive'] == 'show') {
 			$conditions['ProjectIssue.lft >='] = $projectIssue['ProjectIssue']['lft'];
 			$conditions['ProjectIssue.rght <='] = $projectIssue['ProjectIssue']['rght'];
 		} else {

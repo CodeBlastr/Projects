@@ -4,13 +4,13 @@
  		<legend><?php __('Edit Activity');?></legend>
 	<?php
 		echo $this->Form->input('id');
-		if (!empty($this->params['named']['project_id'])) {
-			echo $this->Form->input('project_id', array('type' => 'hidden', 'value' => $this->params['named']['project_id']));
+		if (!empty($this->request->params['named']['project_id'])) {
+			echo $this->Form->input('project_id', array('type' => 'hidden', 'value' => $this->request->params['named']['project_id']));
 		} else {
 			echo $this->Form->input('project_id');
 		}
-		if (!empty($this->params['named']['contact_id'])) {
-			echo $this->Form->input('contact_id', array('type' => 'hidden', 'value' => $this->params['named']['contact_id']));
+		if (!empty($this->request->params['named']['contact_id'])) {
+			echo $this->Form->input('contact_id', array('type' => 'hidden', 'value' => $this->request->params['named']['contact_id']));
 		} else {
 			echo $this->Form->input('contact_id');
 		}
@@ -23,8 +23,8 @@
 		echo $this->Form->input('due_date');
 		echo $this->Form->input('estimated_hours');
 		echo $this->Form->input('assignee_id');
-		if (!empty($this->params['named']['parent_id'])) {
-			echo $this->Form->input('parent_id', array('type' => 'hidden', 'value' => $this->params['named']['parent_id']));
+		if (!empty($this->request->params['named']['parent_id'])) {
+			echo $this->Form->input('parent_id', array('type' => 'hidden', 'value' => $this->request->params['named']['parent_id']));
 		} else {
 			echo $this->Form->input('parent_id', array('type' => 'hidden', 'value' => ''));
 		}

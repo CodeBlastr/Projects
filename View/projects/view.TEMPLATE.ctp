@@ -43,7 +43,7 @@
             <li><?php echo $this->Html->link(__('Add Task', true), array( 'controller' => 'project_issues', 'action' => 'edit', 'project_id' => $project['Project']['id'], 'contact_id' => $project['Contact']['id']), array('class' => 'toggleClick', 'name' => 'addIssueForm')); ?></li>
             <li><?php echo $this->Html->link(__('Sort By', true), array('#'), array('class' => 'toggleClickMenu', 'name' => 'sortby')); ?></li>
             <?php
-				if ($this->params['named']['direction'] == 'asc') {
+				if ($this->request->params['named']['direction'] == 'asc') {
 					$sortDirection = 'desc'; 
 				} else {
 					$sortDirection = 'asc'; 

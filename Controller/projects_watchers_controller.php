@@ -49,7 +49,7 @@ class ProjectsWatchersController extends ProjectsAppController {
 		## Edit these per controller
 		
 		#this puts all contacts into one drop down, who are already project members
-		$combines = $this->$model->query("SELECT concat(Contact.first_name, ' ', Contact.last_name) AS name, Contact.contact_id FROM contact_people AS Contact WHERE Contact.contact_id IN (SELECT contact_id FROM users JOIN `projects_members` on projects_members.user_id = users.id WHERE project_id = ".$this->params['named']['project_id'].") UNION SELECT Contact.name AS name, Contact.contact_id FROM contact_companies AS Contact WHERE Contact.contact_id IN (SELECT contact_id FROM users JOIN `projects_members` on projects_members.user_id = users.id WHERE project_id = ".$this->params['named']['project_id'].") ORDER BY contact_id");
+		$combines = $this->$model->query("SELECT concat(Contact.first_name, ' ', Contact.last_name) AS name, Contact.contact_id FROM contact_people AS Contact WHERE Contact.contact_id IN (SELECT contact_id FROM users JOIN `projects_members` on projects_members.user_id = users.id WHERE project_id = ".$this->request->params['named']['project_id'].") UNION SELECT Contact.name AS name, Contact.contact_id FROM contact_companies AS Contact WHERE Contact.contact_id IN (SELECT contact_id FROM users JOIN `projects_members` on projects_members.user_id = users.id WHERE project_id = ".$this->request->params['named']['project_id'].") ORDER BY contact_id");
 		foreach ($combines as $combine) :
 			$contacts = am($contacts, array($combine[0]['contact_id'] => $combine[0]['name'])); 
 		endforeach;		

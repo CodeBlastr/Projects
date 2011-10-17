@@ -24,7 +24,7 @@ class ProjectsController extends ProjectsAppController {
 		
 		/*  Put this back when you add the archivable behavior.
 		
-		if (!empty($this->params['named']['archived'])) {
+		if (!empty($this->request->params['named']['archived'])) {
 			$this->paginate = array(
 				'conditions' => array(
 					'Project.is_archived' => 1
@@ -88,7 +88,7 @@ class ProjectsController extends ProjectsAppController {
 			# find the number of hours that have been logged for this issue
 			$trackedTimes = $this->Project->TimesheetTime->find('all', array(
 				'conditions' => array(
-					'project_id' => $id
+					'TimesheetTime.project_id' => $id
 					),
 				'fields' => 'hours',
 				));
@@ -126,7 +126,7 @@ class ProjectsController extends ProjectsAppController {
 			}
 		}
 		
-		$this->data['Project']['contact_id'] = !empty($this->params['named']['contact']) ? $this->params['named']['contact'] : null;
+		$this->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	
@@ -148,7 +148,7 @@ class ProjectsController extends ProjectsAppController {
 			$this->data = $this->Project->read(null, $id);
 		}
 		
-		$this->data['Project']['contact_id'] = !empty($this->params['named']['contact']) ? $this->params['named']['contact'] : null;
+		$this->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	
@@ -347,7 +347,7 @@ class ProjectsController extends ProjectsAppController {
 		# the commented text in the next line is an example of how to remove the current logged in user
 		# from the list of users returned in this function from the usable behavior
 		$this->set('users', $this->Project->findUsedUsers($projectId, 'list'/*, array('conditions' => array('User.id !=' => $this->Session->read('Auth.User.id')))*/));
-		$this->data['Message']['foreign_key'] = !empty($projectId) ? $projectId : null;
+		$this->request->data['Message']['foreign_key'] = !empty($projectId) ? $projectId : null;
 		$this->set('messages', $this->paginate('Message'));
 		$this->set('modelName', 'Message');
 		$this->set('pluginName', 'messages');
@@ -427,7 +427,7 @@ class ProjectsController extends ProjectsAppController {
 		$project = $this->Project->find('first', array(
 			'conditions' => array('Project.id' =>  $projectId), 'contain' => 'Contact'));
 		$this->set('project', $project); 
-		$this->data['Task']['foreign_key'] = !empty($projectId) ? $projectId : null;
+		$this->request->data['Task']['foreign_key'] = !empty($projectId) ? $projectId : null;
 		$this->set('tasks', $this->paginate('Task'));
 		$this->set('modelName', 'Task');
 		$this->set('pluginName', 'tasks');
@@ -509,9 +509,9 @@ class ProjectsController extends ProjectsAppController {
 	 */
 	function _callback_commentsafterAdd($options) {
 		
-		if ($this->params['action'] == 'message') :
+		if ($this->request->params['action'] == 'message') :
 			$recipients = $this->Project->Message->findUsedUsers($options['modelId'], 'all');
-		elseif ($this->params['action'] == 'task') :
+		elseif ($this->request->params['action'] == 'task') :
 			$tasks = $this->Project->Task->find('all', array(
 				'conditions' => array(
 					'Task.parent_id' => $options['modelId'],
@@ -538,13 +538,13 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	function _callback_commentsFetchDataThreaded($options) {
-		if ($this->params['action'] == 'message') :
+		if ($this->request->params['action'] == 'message') :
 			$options['id'] = $this->params['pass'][0];
 			$conditions['Comment.foreign_key'] = $options['id'];
 			#$conditions['Comment.parent_id'] = 0;
 			$conditions['Comment.model'] = 'Message';
 			$contain = 'User';
-		elseif ($this->params['action'] == 'task') :
+		elseif ($this->request->params['action'] == 'task') :
 			$options['id'] = $this->params['pass'][0];
 			$conditions['Comment.foreign_key'] = $options['id'];
 			#$conditions['Comment.parent_id'] = 0;
@@ -562,10 +562,10 @@ class ProjectsController extends ProjectsAppController {
 	
 	function _callback_commentsAdd($modelId, $commentId, $displayType, $data = array()) {
     	if (!empty($this->data)) {
-			if ($this->params['action'] == 'message') :
+			if ($this->request->params['action'] == 'message') :
 				$modelId = $this->params['pass'][0];
 				$this->Project->name = 'Message';
-			elseif ($this->params['action'] == 'task') :
+			elseif ($this->request->params['action'] == 'task') :
 				$modelId = $this->params['pass'][0];
 				$this->Project->name = 'Task';
 			endif;

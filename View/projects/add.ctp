@@ -9,8 +9,8 @@
     <fieldset>
     	<legend><p>Who should be able to access this project?</p></legend>
     <?php
-		if (!empty($this->params['named']['contact_id'])) {
-			echo $this->Form->input('Project.contact_id', array('type' => 'hidden', 'value' => $this->params['named']['contact_id']));
+		if (!empty($this->request->params['named']['contact_id'])) {
+			echo $this->Form->input('Project.contact_id', array('type' => 'hidden', 'value' => $this->request->params['named']['contact_id']));
 		} else {
 			echo $this->Form->input('Project.contact_id', array('empty' => '-- Optional --', 'label' => 'Which client? <small>(or '.$this->Html->link('create a new company', array('plugin' => 'contacts', 'controller' => 'contacts', 'controller' => 'contacts', 'action' => 'add', 'company')).')</small>', 'after' => '<br /><br /><br />'.$this->Form->checkbox('Project.contact_all_access', array('checked' => 'checked')).' Give everyone at this company access to this project?'));
 		}
