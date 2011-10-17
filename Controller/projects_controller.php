@@ -272,7 +272,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('project', $project); 
 		$this->set('people', $this->paginate('Used'));
 		$this->set('users', $this->Project->Used->User->find('list'));
-		$this->set('modelName', 'User');
+		$this->set('modelName', 'Used');
 		$this->set('pluginName', 'users');
 		$this->set('displayName', 'full_name');
 		$this->set('displayDescription', ''); 
@@ -356,7 +356,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('displayDescription', 'body'); 
 		$this->set('page_title_for_layout', $project['Project']['displayName']);
 		$this->set('tabsElement', '/projects');
-		if (!empty($messages) && isset($this->params['requested'])) {
+		if (!empty($messages) && isset($this->request->params['requested'])) {
         	return 'someting'.$messages;
         } else {
 			return false;
