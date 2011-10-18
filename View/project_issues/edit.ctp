@@ -38,7 +38,7 @@
 
 <?php 
 // set the contextual menu items
-$this->Menu->setValue(array(
+echo $this->Element('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project Manager',
 		'items' => array(
@@ -52,6 +52,5 @@ $this->Menu->setValue(array(
 			$this->Html->link(__('Add Time', true), array('plugin' => 'timesheets', 'controller' => 'timesheets', 'action' => 'edit')),
 			)
 		),
-	)
-);
+	)));
 ?>

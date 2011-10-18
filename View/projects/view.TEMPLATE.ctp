@@ -232,7 +232,7 @@ echo $this->element('ajax_edit',  array('editFields' => $editFields));
 ?>
 <?php
 // set the contextual menu items
-$this->Menu->setValue(array(
+echo $this->Element('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
@@ -261,8 +261,7 @@ $this->Menu->setValue(array(
 			$this->Html->link(__('Add Time', true), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'edit', 'project_id' => $project['Project']['id'], 'admin' => 1)),
 			)
 		),
-	)
-); 
+	))); 
 ?>
 <?php $this->set('tabs_for_layout', array(
 		array('link' => '/messages/messages/index/Project/'.$project['Project']['id'],

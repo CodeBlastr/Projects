@@ -24,14 +24,14 @@
 
 <?php 
 // set the contextual menu items
-$this->Menu->setValue(array(
+echo $this->Element('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Projects',
 		'items' => array(
 			$this->Html->link(__('List', true), array('controller' => 'projects', 'action' => 'index')),
 			$this->Html->link(__('Add', true), array('controller' => 'projects', 'action' => 'add')),
 			$this->Html->link('Delete', array('controller' => 'projects', 'action' => 'delete', $this->data['Project']['id']), array(), 'Are you sure you want to delete "'.strip_tags($this->data['Project']['displayName']).'"')
-		)
-	),
-));
+			)
+		),
+	)));
 ?>

@@ -1,4 +1,3 @@
-
   <div class="project view">
     <div id="n1" class="info-block">
       <div class="viewRow">
@@ -47,7 +46,7 @@ echo $this->element('ajax_edit',  array('editFields' => $editFields));
 ?>
 <?php
 // set the contextual menu items
-$this->Menu->setValue(array(
+echo $this->Element('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
@@ -64,6 +63,5 @@ $this->Menu->setValue(array(
 			$this->Html->link(__('Time', true), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id'])),
 			)
 		),
-	)
-); 
+	))); 
 ?>

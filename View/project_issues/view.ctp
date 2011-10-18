@@ -223,7 +223,7 @@ if ($projectIssue['ProjectIssue']['archive'] == 1) {
 	$archiveAction = $this->Html->link(__('Archive Issue', true), array('controller' => 'project_issues', 'action' => 'archive', $projectIssue['ProjectIssue']['id'], $projectIssue['ProjectIssue']['project_id']));
 }
 // set the contextual menu items
-$this->Menu->setValue(array(
+echo $this->Element('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project Manager',
 		'items' => array(
@@ -239,8 +239,7 @@ $this->Menu->setValue(array(
 			$this->Html->link(__('Add Time', true), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'edit', 'project_id' => $projectIssue['ProjectIssue']['project_id'], 'project_issue_id' => $projectIssue['ProjectIssue']['id'])),
 			)
 		),
-	)
-);
+	)));
 ?>
 
 <?php # pr($projectTree); ?>
