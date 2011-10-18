@@ -4,21 +4,21 @@
         <?php if ($this->Session->read('Auth.User.user_role_id') == 1) : ?>
         <ul class="metaData">
           <li><span class="metaDataLabel">
-            <?php __('Days Since Launch: '); ?>
+            <?php echo __('Days Since Launch: '); ?>
             </span><span class="metaDataDetail"><?php echo floor((time() - strtotime($project['Project']['created'])) / 86400); ?></span></li>
           <!--li><span class="metaDataLabel">
-            <?php __('Estimated Hours: '); ?>
+            <?php echo __('Estimated Hours: '); ?>
             </span><span name="estimatedhours" class="edit metaDataDetail" id="<?php __($project['Project']['id']); ?>"><?php echo $project['Project']['estimated_hours']; ?></span></li-->
           <li><span class="metaDataLabel">
-            <?php __('Time Logged: '); ?>
+            <?php echo __('Time Logged: '); ?>
             </span><span id="spenthours<?php echo $project['Project']['id']; ?>" class="metaDataDetail"><?php echo $trackedHoursSum; ?></span></li>
           <!--li><span class="metaDataLabel">
-            <?php __('Percent Complete: '); ?>
+            <?php echo __('Percent Complete: '); ?>
             </span><span id="percentcomplete" class="metaDataDetail"><?php echo $percentComplete; __('%'); ?></span></li-->
         </ul>
         <?php endif; ?>
         <div class="recordData">
-        	<h3><?php __('Latest Activities'); ?></h3>
+        	<h3><?php echo __('Latest Activities'); ?></h3>
 	        <?php echo $this->Element('activities', array('parentForeignKey' => $project['Project']['id']), array('plugin' => 'activities')); ?>
         </div>
       </div>
