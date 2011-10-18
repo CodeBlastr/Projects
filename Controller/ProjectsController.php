@@ -53,13 +53,6 @@ class ProjectsController extends ProjectsAppController {
 				'modified',
 				'quick_note',
 				),
-			'contain' => array(
-				'Contact' => array(
-					'fields' => array(
-						'id',
-						),
-					),
-				),
 			'order' => array(
 				'Project.modified'
 				),
@@ -76,7 +69,6 @@ class ProjectsController extends ProjectsAppController {
 		$project = $this->Project->find('first', array(
 			'contain' => array(
 				'ProjectIssue',
-				'Contact',
 				),
 			'conditions' => array(
 				'Project.id' => $id

@@ -227,8 +227,8 @@ class Project extends ProjectsAppModel {
 	
 	function __construct($id = false, $table = null, $ds = null) {
     	parent::__construct($id, $table, $ds);
-	   # $this->virtualFields['displayName'] = sprintf('CONCAT(%s.name, " <small>", Contact.name, "</small>")', $this->alias);
-	    $this->virtualFields['displayName'] = sprintf('CONCAT(%s.name)', $this->alias);
+	    $this->virtualFields['displayName'] = sprintf('CONCAT(%s.name, " <small>", Contact.name, "</small>")', $this->alias);
+	    #$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name)', $this->alias);
 	    $this->virtualFields['displayDescription'] = $this->alias.'.quick_note';
 		$this->displayField = 'displayName';
 		$this->order = array("{$this->alias}.name");		
@@ -239,7 +239,7 @@ class Project extends ProjectsAppModel {
 		return $queryData;
 	}
 	
-	function afterFind($results, $primary) {
+	function afterFind($results, $primary) {		
 		if (!empty($this->listSearch)) : 
 			$i = 0;
 			foreach ($results as $result) : 
@@ -251,7 +251,7 @@ class Project extends ProjectsAppModel {
 	}
 
 	function find($type = null, $params = array()) {
-		$params = array_merge_recursive(array('contain' => array('Contact')), $params);
+		$params = Set::merge(array('contain' => array('Contact.name')), $params);
 		return parent::find($type, $params);
 	}
 	
