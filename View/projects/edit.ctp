@@ -30,7 +30,7 @@ echo $this->Element('context_menu', array('menus' => array(
 		'items' => array(
 			$this->Html->link(__('List', true), array('controller' => 'projects', 'action' => 'index')),
 			$this->Html->link(__('Add', true), array('controller' => 'projects', 'action' => 'add')),
-			$this->Html->link('Delete', array('controller' => 'projects', 'action' => 'delete', $this->data['Project']['id']), array(), 'Are you sure you want to delete "'.strip_tags($this->data['Project']['displayName']).'"')
+			$this->Html->link('Delete', array('controller' => 'projects', 'action' => 'delete', $this->request->data['Project']['id']), array(), 'Are you sure you want to delete "'.strip_tags($this->request->data['Project']['displayName']).'"')
 			)
 		),
 	)));

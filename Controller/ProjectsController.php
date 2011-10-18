@@ -109,16 +109,16 @@ class ProjectsController extends ProjectsAppController {
 
 	 
 	function add($id = null) {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			try {
-				$result = $this->Project->add($this->data);
+				$result = $this->Project->add($this->request->data);
 				$this->redirect(array('action' => 'view', $this->Project->id));
 			} catch(Exception $e) {
 				$result = $e->getMessage();
 			}
 		}
 		
-		$this->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
+		$this->request->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	
@@ -128,23 +128,23 @@ class ProjectsController extends ProjectsAppController {
 	
 	 
 	function edit($id = null) {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			try {
-				$result = $this->Project->add($this->data);
+				$result = $this->Project->add($this->request->data);
 				$this->redirect(array('action' => 'view', $this->Project->id));
 			} catch(Exception $e) {
 				$result = $e->getMessage();
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Project->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Project->read(null, $id);
 		}
 		
-		$this->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
+		$this->request->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	
-		$this->set('page_title_for_layout', 'Edit '.$this->data['Project']['displayName']);
+		$this->set('page_title_for_layout', 'Edit '.$this->request->data['Project']['displayName']);
 		$this->set('title_for_layout', 'New project form');
 	}
 	
@@ -157,9 +157,9 @@ class ProjectsController extends ProjectsAppController {
 	
 	function archive($id = null) {
 		if (!empty($id)) {
-			$this->data['Project']['id'] = $id;
-			$this->data['Project']['is_archived'] = 1;
-			if ($this->Project->save($this->data)) {
+			$this->request->data['Project']['id'] = $id;
+			$this->request->data['Project']['is_archived'] = 1;
+			if ($this->Project->save($this->request->data)) {
 				$this->Session->setFlash(__('The Project has been archived', true));
 				$this->redirect(array('controller' => 'projects', 'action'=>'index'), 'success');
 			} else {
@@ -171,9 +171,9 @@ class ProjectsController extends ProjectsAppController {
 	
 	function unarchive($id = null) {
 		if (!empty($id)) {
-			$this->data['Project']['id'] = $id;
-			$this->data['Project']['is_archived'] = 0;
-			if ($this->Project->save($this->data)) {
+			$this->request->data['Project']['id'] = $id;
+			$this->request->data['Project']['is_archived'] = 0;
+			if ($this->Project->save($this->request->data)) {
 				$this->Session->setFlash(__('The Project has been un-archived', true));
 				$this->redirect(array('controller' => 'projects', 'action'=>'index'));
 			} else {
@@ -281,7 +281,7 @@ class ProjectsController extends ProjectsAppController {
 	 */
 	function used() {
 		try {
-			$this->Project->addUsedUser($this->data);
+			$this->Project->addUsedUser($this->request->data);
 			$this->Session->setFlash(__('User Added', true));
 			$this->redirect($this->referer());
 		} catch(Exception $e) {
@@ -553,7 +553,7 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	function _callback_commentsAdd($modelId, $commentId, $displayType, $data = array()) {
-    	if (!empty($this->data)) {
+    	if (!empty($this->request->data)) {
 			if ($this->request->params['action'] == 'message') :
 				$modelId = $this->params['pass'][0];
 				$this->Project->name = 'Message';

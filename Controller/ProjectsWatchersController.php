@@ -33,15 +33,15 @@ class ProjectsWatchersController extends ProjectsAppController {
 	function admin_ajax_edit($id = null) {
 		$model = $this->modelClass;
 		$controller = $this->name;
-		if (!empty($this->data)) {
-			if ($this->$model->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->$model->save($this->request->data)) {
 				$this->Session->setFlash(__($model.' saved', true));
 			} else {
 				$this->Session->setFlash(__('Could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->$model->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->$model->read(null, $id);
 		}
 		## this might need to be fixed later, because I'm not 100% sure that 
 		## we'll always need a type for the add / edit form

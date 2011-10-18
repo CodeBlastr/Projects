@@ -85,17 +85,17 @@ class ProjectIssuesController extends ProjectsAppController {
 	}
 
 	function edit($id = null) {
-		if (!empty($this->data)) {
-			if ($this->ProjectIssue->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->ProjectIssue->save($this->request->data)) {
 				$this->Session->setFlash(__('The ProjectIssue has been saved', true));
-				$this->redirect(array('controller' => 'projects', 'action'=>'view', $this->data['ProjectIssue']['project_id']));
+				$this->redirect(array('controller' => 'projects', 'action'=>'view', $this->request->data['ProjectIssue']['project_id']));
 			} else {
 				$this->Session->setFlash(__('The ProjectIssue could not be saved. Please, try again.', true));
 				$this->redirect($this->referer());
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->ProjectIssue->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->ProjectIssue->read(null, $id);
 		}
 		$projectIssueParents = $this->ProjectIssue->ProjectIssueParent->find('list');
 		$projectIssueTypes = $this->ProjectIssue->ProjectIssueStatusType->find('list');
@@ -110,9 +110,9 @@ class ProjectIssuesController extends ProjectsAppController {
 	
 	function archive($id = null, $project_id) {
 		if (!empty($id)) {
-			$this->data['ProjectIssue']['id'] = $id;
-			$this->data['ProjectIssue']['archive'] = 1;
-			if ($this->ProjectIssue->save($this->data)) {
+			$this->request->data['ProjectIssue']['id'] = $id;
+			$this->request->data['ProjectIssue']['archive'] = 1;
+			if ($this->ProjectIssue->save($this->request->data)) {
 				$this->Session->setFlash(__('The ProjectIssue has been archived', true));
 				$this->redirect(array('controller' => 'projects', 'action'=>'view', $project_id));
 			} else {
@@ -123,9 +123,9 @@ class ProjectIssuesController extends ProjectsAppController {
 	
 	function unarchive($id = null, $project_id) {
 		if (!empty($id)) {
-			$this->data['ProjectIssue']['id'] = $id;
-			$this->data['ProjectIssue']['archive'] = null;
-			if ($this->ProjectIssue->save($this->data)) {
+			$this->request->data['ProjectIssue']['id'] = $id;
+			$this->request->data['ProjectIssue']['archive'] = null;
+			if ($this->ProjectIssue->save($this->request->data)) {
 				$this->Session->setFlash(__('The ProjectIssue has been un-archived', true));
 				$this->redirect(array('controller' => 'projects', 'action'=>'view', $project_id));
 			} else {

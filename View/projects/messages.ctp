@@ -11,7 +11,7 @@
 	
 	 
 	 echo $this->Form->input('sender_id', array('type' => 'hidden', 'value' => $this->Session->read('Auth.User.id')));
-	 echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => '/projects/projects/messages/'.$this->data['Message']['foreign_key']));
+	 echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => '/projects/projects/messages/'.$this->request->data['Message']['foreign_key']));
 	 echo $this->Form->input('foreign_key', array('type' => 'hidden'));
 	 echo $this->Form->input('model', array('type' => 'hidden', 'value' => 'Project'));
 	 echo $this->Form->input('viewPath', array('type' => 'hidden', 'value' => '/projects/projects/message/{messageId}'));
