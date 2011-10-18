@@ -7,12 +7,12 @@
 	# Inflector::variable(Inflector::pluralize($model)); #contactPeople
 ?>
 <div class="<?php echo $controller; ?> index">
-<h2><?php __($human_ctrl);?></h2>
+<h2><?php echo __($human_ctrl);?></h2>
 <table cellpadding="0" cellspacing="0">
 <tr>
 <?php foreach($viewFields as $viewField) : ?>
 	<?php if ($viewField == 'actions') : ?>
-	<th class="actions"><?php __('Actions');?></th>
+	<th class="actions"><?php echo __('Actions');?></th>
 	<?php else: ?> 
 	<th><?php echo $this->Paginator->sort($viewField);?></th>
 	<?php endif; ?>

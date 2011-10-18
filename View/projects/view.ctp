@@ -8,7 +8,7 @@
             </span><span class="metaDataDetail"><?php echo floor((time() - strtotime($project['Project']['created'])) / 86400); ?></span></li>
           <!--li><span class="metaDataLabel">
             <?php echo __('Estimated Hours: '); ?>
-            </span><span name="estimatedhours" class="edit metaDataDetail" id="<?php __($project['Project']['id']); ?>"><?php echo $project['Project']['estimated_hours']; ?></span></li-->
+            </span><span name="estimatedhours" class="edit metaDataDetail" id="<?php echo __($project['Project']['id']); ?>"><?php echo $project['Project']['estimated_hours']; ?></span></li-->
           <li><span class="metaDataLabel">
             <?php echo __('Time Logged: '); ?>
             </span><span id="spenthours<?php echo $project['Project']['id']; ?>" class="metaDataDetail"><?php echo $trackedHoursSum; ?></span></li>

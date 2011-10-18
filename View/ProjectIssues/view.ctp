@@ -9,7 +9,7 @@ endif;
 ?>
  <div class="project view">
 	<div class="contactname">
-		<h2><span id="projectissuename"><?php __($projectIssue['ProjectIssue']['name']); ?></span> of <?php echo $this->Html->link(__($projectIssue['Project']['name'], true), array('controller'=> 'projects', 'action' => 'view', $projectIssue['Project']['id'])); ?> for <?php echo $this->Html->link(__($relator, true), array('plugin' => null, 'controller'=> 'contacts', 'action' => 'view', $projectIssue['Contact']['id'])); ?></h2>
+		<h2><span id="projectissuename"><?php echo __($projectIssue['ProjectIssue']['name']); ?></span> of <?php echo $this->Html->link(__($projectIssue['Project']['name'], true), array('controller'=> 'projects', 'action' => 'view', $projectIssue['Project']['id'])); ?> for <?php echo $this->Html->link(__($relator, true), array('plugin' => null, 'controller'=> 'contacts', 'action' => 'view', $projectIssue['Contact']['id'])); ?></h2>
 	</div>
 	
 <div id="tabscontent">
@@ -17,48 +17,48 @@ endif;
 	<div class="details data">
 		<ul class="detail datalist">
 			<li>
-            	<span class="label"><?php __('Assignee: '); ?></span>
-                <span name="assignee" class="edit"  id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php __($projectIssue['Assignee']['username']); ?></span>
+            	<span class="label"><?php echo __('Assignee: '); ?></span>
+                <span name="assignee" class="edit"  id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo __($projectIssue['Assignee']['username']); ?></span>
             </li>
 			<li>
 				<span class="label"><?php echo $this->Html->link(__('Project Tracker', true), array('plugin' => null, 'controller' => 'enumerations', 'action' => 'index', 'filter' => 'PROJECTISSUETRACKER', 'admin' => 1), array('class' => 'dialog', 'title' => 'Edit Project Tracker List')); ?></span>
-	            <span name="tracker" class="edit" id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php echo $projectIssue['ProjectTrackerType']['name']; ?></span>
+	            <span name="tracker" class="edit" id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo $projectIssue['ProjectTrackerType']['name']; ?></span>
             </li>
 			<li>
             	<span class="label"><?php echo $this->Html->link(__('Priority', true), array('plugin' => null, 'controller' => 'enumerations', 'action' => 'index', 'filter' => 'PROJECTISSUEPRIORITY', 'admin' => 1), array('class' => 'dialog', 'title' => 'Edit Priority List')); ?></span>
-                <span name="priority" class="edit" id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php __($projectIssue['ProjectIssuePriorityType']['name']); ?></span>
+                <span name="priority" class="edit" id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo __($projectIssue['ProjectIssuePriorityType']['name']); ?></span>
             </li>		
 			<li>
             	<span class="label"><?php echo $this->Html->link(__('Status', true), array('plugin' => null, 'controller' => 'enumerations', 'action' => 'index', 'filter' => 'PROJECTISSUESTATUS', 'admin' => 1), array('class' => 'dialog', 'title' => 'Edit Priority List')); ?></span>
-                <span name="status" class="edit" id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php __($projectIssue['ProjectIssueStatusType']['name']); ?></span>
+                <span name="status" class="edit" id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo __($projectIssue['ProjectIssueStatusType']['name']); ?></span>
             </li>
         </ul>
 		<ul class="detail datalist">
 			<li>
-            	<span class="label"><?php __('Start Date: '); ?></span>
-                <span name="startdate" class="edit" id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php __($projectIssue['ProjectIssue']['start_date']); ?></span>
+            	<span class="label"><?php echo __('Start Date: '); ?></span>
+                <span name="startdate" class="edit" id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo __($projectIssue['ProjectIssue']['start_date']); ?></span>
             </li>
 			<li>
-            	<span class="label"><?php __('Due Date: '); ?></span>
-                <span name="duedate" class="edit"  id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php __($projectIssue['ProjectIssue']['due_date']); ?></span>
+            	<span class="label"><?php echo __('Due Date: '); ?></span>
+                <span name="duedate" class="edit"  id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo __($projectIssue['ProjectIssue']['due_date']); ?></span>
             </li>
 			<li>
-            	<span class="label"><?php __('Estimated Hours: '); ?></span>
-                <span name="estimatedhours" class="edit"  id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php __($projectIssue['ProjectIssue']['estimated_hours']); ?></span>
+            	<span class="label"><?php echo __('Estimated Hours: '); ?></span>
+                <span name="estimatedhours" class="edit"  id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo __($projectIssue['ProjectIssue']['estimated_hours']); ?></span>
             </li>
 			<li>
-				<span class="label"><?php __('Spent Hours: '); ?></span>
-                <span name="spenthours" id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php echo $trackedHoursSum; ?></span>
+				<span class="label"><?php echo __('Spent Hours: '); ?></span>
+                <span name="spenthours" id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo $trackedHoursSum; ?></span>
             </li>
 			<li>
-            	<span class="label"><?php __('Done Ratio: '); ?></span>
-                <span name="doneratio" class="edit"  id="<?php __($projectIssue['ProjectIssue']['id']); ?>"><?php __($projectIssue['ProjectIssue']['done_ratio']); ?></span>
+            	<span class="label"><?php echo __('Done Ratio: '); ?></span>
+                <span name="doneratio" class="edit"  id="<?php echo __($projectIssue['ProjectIssue']['id']); ?>"><?php echo __($projectIssue['ProjectIssue']['done_ratio']); ?></span>
             </li>
 		</ul>
 	</div>
 	<div class="descriptions data">
 		<div class="description">
-			<div id="detail<?php echo $projectIssue['ProjectIssue']['id']; ?>"><?php __($projectIssue['ProjectIssue']['description']); ?></div>
+			<div id="detail<?php echo $projectIssue['ProjectIssue']['id']; ?>"><?php echo __($projectIssue['ProjectIssue']['description']); ?></div>
 		</div>
 	</div>
 	
@@ -81,12 +81,12 @@ endif;
 		if ($projectTree) { 
 			foreach ($projectTree[0]['children'] as $branch) { ?>
               <div class="branch-issue detail <?php # echo ($branch['children'][0] ? 'hide' : ''); ?>">	
-			  	<p><span class="branch-project-issue-name"><?php echo $this->Html->link(__($branch['ProjectIssue']['name'], true), '', array('class' => 'toggleClick', 'name' => 'branchdescription'.$branch['ProjectIssue']['id'])); ?></span><?php __(' to '.$branch['Assignee']['username']); ?></p>	
+			  	<p><span class="branch-project-issue-name"><?php echo $this->Html->link(__($branch['ProjectIssue']['name'], true), '', array('class' => 'toggleClick', 'name' => 'branchdescription'.$branch['ProjectIssue']['id'])); ?></span><?php echo __(' to '.$branch['Assignee']['username']); ?></p>	
             	<div class="hide" id="branchdescription<?php echo $branch['ProjectIssue']['id']; ?>">
             		<?php echo $branch['ProjectIssue']['description']; ?>
 	                <div id="extendeddetails<?php echo $branch['ProjectIssue']['id']; ?>" class="hide">
-						<p><?php __('Creator '.$branch['Creator']['username']); ?></p>
-						<p><?php __('Created '.$this->Time->nice($branch['ProjectIssue']['created'])); ?></p>
+						<p><?php echo __('Creator '.$branch['Creator']['username']); ?></p>
+						<p><?php echo __('Created '.$this->Time->nice($branch['ProjectIssue']['created'])); ?></p>
 	                </div>
     	        	<p class="action"><?php echo $this->Html->link(__('Show Details', true), array(''), array('class' => 'toggleClick', 'name' => 'extendeddetails'.$branch['ProjectIssue']['id']));?><?php echo $this->Html->link(__('Archive', true), array('action' => 'archive', $branch['ProjectIssue']['id'], $branch['ProjectIssue']['project_id']));?><?php echo $this->Html->link(__('Reply', true), array(''), array('class' => 'toggleClick', 'name' => 'replyform'.$branch['ProjectIssue']['id'])); ?></p>
                 </div>
@@ -94,13 +94,13 @@ endif;
 						$branch['children'] = array_reverse($branch['children']);
 					  	foreach ($branch['children'] as $child) { ?> 
 						<div class="child-issue detail">
-	            			<p><span class="child-project-issue-name"><?php echo $this->Html->link(__($child['ProjectIssue']['name'], true), '', array('class' => 'toggleClick', 'name' => 'childdescription'.$child['ProjectIssue']['id'])); ?></span><?php __(' to '.$child['Assignee']['username']); ?></p>	
+	            			<p><span class="child-project-issue-name"><?php echo $this->Html->link(__($child['ProjectIssue']['name'], true), '', array('class' => 'toggleClick', 'name' => 'childdescription'.$child['ProjectIssue']['id'])); ?></span><?php echo __(' to '.$child['Assignee']['username']); ?></p>	
 	                        <div class="hide" id="childdescription<?php echo $child['ProjectIssue']['id']; ?>">
-			                <?php __($child['ProjectIssue']['description']); ?>
+			                <?php echo __($child['ProjectIssue']['description']); ?>
                             
 	               				<div id="extendeddetails<?php echo $child['ProjectIssue']['id']; ?>" class="hide">
-									<p><?php __('Creator: '.$child['Creator']['username']); ?></p>
-									<p><?php __('Created: '.$this->Time->nice($child['ProjectIssue']['created'])); ?></p>
+									<p><?php echo __('Creator: '.$child['Creator']['username']); ?></p>
+									<p><?php echo __('Created: '.$this->Time->nice($child['ProjectIssue']['created'])); ?></p>
 				                </div>
     	        				<p class="action"><?php echo $this->Html->link(__('Show Details', true), array(''), array('class' => 'toggleClick', 'name' => 'extendeddetails'.$child['ProjectIssue']['id']));?><?php echo $this->Html->link(__('Archive', true), array('action' => 'archive', $child['ProjectIssue']['id'], $child['ProjectIssue']['project_id']));?><?php echo $this->Html->link(__('Reply', true), array(''), array('class' => 'toggleClick', 'name' => 'replyform'.$branch['ProjectIssue']['id'])); ?></p>
 	                		</div>
@@ -128,7 +128,7 @@ endif;
 	</div>
   </div> 
 </div>
-<p class="timing"><strong><?php __($projectIssue['ProjectIssue']['name']);?></strong><?php __(' was '); ?><strong><?php __('Created: '); ?></strong><?php echo $this->Time->relativeTime($projectIssue['ProjectIssue']['created']); ?><?php __(', '); ?><strong><?php __('Last Modified: '); ?></strong><?php echo $this->Time->relativeTime($projectIssue['ProjectIssue']['modified']); ?></p>
+<p class="timing"><strong><?php echo __($projectIssue['ProjectIssue']['name']);?></strong><?php echo __(' was '); ?><strong><?php echo __('Created: '); ?></strong><?php echo $this->Time->relativeTime($projectIssue['ProjectIssue']['created']); ?><?php echo __(', '); ?><strong><?php echo __('Last Modified: '); ?></strong><?php echo $this->Time->relativeTime($projectIssue['ProjectIssue']['modified']); ?></p>
 
 </div>
 <?php

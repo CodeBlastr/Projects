@@ -3,7 +3,7 @@
   <div class="tasks form"> <?php echo $this->Form->create('Task', array('url' => '/tasks/tasks/add'));?>
   <fieldset>
     <legend class="toggleClick">
-    <?php __('Add a task to this list?');?>
+    <?php echo __('Add a task to this list?');?>
     </legend>
     <?php
 	 echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));

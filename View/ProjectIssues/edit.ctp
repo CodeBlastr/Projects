@@ -1,7 +1,7 @@
 <div class="project-issues form">
 <?php echo $this->Form->create('ProjectIssue', array('action' => 'edit'));?>
 	<fieldset>
- 		<legend><?php __('Edit Activity');?></legend>
+ 		<legend><?php echo __('Edit Activity');?></legend>
 	<?php
 		echo $this->Form->input('id');
 		if (!empty($this->request->params['named']['project_id'])) {

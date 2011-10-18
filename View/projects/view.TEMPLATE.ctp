@@ -10,19 +10,19 @@
         <ul class="metaData">
           <li class="metaDataPriorityDetail"> <img src="/img/admin/ico22.gif" /> </li>
           <li><span class="metaDataLabel">
-            <?php __('Days Since Launch: '); ?>
+            <?php echo __('Days Since Launch: '); ?>
             </span><span class="metaDataDetail"><?php echo floor((time() - strtotime($project['Project']['created'])) / 86400); ?></span></li>
           <li><span class="metaDataLabel">
-            <?php __($this->Html->link(__('Status: ', true), array('plugin' => null, 'controller' => 'enumerations', 'action' => 'index', 'filter' => 'PROJECTSTATUS', 'admin' => 1), array('class' => 'dialog', 'title' => 'Edit Status List'))); ?>
-            </span><span name="status" class="edit metaDataDetail" id="<?php __($project['Project']['id']); ?>"><?php echo $project['ProjectStatusType']['name']; ?></span></li>
+            <?php echo __($this->Html->link(__('Status: ', true), array('plugin' => null, 'controller' => 'enumerations', 'action' => 'index', 'filter' => 'PROJECTSTATUS', 'admin' => 1), array('class' => 'dialog', 'title' => 'Edit Status List'))); ?>
+            </span><span name="status" class="edit metaDataDetail" id="<?php echo __($project['Project']['id']); ?>"><?php echo $project['ProjectStatusType']['name']; ?></span></li>
           <li><span class="metaDataLabel">
-            <?php __('Estimated Hours: '); ?>
-            </span><span name="estimatedhours" class="edit metaDataDetail" id="<?php __($project['Project']['id']); ?>"><?php echo $project['Project']['estimated_hours']; ?></span></li>
+            <?php echo __('Estimated Hours: '); ?>
+            </span><span name="estimatedhours" class="edit metaDataDetail" id="<?php echo __($project['Project']['id']); ?>"><?php echo $project['Project']['estimated_hours']; ?></span></li>
           <li><span class="metaDataLabel">
-            <?php __('Spent Hours: '); ?>
+            <?php echo __('Spent Hours: '); ?>
             </span><span id="spenthours<?php echo $project['Project']['id']; ?>" class="metaDataDetail"><?php echo $trackedHoursSum; ?></span></li>
           <li><span class="metaDataLabel">
-            <?php __('Percent Complete: '); ?>
+            <?php echo __('Percent Complete: '); ?>
             </span><span id="percentcomplete" class="metaDataDetail"><?php echo $percentComplete; __('%'); ?></span></li>
         </ul>
         <div class="recordData">
@@ -35,7 +35,7 @@
       <div class="viewRow data">
         <div class="viewHeading toggleClick" name="issues">
           <h6>
-            <?php __('Tasks') ?>
+            <?php echo __('Tasks') ?>
           </h6>
         </div>
         <div id="issues" class="hide">
@@ -85,15 +85,15 @@
             <?php
 			if ($project['ProjectIssue']) {
 				foreach ($project['ProjectIssue'] as $issue) { ?>
-            <tr class="project-issue <?php __($issue['ProjectIssuePriorityType']['name']); ?> <?php __($issue['ProjectIssueStatusType']['name']); ?>">
+            <tr class="project-issue <?php echo __($issue['ProjectIssuePriorityType']['name']); ?> <?php echo __($issue['ProjectIssueStatusType']['name']); ?>">
               <!--td><?php echo $this->Form->input('project_issue_id', array('type' => 'checkbox', 'label' => '')); ?></td-->
-              <td class="assignee"><?php __($issue['Assignee']['username']); ?></td>
+              <td class="assignee"><?php echo __($issue['Assignee']['username']); ?></td>
               <td><?php echo $this->Html->link(__($issue['name'], true), array('controller'=> 'project_issues', 'action' => 'view', $issue['id'])); # __(' - '.strip_tags($text->truncate($issue['description'], 100, array('ending' => '...', 'html' => true)))); ?></td>
-              <td><?php __('Start '.$this->Time->timeAgoInWords($issue['start_date'])); ?></td>
-              <td><?php __('Due '.$this->Time->timeAgoInWords($issue['due_date'])); ?></td>
-              <td><?php __($issue['done_ratio'].'%'); ?></td>
-              <td><?php __($issue['ProjectIssuePriorityType']['name']); ?></td>
-              <td><?php __($issue['ProjectIssueStatusType']['name']); ?></td>
+              <td><?php echo __('Start '.$this->Time->timeAgoInWords($issue['start_date'])); ?></td>
+              <td><?php echo __('Due '.$this->Time->timeAgoInWords($issue['due_date'])); ?></td>
+              <td><?php echo __($issue['done_ratio'].'%'); ?></td>
+              <td><?php echo __($issue['ProjectIssuePriorityType']['name']); ?></td>
+              <td><?php echo __($issue['ProjectIssueStatusType']['name']); ?></td>
             </tr>
             <?php 
 				} 
@@ -105,7 +105,7 @@
       <div class="viewRow data">
         <div class="viewHeading toggleClick" name="members">
           <h6>
-            <?php __('Members') ?>
+            <?php echo __('Members') ?>
           </h6>
         </div>
         <div id="members" class="hide">
@@ -138,7 +138,7 @@ endif;
       <div class="viewRow data">
         <div class="viewHeading toggleClick" name="watchers">
           <h6>
-            <?php __('Watchers') ?>
+            <?php echo __('Watchers') ?>
           </h6>
         </div>
         <div id="watchers" class="hide">
