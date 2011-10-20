@@ -531,13 +531,13 @@ class ProjectsController extends ProjectsAppController {
 	
 	function _callback_commentsFetchDataThreaded($options) {
 		if ($this->request->params['action'] == 'message') :
-			$options['id'] = $this->params['pass'][0];
+			$options['id'] = $this->request->params['pass'][0];
 			$conditions['Comment.foreign_key'] = $options['id'];
 			#$conditions['Comment.parent_id'] = 0;
 			$conditions['Comment.model'] = 'Message';
 			$contain = 'User';
 		elseif ($this->request->params['action'] == 'task') :
-			$options['id'] = $this->params['pass'][0];
+			$options['id'] = $this->request->params['pass'][0];
 			$conditions['Comment.foreign_key'] = $options['id'];
 			#$conditions['Comment.parent_id'] = 0;
 			$conditions['Comment.model'] = 'Task';
@@ -555,10 +555,10 @@ class ProjectsController extends ProjectsAppController {
 	function _callback_commentsAdd($modelId, $commentId, $displayType, $data = array()) {
     	if (!empty($this->request->data)) {
 			if ($this->request->params['action'] == 'message') :
-				$modelId = $this->params['pass'][0];
+				$modelId = $this->request->params['pass'][0];
 				$this->Project->name = 'Message';
 			elseif ($this->request->params['action'] == 'task') :
-				$modelId = $this->params['pass'][0];
+				$modelId = $this->request->params['pass'][0];
 				$this->Project->name = 'Task';
 			endif;
 	    }
