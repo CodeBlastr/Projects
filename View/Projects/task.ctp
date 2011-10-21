@@ -1,9 +1,9 @@
 <div class="tasks view">
-  <h2><?php echo $task['Task']['name']; ?></h2>
   <div class="tasks form"> <?php echo $this->Form->create('Task', array('url' => '/tasks/tasks/add'));?>
   <fieldset>
     <legend class="toggleClick">
-    <?php echo __('Add a task to this list?');?>
+     <h2><?php echo $task['Task']['name']; ?></h2>
+   	 <span class="button"><?php echo __('Add a task?');?></span>
     </legend>
     <?php
 	 echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
@@ -18,6 +18,9 @@
 	?>
   </fieldset>
 </div>
+</div>
+
+<div class="tasks index">
   <h3 class="indexHead">Still pending tasks</h3>
   <?php echo $this->Element('scaffolds/index', array(
 				'data' => $childTasks, 
