@@ -1,9 +1,10 @@
 <div class="messages index">
-  <div class="messages form">
-    <h2><?php echo 'Messages for ' . $project['Project']['displayName']; ?></h2>
+  <div class="messages form"> <?php echo $this->Form->create('Message' , array('url'=>'/messages/messages/add'));?>
     <fieldset>
-      <?php echo $this->Form->create('Message' , array('url'=>'/messages/messages/add'));?>
-      <legend class="toggleClick"><?php echo 'Post a new message thread?'; ?></legend>
+      <legend class="toggleClick">
+      <h2><?php  echo __("{$project['Project']['displayName']} Messages "); ?></h2>
+      <span class="button"><?php echo 'Create a new message.'; ?></span>
+      </legend>
       <?php
 	 echo $this->Form->input('title', array('label' => __('Subject', true)));
 	 echo $this->Form->input('body', array('label' => '', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
@@ -25,5 +26,4 @@
 				$this->Html->link('View Comments', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'message', '{id}')), 
 				)
 			));
-  ?>
-</div>
+  ?> </div>
