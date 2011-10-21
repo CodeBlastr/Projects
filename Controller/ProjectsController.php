@@ -264,7 +264,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('project', $project); 
 		$this->set('people', $this->paginate('Used'));
 		$this->set('users', $this->Project->Used->User->find('list'));
-		$this->set('modelName', 'Used');
+		$this->set('modelName', 'User');
 		$this->set('pluginName', 'users');
 		$this->set('displayName', 'full_name');
 		$this->set('displayDescription', ''); 

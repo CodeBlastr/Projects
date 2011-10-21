@@ -15,7 +15,7 @@
 <?php echo $this->Element('scaffolds/index', array(
 		'data' => $people, 
 		'actions' => array(
-			$this->Html->link('View', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'view', '{id}')),
+			$this->Html->link('View', array('plugin' => 'users', 'controller' => 'users', 'action' => 'view', '{id}')),
 			$this->Html->link('Remove User', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'unuse', '{id}',  "{project[Project][id]}"), array(), 'Are you sure you want to permanently remove?'),
 			),
 		));
