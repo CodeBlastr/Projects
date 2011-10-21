@@ -445,9 +445,34 @@ class ProjectsController extends ProjectsAppController {
 			));
 		
 		$this->set('task', $task);
+		$project = $this->Project->find('first', array(
+			'conditions' => array('Project.id' => $task['Task']['foreign_key']), 'contain' => 'Contact'));
+		$this->set('project', $project); 
+		$associations =  array('Assignee' => array('displayField' => $this->Project->Task->Assignee->displayField), 'Creator' => array('displayField' => 'full_name'));
+		$this->set('associations', $associations);
+		$this->set('childTasks', $this->_pendingChildTasks($task['Task']['id']));
+		$this->set('finishedChildTasks', $this->_completedChildTasks($task['Task']['id']));
+		$this->set('parentId', $task['Task']['id']);
+		$this->set('model', $task['Task']['model']);
+		$this->set('foreignKey', $task['Task']['foreign_key']);
+		$this->set('assignees', $this->Project->findUsedUsers($task['Task']['foreign_key'], 'list'));
+		$this->set('modelName', 'Task');
+		$this->set('pluginName', 'tasks');
+		$this->set('displayName', 'name');
+		$this->set('displayDescription', 'description'); 
+		$this->set('showGallery', true);
+		$this->set('galleryModel', array('name' => 'User', 'alias' => 'Assignee'));
+		$this->set('galleryForeignKey', 'id');
+		$this->set('page_title_for_layout', $project['Project']['displayName']);
+		$this->set('tabsElement', '/projects');
+	}
+	
+	
+	protected function _pendingChildTasks($parentTaskId) {
+		unset($this->paginate);
 		$this->paginate = array(
 			'conditions' => array(
-				'Task.parent_id' => $task['Task']['id'],
+				'Task.parent_id' => $parentTaskId,
 				'Task.is_completed' => 0,
 				),
 			'contain' => array(
@@ -470,28 +495,39 @@ class ProjectsController extends ProjectsAppController {
 				'Task.due_date',
 				),
 			);
-		$project = $this->Project->find('first', array(
-			'conditions' => array('Project.id' => $task['Task']['foreign_key']), 'contain' => 'Contact'));
-		$this->set('project', $project); 
-		$associations =  array('Assignee' => array('displayField' => $this->Project->Task->Assignee->displayField), 'Creator' => array('displayField' => 'full_name'));
-		$this->set('associations', $associations);
-		$this->set('childTasks', $this->paginate('Task'));
-		$this->paginate['conditions']['Task.is_completed'] = 1;
-		$this->paginate['fields'] = array('id', 'due_date', 'completed_date', 'assignee_id', 'name', 'description');
-		$this->set('finishedChildTasks', $this->paginate('Task'));
-		$this->set('parentId', $task['Task']['id']);
-		$this->set('model', $task['Task']['model']);
-		$this->set('foreignKey', $task['Task']['foreign_key']);
-		$this->set('assignees', $this->Project->findUsedUsers($task['Task']['foreign_key'], 'list'));
-		$this->set('modelName', 'Task');
-		$this->set('pluginName', 'tasks');
-		$this->set('displayName', 'name');
-		$this->set('displayDescription', 'description'); 
-		$this->set('showGallery', true);
-		$this->set('galleryModel', array('name' => 'User', 'alias' => 'Assignee'));
-		$this->set('galleryForeignKey', 'id');
-		$this->set('page_title_for_layout', $project['Project']['displayName']);
-		$this->set('tabsElement', '/projects');
+		return $this->paginate('Task');
+	}
+	
+	
+	protected function _completedChildTasks($parentTaskId) {
+		unset($this->paginate);
+		$this->paginate = array(
+			'conditions' => array(
+				'Task.parent_id' => $parentTaskId,
+				'Task.is_completed' => 1,
+				),
+			'contain' => array(
+				'Assignee' => array(
+					'fields' => array(
+						'id',
+						'full_name',
+						),
+					),
+				),
+			'fields' => array(
+				'id',
+				'due_date',
+				'completed_date',
+				'assignee_id',
+				'name',
+				'description',
+				),
+			'order' => array(
+				'Task.order',
+				'Task.due_date',
+				),
+			);
+		return $this->paginate('Task');
 	}
 	
 	
