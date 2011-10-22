@@ -21,46 +21,38 @@ class ProjectsController extends ProjectsAppController {
 	 * Use admin_dashboard() for all projects
 	 */
 	function index() {
-		
-		/*  Put this back when you add the archivable behavior.
-		
-		if (!empty($this->request->params['named']['archived'])) {
-			$this->paginate = array(
-				'conditions' => array(
-					'Project.is_archived' => 1
-					),
-				'fields' => array(
-					'name',
-					),
-				'contain' => array(
-					'Contact',
-					),
-				'order' => array(
-					'Project.modified'
-					),
-				'limit' => 10,
-				);
-		} else {
-		}*/
 		$this->paginate = array(
-			'conditions' => array(
-				'Project.is_archived' => 0
-				),
 			'fields' => array(
 				'id',
 				'displayName',
 				'star',
 				'modified',
-				'quick_note',
 				),
 			'order' => array(
 				'Project.modified'
 				),
 			'limit' => 25,
 			);
+		$this->paginate['conditions']['Project.is_archived'] = !empty($this->request->params['named']['archived']) ? 1 : 0;
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'displayName');
-		$this->set('displayDescription', 'quick_note'); 
+		$this->set('displayDescription', ''); 
+		$this->set('indexClass', ''); 
+		$this->set('pageActions', array(
+			array(
+				'linkText' => 'Create',
+				'linkUrl' => array(
+					'action' => 'add',
+					),
+				),
+			array(
+				'linkText' => 'Archived',
+				'linkUrl' => array(
+					'action' => 'index',
+					'archived' => 1,
+					),
+				),
+			));
 	}
 
 	function view($id = null) {
@@ -140,7 +132,6 @@ class ProjectsController extends ProjectsAppController {
 			$this->request->data = $this->Project->read(null, $id);
 		}
 		
-		$this->request->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	

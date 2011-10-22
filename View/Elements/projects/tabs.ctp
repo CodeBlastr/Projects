@@ -9,6 +9,9 @@ if(
 	$this->request->params['action'] == 'people') :
 
 $tabs_for_layout = !empty($tabs_for_layout) ? $tabs_for_layout : array(
+	array('action' => array('index'),
+		  'link' => $this->Html->link('<span>All Projects</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'index'), array('title' => 'Projects', 'escape' => false)),
+		  ),
 	array('action' => array('view'),
 		  'link' => $this->Html->link('<span>Dashboard</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'escape' => false)),
 		  ),
