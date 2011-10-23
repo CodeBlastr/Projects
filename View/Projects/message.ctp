@@ -24,6 +24,19 @@
   <?php $this->CommentWidget->options(array('allowAnonymousComment' => false));?>
   <?php echo $this->CommentWidget->display();?> </div>
 
+<?php 
+// set the contextual menu items
+echo $this->Element('context_menu', array('menus' => array(
+	array(
+		'heading' => 'Projects',
+		'items' => array(
+			$this->Html->link(__('Create', true), array('action' => 'messages', $project['Project']['id'])),
+			$this->Html->link('Delete', array('plugin' => 'messages', 'controller' => 'messages', 'action' => 'delete', $message['Message']['id']), array(), "Are you sure you want to delete {$message['Message']['subject']}")
+			)
+		),
+	)));
+?>
+
 
 
 
