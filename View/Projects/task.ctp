@@ -8,7 +8,7 @@
     <?php
 	 echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
 	 echo $this->Form->input('Task.name');
-	 echo $this->Form->input('Task.due_date');
+	 echo $this->Form->input('Task.due_date', array('class' => 'test'));
 	 echo $this->Form->input('Task.assignee_id');
 	 echo $this->Form->input('Task.description', array('label' => 'Task details', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
 	 echo $this->Form->input('Task.model', array('type' => 'hidden', 'value' => $model));
