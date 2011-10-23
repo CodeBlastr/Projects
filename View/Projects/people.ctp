@@ -7,7 +7,7 @@
       </legend>
       <?php
 	 echo $this->Form->input('model', array('type' => 'hidden', 'value' => 'Project'));
-	 echo $this->Form->input('foreign_key', array('type' => 'hidden', 'value' => $project['Project']['id']));
+	 echo $this->Form->input('foreign_key', array('type' => 'hidden', 'value' => $this->request->params['pass'][0]));
 	 echo $this->Form->input('role', array('type' => 'hidden', 'value' => 'member'));
 	 echo $this->Form->input('user_id', array());
 	 echo $this->Form->end(__('Add User', true));?>

@@ -49,8 +49,6 @@ echo $this->Element('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link(__('New', true), array('controller' => 'projects', 'action' => 'add'), array('class' => 'add')),
-			$this->Html->link(__('List', true), array('controller' => 'projects', 'action' => 'index'), array('class' => 'index')),
 			$this->Html->link(__('Edit', true), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id']), array('class' => 'edit')),
 			$this->Html->link(__('Archive', true), array('controller' => 'projects', 'action' => 'archive', $project['Project']['id']), array('class' => 'archive')),
 			$this->Html->link(__('Un-archive', true), array('controller' => 'projects', 'action' => 'unarchive', $project['Project']['id']), array('class' => 'archive')),
