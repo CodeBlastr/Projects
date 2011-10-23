@@ -19,7 +19,6 @@
 	 echo $this->Form->end(__('Send', true));?>
     </fieldset>
   </div>
-  <?php $this->Set('noItems', 'print this message when there are no messages'); ?>
   <?php echo $this->Element('scaffolds/index', array(
 			'data' => $messages,
 			'actions' => array(
