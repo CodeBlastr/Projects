@@ -354,18 +354,21 @@ class ProjectsController extends ProjectsAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		$this->Project->commentAdd(0, $options = array('modelId' => $messageId, 'modelName' => 'Message'));
-		
+		#$this->Project->commentAdd(0, $options = array('modelId' => $messageId, 'modelName' => 'Message'));
 		$this->Project->Message->recursive = 1;
 		$message = $this->Project->Message->read(null, $messageId);
-		$message['Recipient'] = $this->Project->Message->findUsedUsers($messageId, $type = 'list');
-		$message['Message']['is_read'] = 1;
-		if ($this->Project->Message->save($message)) {
-			$this->set(compact('message'));
-		} else {
-			$this->Session->setFlash(__('The message could not be saved. Please, try again.', true));
-			$this->redirect(array('action' => 'index'));
-		}
+		
+		/* This is having too many problems with the usable behavior with no use right now. Not to mention that it doesn't work on a per user basis so, its pretty much worthless as is.
+		if (!empty($message) && $message['Message']['is_read'] == 0) : 
+			$message['Message']['is_read'] = 1;
+			if ($this->Project->Message->save($message)) :
+			else : 
+				$this->Session->setFlash(__('The message could not be saved. Please, try again.'));
+				$this->redirect(array('action' => 'index'));
+			endif;
+		endif; */
+		
+		$this->set(compact('message'));
 		$project = $this->Project->find('first', array(
 			'conditions' => array('Project.id' => $message['Message']['foreign_key']), 'contain' => 'Contact'));
 		$this->set('project', $project); 

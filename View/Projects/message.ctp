@@ -7,7 +7,7 @@
           <li><span class="metaDataLabel"> <?php echo __('From: '); ?> </span><span class="metaDataDetail"><?php echo $message['Sender']['username']; ?></span></li>
           <li><span class="metaDataLabel"> <?php echo __('To: '); ?> </span>
             <?php if(!empty($message['Recipient'])) : foreach ($message['Recipient'] as $recipient) : ?>
-            <span class="metaDataDetail"><?php echo $recipient.', '; ?></span>
+            <span class="metaDataDetail"><?php echo $recipient['full_name'].', '; ?></span>
             <?php endforeach; endif; ?>
           </li>
         </ul>
@@ -23,6 +23,11 @@
 <div id="post-comments">
   <?php $this->CommentWidget->options(array('allowAnonymousComment' => false));?>
   <?php echo $this->CommentWidget->display();?> </div>
+
+
+
+
+
 <?php /*
 
 <ul>
