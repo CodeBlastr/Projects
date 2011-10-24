@@ -422,6 +422,16 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('displayDescription', ''); 
 		$this->set('page_title_for_layout', $project['Project']['displayName']);
 		$this->set('tabsElement', '/projects');
+		$this->set('pageActions', array(
+			array(
+				'linkText' => 'All Your Tasks',
+				'linkUrl' => array(
+					'plugin' => 'tasks',
+					'controller' => 'tasks',
+					'action' => 'my',
+					),
+				),
+			));
 	}
 	
 	
