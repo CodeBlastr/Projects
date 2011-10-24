@@ -604,6 +604,9 @@ class ProjectsController extends ProjectsAppController {
 	    }
 	    return $this->Comments->callback_add($modelId, $commentId, $displayType, $data);
 	} 
+	
+	function dashboard () {
+	}
 
 }
 ?>
