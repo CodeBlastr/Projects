@@ -282,9 +282,15 @@ class Project extends ProjectsAppModel {
 				'Project.contact_id is NOT NULL',
 				),
 			'contain' => array(
-				'Contact',
+				'Contact' => array(
+					'fields' => array(
+						'Contact.id',
+						'Contact.name',
+						),
+					)
 				)
 			));
+		debug($projects);
 		$contactIds = Set::extract('/Contact/id', $projects);
 		$params['conditions']['Contact.id'] = array_unique($contactIds);
 		return $this->Contact->find($type, $params);
