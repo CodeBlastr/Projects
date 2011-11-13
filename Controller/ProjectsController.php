@@ -92,7 +92,8 @@ class ProjectsController extends ProjectsAppController {
 			
 			$this->set(compact('project', 'trackedHoursSum', 'percentComplete'));
 		} else {
-			$this->flash(__('Invalid Project.', true), array('action'=>'index'));
+			$this->Session->setFlash(__('Invalid Project', true));
+			$this->redirect(array('controller' => 'projects', 'action'=>'index'));
 		}
 		$this->set('page_title_for_layout', $project['Project']['displayName']);
 		$this->set('title_for_layout',  strip_tags($project['Project']['displayName']));

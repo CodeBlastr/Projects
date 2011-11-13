@@ -260,7 +260,6 @@ class Project extends ProjectsAppModel {
 	 */
 	function add($data) {
 		$data = $this->cleanInputData($data);
-		
 		if ($this->saveAll($data, array('atomic' => false))){
 			return true;
 		} else {
