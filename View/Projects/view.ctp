@@ -1,10 +1,5 @@
 <div class="project view">
-  <fieldset>
-    <legend>
-    <h2>
-      <?php  echo __("{$project['Project']['displayName']} Dashboard"); ?>
-    </h2>
-    </legend>
+    <h2><?php  echo __("{$project['Project']['displayName']} Dashboard"); ?></h2>
     <div id="n1" class="info-block">
       <div class="viewRow">
         <?php if ($this->Session->read('Auth.User.user_role_id') == 1) : ?>
@@ -24,7 +19,6 @@
           <?php echo $this->Element('activities', array('parentForeignKey' => $project['Project']['id']), array('plugin' => 'activities')); ?> </div>
       </div>
     </div>
-  </fieldset>
   <!-- /info-block end -->
 </div>
 <?php
