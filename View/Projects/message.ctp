@@ -12,7 +12,7 @@
           </li>
         </ul>
         <div class="recordData">
-          <div class="truncate"> <?php echo $message['Message']['body']; ?> </div>
+          <?php echo $message['Message']['body']; ?>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ class ProjectsController extends ProjectsAppController {
 	
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->passedArgs['comment_view_type'] = 'threaded';
+		$this->passedArgs['comment_view_type'] = 'flat';
 	}
 
 	/**
@@ -322,7 +322,7 @@ class ProjectsController extends ProjectsAppController {
 					),
 				),
 			'order' => array(
-				'Message.created DESC'
+				'Message.created' => 'desc',
 				),
 			'limit' => 10,
 			);
@@ -549,10 +549,8 @@ class ProjectsController extends ProjectsAppController {
 	
 	/**
 	 * @todo	 This send message thing is used here, and in the messages controller itself.  I don't know where we could put it so that its usable between both.  (Probably would have to do some kind of added on, slow component thing).
-	 * @todo 	 The task messaging is for the entire task list.  It is not per task, like it should be.  But there is some thought that needs to be put in about who gets notifications for tasks.  Assignee, Assigner, and what if you want someone else in on it.  So the todo, is put in that thought and make it happen. 
 	 */
 	function _callback_commentsafterAdd($options) {
-		
 		if ($this->request->params['action'] == 'message') :
 			$recipients = $this->Project->Message->findUsedUsers($options['modelId'], 'all');
 		elseif ($this->request->params['action'] == 'task') :
@@ -597,12 +595,30 @@ class ProjectsController extends ProjectsAppController {
 		endif;
 		
 		
-		$order = array(
-			'Comment.parent_id' => 'asc',
-			'Comment.created' => 'desc');
+		$order = array('Comment.modified' => 'desc');
 		$comments = $this->Project->Comment->find('threaded', compact('conditions', 'contain', 'order'));
 		return $comments;
 	}
+	
+	function _callback_commentsFetchDataFlat($options) {
+		unset($this->paginate);
+		$options['id'] = $this->request->params['pass'][0];
+		$this->paginate = array(
+			'conditions' => array(
+				'Comment.foreign_key' => $options['id'],
+				'Comment.model' => 'Message',
+				),
+			'order' => array(
+				'Comment.created' => 'desc',
+				),
+			'contain' => array(
+				'User',
+				),
+			);
+		$comments = $this->paginate('Comment');
+		return $comments;
+	}
+	
 	
 	function _callback_commentsAdd($modelId, $commentId, $displayType, $data = array()) {
     	if (!empty($this->request->data)) {
