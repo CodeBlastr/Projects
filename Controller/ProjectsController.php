@@ -111,10 +111,10 @@ class ProjectsController extends ProjectsAppController {
 			}
 		}
 		
-		$this->request->data['Project']['contact_id'] = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
+		$contactId = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
-		$this->set(compact('contacts','userGroups'));	
+		$this->set(compact('contacts','userGroups', 'contactId'));	
 		$this->set('page_title_for_layout', 'Create a new project');
 		$this->set('title_for_layout', 'New project form');
 	}
@@ -414,7 +414,8 @@ class ProjectsController extends ProjectsAppController {
 		$project = $this->Project->find('first', array(
 			'conditions' => array('Project.id' =>  $projectId), 'contain' => 'Contact'));
 		$this->set('project', $project); 
-		$this->request->data['Task']['foreign_key'] = !empty($projectId) ? $projectId : null;
+		$foreignKey = !empty($projectId) ? $projectId : null;
+		$this->set('foreignKey', $foreignKey);
 		$this->set('tasks', $this->paginate('Task'));
 		$this->set('modelName', 'Task');
 		$this->set('pluginName', 'tasks');

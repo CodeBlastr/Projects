@@ -227,11 +227,11 @@ class Project extends ProjectsAppModel {
 	
 	function __construct($id = false, $table = null, $ds = null) {
     	parent::__construct($id, $table, $ds);
-	    $this->virtualFields['displayName'] = sprintf('CONCAT(%s.name, " <small>", Contact.name, "</small>")', $this->alias);
-	    #$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name)', $this->alias);
+	   	$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name, " <small>", Contact.name, "</small>")', $this->alias);
+	   	#$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name)', $this->alias);
 	    $this->virtualFields['displayDescription'] = $this->alias.'.quick_note';
 		$this->displayField = 'displayName';
-		$this->order = array("{$this->alias}.name");		
+		$this->order = array("{$this->alias}.name");
     }
 	
 	function beforeFind($queryData) {
