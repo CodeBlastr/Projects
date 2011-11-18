@@ -22,7 +22,8 @@
   <?php echo $this->Element('scaffolds/index', array(
 			'data' => $messages,
 			'actions' => array(
-				$this->Html->link('View Comments', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'message', '{id}')), 
+				$this->Html->link('Go to message', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'message', '{id}')), 
+				$this->Html->link('Add a comment', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'message', '{id}', 'comment' => 0, '#' => 'comments')), 
 				)
 			));
   ?> </div>

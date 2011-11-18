@@ -338,6 +338,9 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('link', array('pluginName' => 'projects', 'controllerName' => 'projects', 'actionName' => 'message'));
 		$this->set('displayName', 'title');
 		$this->set('displayDescription', 'body'); 
+		$this->set('showGallery', true);
+		$this->set('galleryModel', array('name' => 'User', 'alias' => 'Sender'));
+		$this->set('galleryForeignKey', 'id');
 		$this->set('page_title_for_layout', $project['Project']['displayName']);
 		$this->set('tabsElement', '/projects');
 		if (!empty($messages) && isset($this->request->params['requested'])) {
