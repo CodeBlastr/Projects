@@ -289,7 +289,6 @@ class Project extends ProjectsAppModel {
 					)
 				)
 			));
-		debug($projects);
 		$contactIds = Set::extract('/Contact/id', $projects);
 		$params['conditions']['Contact.id'] = array_unique($contactIds);
 		return $this->Contact->find($type, $params);
