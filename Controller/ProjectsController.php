@@ -344,7 +344,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('page_title_for_layout', $project['Project']['displayName']);
 		$this->set('tabsElement', '/projects');
 		if (!empty($messages) && isset($this->request->params['requested'])) {
-        	return 'someting'.$messages;
+        	return $messages;
         } else {
 			return false;
 		}
