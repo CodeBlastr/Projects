@@ -24,8 +24,9 @@
  */
 class ProjectsWatchersController extends ProjectsAppController {
 
-	var $name = 'ProjectsWatchers';
-	var $allowedActions = array('most_watched');
+	public $name = 'ProjectsWatchers';
+	public $uses = 'Projects.ProjectsWatcher';
+	public $allowedActions = array('most_watched');
 	
 	/**
 	 * @todo this admin_ajax_edit probably needs to be removed, and then rerun the default build_acl

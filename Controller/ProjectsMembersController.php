@@ -24,7 +24,8 @@
  */
 class ProjectsMembersController extends ProjectsAppController {
 
-	var $name = 'ProjectsMembers';
+	public $name = 'ProjectsMembers';
+	public $uses = 'Projects.ProjectsMember';
 
 	/**
 	 * @ todo this admin_ajax_edit probably needs to be removed (and then reset build_acl original)

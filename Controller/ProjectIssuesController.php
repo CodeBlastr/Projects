@@ -1,8 +1,8 @@
 <?php
 class ProjectIssuesController extends ProjectsAppController {
 
-	var $name = 'ProjectIssues';
-	var $helpers = array('Cke');
+	public $name = 'ProjectIssues';
+	public $uses = 'Projects.ProjectIssue';
 
 	
 	function index() {
