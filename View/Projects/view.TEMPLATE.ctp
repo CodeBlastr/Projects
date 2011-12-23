@@ -232,7 +232,7 @@ echo $this->element('ajax_edit',  array('editFields' => $editFields));
 ?>
 <?php
 // set the contextual menu items
-echo $this->Element('context_menu', array('menus' => array(
+$this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
