@@ -26,4 +26,5 @@
 				$this->Html->link('Add a comment', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'message', '{id}', 'comment' => 0, '#' => 'comments')), 
 				)
 			));
-  ?> </div>
+  ?> 
+</div>

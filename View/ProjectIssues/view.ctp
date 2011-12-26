@@ -223,7 +223,7 @@ if ($projectIssue['ProjectIssue']['archive'] == 1) {
 	$archiveAction = $this->Html->link(__('Archive Issue', true), array('controller' => 'project_issues', 'action' => 'archive', $projectIssue['ProjectIssue']['id'], $projectIssue['ProjectIssue']['project_id']));
 }
 // set the contextual menu items
-echo $this->Element('context_menu', array('menus' => array(
+$this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project Manager',
 		'items' => array(
