@@ -1,51 +1,50 @@
 <div class="tasks view">
-  <div class="tasks form"> <?php echo $this->Form->create('Task', array('url' => '/tasks/tasks/add'));?>
-  <fieldset>
-    <legend class="toggleClick">
-     <h2><?php echo $task['Task']['name']; ?></h2>
-   	 <span class="button"><?php echo __('Add a task?');?></span>
-    </legend>
-    <?php
-	 echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
-	 echo $this->Form->input('Task.name');
-	 echo $this->Form->input('Task.due_date', array('class' => 'test'));
-	 echo $this->Form->input('Task.assignee_id');
-	 echo $this->Form->input('Task.description', array('label' => 'Task details', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
-	 echo $this->Form->input('Task.model', array('type' => 'hidden', 'value' => $model));
-	 echo $this->Form->input('Task.foreign_key', array('type' => 'hidden', 'value' => $foreignKey));
-	 echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => '/projects/projects/task/'.$parentId));
-	 echo $this->Form->end('Submit');
-	?>
-  </fieldset>
+  <div class="tasks form">
+  	<?php 
+	echo $this->Form->create('Task', array('url' => '/tasks/tasks/add'));?>
+    <fieldset>
+      <legend class="toggleClick">
+      <h2><?php echo $task['Task']['name']; ?></h2>
+      <span class="button"><?php echo __('Add a task?');?></span>
+      </legend>
+      <?php
+	  echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
+	  echo $this->Form->input('Task.name');
+	  echo $this->Form->input('Task.due_date', array('class' => 'test'));
+	  echo $this->Form->input('Task.assignee_id');
+	  echo $this->Form->input('Task.description', array('label' => 'Task details', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
+	  echo $this->Form->input('Task.model', array('type' => 'hidden', 'value' => $model));
+	  echo $this->Form->input('Task.foreign_key', array('type' => 'hidden', 'value' => $foreignKey));
+	  echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => '/projects/projects/task/'.$parentId));
+	  echo $this->Form->end('Submit'); ?>
+    </fieldset>
+  </div>
 </div>
-</div>
-
 <div class="tasks index">
   <h3 class="indexHead">Still pending tasks</h3>
-  <?php echo $this->Element('scaffolds/index', array(
-				'data' => $childTasks, 
-				'actions' => array(
-					$this->Html->link('View', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'view', '{id}')), 
-					$this->Html->link('Edit', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit', '{id}')), 
-					$this->Html->link('Complete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'complete', '{id}'), array()),
-					$this->Html->link('Delete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'delete', '{id}'), array(), 'Are you sure you want to permanently delete?'),
-					)
-				));
-		?>
+  <?php
+  echo $this->Element('scaffolds/index', array(
+	'data' => $childTasks, 
+	'actions' => array(
+		$this->Html->link('View', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'view', '{id}')), 
+		$this->Html->link('Edit', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit', '{id}')), 
+		$this->Html->link('Complete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'complete', '{id}'), array()),
+		$this->Html->link('Delete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'delete', '{id}'), array(), 'Are you sure you want to permanently delete?'),
+		)
+	)); ?>
+    
   <h3 class="indexHead">Completed tasks</h3>
-  <?php echo $this->Element('scaffolds/index', array(
-				'data' => $finishedChildTasks, 
-				'actions' => array(
-					$this->Html->link('View', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'view', '{id}')), 
-					$this->Html->link('Edit', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit', '{id}')), 
-					$this->Html->link('InComplete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'incomplete', '{id}'), array()),
-					$this->Html->link('Delete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'delete', '{id}'), array(), 'Are you sure you want to permanently delete?'),
-					),
-				));
-		?>
-  <!-- /info-block end -->
+  <?php
+  echo $this->Element('scaffolds/index', array(
+	'data' => $finishedChildTasks, 
+		'actions' => array(
+			$this->Html->link('View', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'view', '{id}')), 
+			$this->Html->link('Edit', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit', '{id}')), 
+			$this->Html->link('InComplete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'incomplete', '{id}'), array()),
+			$this->Html->link('Delete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'delete', '{id}'), array(), 'Are you sure you want to permanently delete?'),
+			),
+		));	?>
 </div>
-
 <script type="text/javascript">
 $(function() {
 	$(".indexRow").parent().sortable({
