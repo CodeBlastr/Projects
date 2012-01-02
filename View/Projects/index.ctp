@@ -1,8 +1,5 @@
 <fieldset>
-  <legend>
-  <h2>
-    <?php  echo !empty($this->request->params['named']['archived']) ? __("Archived ") : __("Current "); echo __("Projects")?>
-  </h2>
+  <legend><?php  echo !empty($this->request->params['named']['archived']) ? __("Archived ") : __("Current "); echo __("Projects")?>
   <?php echo $this->Html->link(__("Create a new project."), array('action' => 'add'), array('class' => 'button')); ?>
   </legend>
 </fieldset>

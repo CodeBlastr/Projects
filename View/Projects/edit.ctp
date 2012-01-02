@@ -1,9 +1,7 @@
 <div class="project form">
 <?php echo $this->Form->create('Project');?>
 	<fieldset>
-      <legend>
-      <h2><?php  echo __("Edit Project"); ?></h2>
-      </legend>
+      <legend><?php  echo __("Edit Project"); ?></legend>
 	<?php
 		echo $this->Form->input('Project.id');
 		echo $this->Form->input('Project.name', array('label' => 'Name the project ( ie. "Home page redesign")'));

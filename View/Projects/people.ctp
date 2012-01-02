@@ -1,10 +1,7 @@
 <div class="people index">
   <div class="people form"> <?php echo $this->Form->create('Used' , array('url'=>'/projects/projects/used'));?>
     <fieldset>
-      <legend class="toggleClick">
-      <h2><?php echo __("People with access to {$project['Project']['displayName']}"); ?></h2>
-      <span class="button"><?php echo 'Add a new user?'; ?></span>
-      </legend>
+      <legend class="toggleClick"><?php echo __("People with access to {$project['Project']['displayName']}"); ?><span class="button"><?php echo 'Add a new user?'; ?></span></legend>
       <?php
 	 echo $this->Form->input('model', array('type' => 'hidden', 'value' => 'Project'));
 	 echo $this->Form->input('foreign_key', array('type' => 'hidden', 'value' => $this->request->params['pass'][0]));
