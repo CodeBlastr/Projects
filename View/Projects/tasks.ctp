@@ -1,9 +1,6 @@
 <div class="tasks form"> <?php echo $this->Form->create('Task' , array('url'=>'/tasks/tasks/add'));?>
   <fieldset>
-    <legend class="toggleClick">
-    <h2><?php  echo __("{$project['Project']['displayName']} Task Lists "); ?></h2>
-    <span class="button"><?php echo 'Create a new task list?'; ?></span>
-    </legend>
+    <legend class="toggleClick"><?php  echo __("{$project['Project']['displayName']} Task Lists "); ?><span class="button"><?php echo 'Create a new task list?'; ?></span></legend>
     <?php
 	 echo $this->Form->input('Task.name', array('label' => __('List Name', true)));
 	 echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => $_SERVER['REQUEST_URI']));
