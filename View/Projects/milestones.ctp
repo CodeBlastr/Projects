@@ -1,7 +1,7 @@
 <div class="messages form">
   <h2><?php echo 'Messages for ' . $project['Project']['name']; ?></h2>
   <fieldset>
-	<?php echo $this->Form->create('Message' , array('url'=>'/messages/messages/add'));?>
+	<?php echo $this->Form->create('Message' , array('url'=>'/messages/messages/send'));?>
     <legend class="toggleClick"><?php echo 'Post a new message thread?'; ?></legend>
     <?php
 	 echo $this->Form->input('title', array('label' => __('Subject', true)));

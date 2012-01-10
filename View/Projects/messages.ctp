@@ -1,5 +1,5 @@
 <div class="messages index">
-  <div class="messages form"> <?php echo $this->Form->create('Message' , array('url'=>'/messages/messages/add'));?>
+  <div class="messages form"> <?php echo $this->Form->create('Message' , array('url'=>'/messages/messages/send'));?>
     <fieldset>
       <legend class="toggleClick"><?php  echo __("{$project['Project']['displayName']} Messages "); ?> <span class="button"><?php echo 'Create a new message.'; ?></span></legend>
       <?php
