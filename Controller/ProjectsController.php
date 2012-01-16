@@ -22,38 +22,24 @@ class ProjectsController extends ProjectsAppController {
  * Use admin_dashboard() for all projects
  */
 	public function index() {
-		$this->paginate = array(
-			'fields' => array(
-				'id',
-				'displayName',
-				'star',
-				'modified',
-				),
-			'order' => array(
-				'Project.modified'
-				),
-			'limit' => 25,
-			);
-		$this->paginate['conditions']['Project.is_archived'] = !empty($this->request->params['named']['archived']) ? 1 : 0;
+		$this->paginate['fields'] = array('id', 'displayName', 'star', 'modified');
+		$this->paginate['order'] = array('Project.modified');
+		$this->paginate['limit'] = 25;
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'displayName');
 		$this->set('displayDescription', ''); 
 		$this->set('indexClass', ''); 
+		$filterLink = !empty($this->paginate['conditions']['Project.is_archived']) ? array('linkText' => 'List','linkUrl' => array('action' => 'index')) : array('linkText' => 'Archived','linkUrl' => array('action' => 'index', 'filter' => 'isArchived:1'));
 		$this->set('pageActions', array(
 			array(
-				'linkText' => 'Create',
+				'linkText' => 'Add',
 				'linkUrl' => array(
 					'action' => 'add',
 					),
 				),
-			array(
-				'linkText' => 'Archived',
-				'linkUrl' => array(
-					'action' => 'index',
-					'archived' => 1,
-					),
-				),
+			$filterLink,
 			));
+		$this->set('page_title_for_layout', !empty($this->paginate['conditions']['Project.is_archived']) ? __('Archived Projects') : 'Projects');
 	}
 
 	public function view($id = null) {
