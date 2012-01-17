@@ -3,7 +3,7 @@ class ProjectsController extends ProjectsAppController {
 
 	public $name = 'Projects';
 	public $uses = 'Projects.Project';
-	public $paginate = array('limit' => 10, 'order' => array('Project.created' => 'desc'));
+	public $paginate = array('order' => array('Project.created' => 'desc'));
 	public $components = array(
 		'Comments.Comments' => array(
 			'userModelClass' => 'Users.User',
