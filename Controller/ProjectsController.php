@@ -3,7 +3,7 @@ class ProjectsController extends ProjectsAppController {
 
 	public $name = 'Projects';
 	public $uses = 'Projects.Project';
-	public $paginate = array('limit' => 10, 'order' => array('Project.created' => 'desc'));
+	public $paginate = array('order' => array('Project.created' => 'desc'));
 	public $components = array(
 		'Comments.Comments' => array(
 			'userModelClass' => 'Users.User',
@@ -12,51 +12,37 @@ class ProjectsController extends ProjectsAppController {
 		);
 	public $allowedActions = array('desktop_index');
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->passedArgs['comment_view_type'] = 'flat';
 	}
 
-	/**
-	 * Show only projects you have access to on the index.
-	 * Use admin_dashboard() for all projects
-	 */
-	function index() {
-		$this->paginate = array(
-			'fields' => array(
-				'id',
-				'displayName',
-				'star',
-				'modified',
-				),
-			'order' => array(
-				'Project.modified'
-				),
-			'limit' => 25,
-			);
-		$this->paginate['conditions']['Project.is_archived'] = !empty($this->request->params['named']['archived']) ? 1 : 0;
+/**
+ * Show only projects you have access to on the index.
+ * Use admin_dashboard() for all projects
+ */
+	public function index() {
+		$this->paginate['fields'] = array('id', 'displayName', 'star', 'modified');
+		$this->paginate['order'] = array('Project.modified');
+		$this->paginate['limit'] = 25;
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'displayName');
 		$this->set('displayDescription', ''); 
 		$this->set('indexClass', ''); 
+		$filterLink = !empty($this->paginate['conditions']['Project.is_archived']) ? array('linkText' => 'List','linkUrl' => array('action' => 'index')) : array('linkText' => 'Archived','linkUrl' => array('action' => 'index', 'filter' => 'isArchived:1'));
 		$this->set('pageActions', array(
 			array(
-				'linkText' => 'Create',
+				'linkText' => 'Add',
 				'linkUrl' => array(
 					'action' => 'add',
 					),
 				),
-			array(
-				'linkText' => 'Archived',
-				'linkUrl' => array(
-					'action' => 'index',
-					'archived' => 1,
-					),
-				),
+			$filterLink,
 			));
+		$this->set('page_title_for_layout', !empty($this->paginate['conditions']['Project.is_archived']) ? __('Archived Projects') : 'Projects');
 	}
 
-	function view($id = null) {
+	public function view($id = null) {
 		$this->_testValidity($id);
 		
 		$project = $this->Project->find('first', array(
@@ -102,7 +88,7 @@ class ProjectsController extends ProjectsAppController {
 	}
 
 	 
-	function add($id = null) {
+	public function add($id = null) {
 		if (!empty($this->request->data)) {
 			try {
 				$result = $this->Project->add($this->request->data);
@@ -121,7 +107,7 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	 
-	function edit($id = null) {
+	public function edit($id = null) {
 		if (!empty($this->request->data)) {
 			try {
 				$result = $this->Project->add($this->request->data);
@@ -143,12 +129,12 @@ class ProjectsController extends ProjectsAppController {
 	
 	
 	
-	function delete($id = null) {
+	public function delete($id = null) {
 		$this->__delete('Project', $id);
 	}	
 		
 	
-	function archive($id = null) {
+	public function archive($id = null) {
 		if (!empty($id)) {
 			$this->request->data['Project']['id'] = $id;
 			$this->request->data['Project']['is_archived'] = 1;
@@ -162,7 +148,7 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	
-	function unarchive($id = null) {
+	public function unarchive($id = null) {
 		if (!empty($id)) {
 			$this->request->data['Project']['id'] = $id;
 			$this->request->data['Project']['is_archived'] = 0;
@@ -177,7 +163,7 @@ class ProjectsController extends ProjectsAppController {
 	
 	
 	# Desktop App Function
-	function desktop_index($userId = null){
+	public function desktop_index($userId = null){
 		# find issues assigned to this user.
 		$userissues = $this->Project->Task->find('all', array(
 			'conditions' => array(
@@ -211,11 +197,11 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('data', $this->str);  
 	}
 	
-	function ajax_edit(){ 
+	public function ajax_edit(){ 
 		$this->__ajax_edit();
 	} 
 
-	function _testValidity($id = null) {
+	public function _testValidity($id = null) {
 		if (!$id) :
 			$this->Session->setFlash(__('Invalid Project', true));
 			$this->redirect(array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'index'), 'error');
@@ -224,11 +210,11 @@ class ProjectsController extends ProjectsAppController {
 	
 	
 
-	/**
-	 * Show the people related to this project.
-	 * @todo 	Make this so that it renders using an element from the contacts plugin
-	 */
-	function people($projectId = null) {
+/**
+ * Show the people related to this project.
+ * @todo 	Make this so that it renders using an element from the contacts plugin
+ */
+	public function people($projectId = null) {
 		$this->_testValidity($projectId);
 		$this->paginate = array(
 			'conditions' => array(
@@ -269,10 +255,10 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	
-	/**
-	 * Remove users from a project
-	 */
-	function used() {
+/**
+ * Remove users from a project
+ */
+	public function used() {
 		try {
 			$this->Project->addUsedUser($this->request->data);
 			$this->Session->setFlash(__('User Added', true));
@@ -284,10 +270,10 @@ class ProjectsController extends ProjectsAppController {
 	 }
 	
 	
-	/**
-	 * Remove users from a project
-	 */
-	function unuse($userId = null, $foreignKey = null) {
+/**
+ * Remove users from a project
+ */
+	public function unuse($userId = null, $foreignKey = null) {
 		if ($this->Project->removeUsedUser($userId, $foreignKey)) :
 			$this->Session->setFlash(__('User Removed', true));
 			$this->redirect($this->referer());
@@ -298,11 +284,11 @@ class ProjectsController extends ProjectsAppController {
 	 }
 	
 	
-	/**
-	 * Show the messages related to this project.
-	 * @todo 	Make this so that it renders using an element from the messages plugin
-	 */
-	function messages($projectId = null) {
+/**
+ * Show the messages related to this project.
+ * @todo 	Make this so that it renders using an element from the messages plugin
+ */
+	public function messages($projectId = null) {
 		$this->_testValidity($projectId);
 		$this->paginate = array(
 			'conditions' => array(
@@ -353,7 +339,7 @@ class ProjectsController extends ProjectsAppController {
 	
 	
 	
-	function message($messageId = null) {
+	public function message($messageId = null) {
 		if (!$messageId) {
 			$this->Session->setFlash(__('Invalid message', true));
 			$this->redirect(array('action' => 'index'));
@@ -385,11 +371,11 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	
-	/**
-	 * Show the messages related to this project.
-	 * @todo 	Make this so that it renders using an element from the tasks plugin
-	 */
-	function tasks($projectId = null) {
+/**
+ * Show the messages related to this project.
+ * @todo 	Make this so that it renders using an element from the tasks plugin
+ */
+	public function tasks($projectId = null) {
 		$this->_testValidity($projectId);
 		$this->paginate = array(
 			'conditions' => array(
@@ -441,11 +427,11 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	
-	/**
-	 * Show the messages related to this project.
-	 * @todo 	Make this so that it renders using an element from the tasks plugin
-	 */
-	function task($taskId = null) {		
+/**
+ * Show the messages related to this project.
+ * @todo 	Make this so that it renders using an element from the tasks plugin
+ */
+	public function task($taskId = null) {		
 		$this->_testValidity($taskId);
 		
 		$task = $this->Project->Task->find('first', array(
@@ -551,10 +537,10 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	
-	/**
-	 * @todo	 This send message thing is used here, and in the messages controller itself.  I don't know where we could put it so that its usable between both.  (Probably would have to do some kind of added on, slow component thing).
-	 */
-	function _callback_commentsafterAdd($options) {
+/**
+ * @todo	 This send message thing is used here, and in the messages controller itself.  I don't know where we could put it so that its usable between both.  (Probably would have to do some kind of added on, slow component thing).
+ */
+	public function _callback_commentsafterAdd($options) {
 		if ($this->request->params['action'] == 'message') :
 			$recipients = $this->Project->Message->findUsedUsers($options['modelId'], 'all');
 		elseif ($this->request->params['action'] == 'task') :
@@ -583,7 +569,7 @@ class ProjectsController extends ProjectsAppController {
 		endforeach; endif;
 	}
 	
-	function _callback_commentsFetchDataThreaded($options) {
+	public function _callback_commentsFetchDataThreaded($options) {
 		if ($this->request->params['action'] == 'message') :
 			$options['id'] = $this->request->params['pass'][0];
 			$conditions['Comment.foreign_key'] = $options['id'];
@@ -604,7 +590,7 @@ class ProjectsController extends ProjectsAppController {
 		return $comments;
 	}
 	
-	function _callback_commentsFetchDataFlat($options) {
+	public function _callback_commentsFetchDataFlat($options) {
 		unset($this->paginate);
 		$options['id'] = $this->request->params['pass'][0];
 		$this->paginate = array(
@@ -624,7 +610,7 @@ class ProjectsController extends ProjectsAppController {
 	}
 	
 	
-	function _callback_commentsAdd($modelId, $commentId, $displayType, $data = array()) {
+	public function _callback_commentsAdd($modelId, $commentId, $displayType, $data = array()) {
     	if (!empty($this->request->data)) {
 			if ($this->request->params['action'] == 'message') :
 				$modelId = $this->request->params['pass'][0];
@@ -637,7 +623,7 @@ class ProjectsController extends ProjectsAppController {
 	    return $this->Comments->callback_add($modelId, $commentId, $displayType, $data);
 	} 
 	
-	function dashboard () {
+	public function dashboard () {
 	}
 
 }

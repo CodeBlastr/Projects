@@ -1,15 +1,15 @@
 <?php
 class Project extends ProjectsAppModel {
 
-	var $name = 'Project';
-	var $displayField = 'name';
-	var $validate = array(
+	public $name = 'Project';
+	public $displayField = 'name';
+	public $validate = array(
 		'name' => array('notempty')
 		); 
-	var $actsAs = array('Users.Usable' => array('defaultRole' => 'member'));
+	public $actsAs = array('Users.Usable' => array('defaultRole' => 'member'));
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ProjectStatusType' => array(
 			'className' => 'Enumeration',
 			'foreignKey' => 'project_status_type_id',
@@ -47,7 +47,7 @@ class Project extends ProjectsAppModel {
 		)
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'ProjectIssue' => array(
 			'className' => 'Projects.ProjectIssue',
 			'foreignKey' => 'project_id',
@@ -154,7 +154,7 @@ class Project extends ProjectsAppModel {
 		),
 	);
 
-	var $hasAndBelongsToMany = array(
+	public $hasAndBelongsToMany = array(
 		'User' => array(
 			'className' => 'Users.User',
 			'joinTable' => 'used',
@@ -225,7 +225,7 @@ class Project extends ProjectsAppModel {
         ),
 	);
 	
-	function __construct($id = false, $table = null, $ds = null) {
+	public function __construct($id = false, $table = null, $ds = null) {
     	parent::__construct($id, $table, $ds);
 	   	$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name, " <small>", Contact.name, "</small>")', $this->alias);
 	   	#$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name)', $this->alias);
@@ -234,12 +234,12 @@ class Project extends ProjectsAppModel {
 		$this->order = array("{$this->alias}.name");
     }
 	
-	function beforeFind($queryData) {
+	public function beforeFind($queryData) {
 		$this->listSearch = !empty($queryData['list']) ? true : null;
 		return $queryData;
 	}
 	
-	function afterFind($results, $primary) {		
+	public function afterFind($results, $primary) {		
 		if (!empty($this->listSearch)) : 
 			$i = 0;
 			foreach ($results as $result) : 
@@ -250,15 +250,15 @@ class Project extends ProjectsAppModel {
 		return $results;
 	}
 
-	function find($type = null, $params = array()) {
+	public function find($type = null, $params = array()) {
 		$params = Set::merge(array('contain' => array('Contact.name')), $params);
 		return parent::find($type, $params);
 	}
 	
-	/**
-	 * @todo		$data['Project']['manager_id'] should be $data['Project'][0]['manager_id'] if we're going to use saveAll
-	 */
-	function add($data) {
+/**
+ * @todo		$data['Project']['manager_id'] should be $data['Project'][0]['manager_id'] if we're going to use saveAll
+ */
+	public function add($data) {
 		$data = $this->cleanInputData($data);
 		if ($this->saveAll($data, array('atomic' => false))){
 			return true;
@@ -268,14 +268,14 @@ class Project extends ProjectsAppModel {
 	}
 	
 	
-	/** 
-	 * Take the input data and parse it for actual saving
-	 */
-	function cleanInputData($data) {		
+/** 
+ * Take the input data and parse it for actual saving
+ */
+	public function cleanInputData($data) {		
 		return $data;
 	}
 	
-	function findContactsWithProjects($type = 'list', $params = null) {
+	public function findContactsWithProjects($type = 'list', $params = null) {
 		$projects = $this->find('all', array(
 			'conditions' => array(
 				'Project.contact_id is NOT NULL',
