@@ -126,19 +126,6 @@ class Project extends ProjectsAppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'TimesheetTime' => array(
-			'className' => 'Timesheets.TimesheetTime',
-			'foreignKey' => 'project_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'Invoice' => array(
 			'className' => 'Invoices.Invoice',
 			'foreignKey' => 'project_id',
@@ -232,6 +219,23 @@ class Project extends ProjectsAppModel {
 	    $this->virtualFields['displayDescription'] = $this->alias.'.quick_note';
 		$this->displayField = 'displayName';
 		$this->order = array("{$this->alias}.name");
+		
+		
+		if (in_array('Timesheets', CakePlugin::loaded())) {
+			$this->hasMany['TimesheetTime'] = array(
+				'className' => 'Timesheets.TimesheetTime',
+				'foreignKey' => 'project_id',
+				'dependent' => false,
+				'conditions' => '',
+				'fields' => '',
+				'order' => '',
+				'limit' => '',
+				'offset' => '',
+				'exclusive' => '',
+				'finderQuery' => '',
+				'counterQuery' => '',
+				);
+		}
     }
 	
 	public function beforeFind($queryData) {

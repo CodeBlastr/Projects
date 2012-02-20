@@ -1,14 +1,14 @@
 <?php
 class ProjectIssue extends ProjectsAppModel {
 	
-	var $name = 'ProjectIssue';
-	var $actsAs = array('Tree');
-	var $validate = array(
+	public $name = 'ProjectIssue';
+	public $actsAs = array('Tree');
+	public $validate = array(
 		'name' => array('notempty')
 	); 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	var $belongsTo = array(
+	public $belongsTo = array(
 		'ProjectIssueParent' => array(
 			'className' => 'Projects.ProjectIssue',
 			'foreignKey' => 'parent_id',
@@ -73,22 +73,26 @@ class ProjectIssue extends ProjectsAppModel {
 			'order' => ''
 		)
 	);
-
-	var $hasMany = array(
-		'TimesheetTime' => array(
-			'className' => 'Timesheets.TimesheetTime',
-			'foreignKey' => 'project_issue_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	
+	public function __construct($id = false, $table = null, $ds = null) {
+    	parent::__construct($id, $table, $ds);		
+		
+		if (in_array('Timesheets', CakePlugin::loaded())) {
+			$this->hasMany['TimesheetTime'] = array(
+				'className' => 'Timesheets.TimesheetTime',
+				'foreignKey' => 'project_issue_id',
+				'dependent' => false,
+				'conditions' => '',
+				'fields' => '',
+				'order' => '',
+				'limit' => '',
+				'offset' => '',
+				'exclusive' => '',
+				'finderQuery' => '',
+				'counterQuery' => '',
+				);
+		}
+    }
 
 }
 ?>
