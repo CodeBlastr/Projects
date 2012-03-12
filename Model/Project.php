@@ -1,4 +1,6 @@
 <?php
+App::uses('ProjectsAppModel', 'Projects.Model');
+
 class Project extends ProjectsAppModel {
 
 	public $name = 'Project';
