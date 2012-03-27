@@ -1,5 +1,5 @@
 <div class="project view">
-    <h2><?php  echo __('$s Dashboard', $project['Project']['displayName']); ?></h2>
+    <h2><?php  echo __('%s Dashboard', $project['Project']['displayName']); ?></h2>
     <div id="n1" class="info-block">
       <div class="viewRow">
         <?php if ($this->Session->read('Auth.User.user_role_id') == 1) : ?>
