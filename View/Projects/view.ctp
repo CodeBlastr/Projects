@@ -1,4 +1,4 @@
-<?php debug($project); ?><div class="project view">
+<div class="project view">
     <h2><?php echo __('%s Dashboard', $project['Project']['displayName']); ?></h2>
     <div id="n1" class="info-block">
       <div class="viewRow">
