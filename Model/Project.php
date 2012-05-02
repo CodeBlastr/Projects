@@ -206,7 +206,7 @@ class Project extends ProjectsAppModel {
 		),
         'Category' => array(
             'className' => 'Categories.Category',
-       		'joinTable' => 'categorizeds',
+       		'joinTable' => 'categorized',
             'foreignKey' => 'foreign_key',
             'associationForeignKey' => 'category_id',
     		'conditions' => 'Categorized.model = "Project"',
