@@ -24,7 +24,6 @@ class ProjectsController extends ProjectsAppController {
 	public function index() {
 		$this->paginate['fields'] = array('id', 'displayName', 'star', 'modified');
 		$this->paginate['order'] = array('Project.modified');
-		$this->paginate['limit'] = 25;
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'displayName');
 		$this->set('displayDescription', ''); 
@@ -236,7 +235,6 @@ class ProjectsController extends ProjectsAppController {
 			'order' => array(
 				'User.full_name'
 				),
-			'limit' => 10,
 			);
 		$project = $this->Project->find('first', array(
 			'conditions' => array('Project.id' =>  $projectId), 'contain' => 'Contact'));
@@ -311,7 +309,6 @@ class ProjectsController extends ProjectsAppController {
 			'order' => array(
 				'Message.created' => 'desc',
 				),
-			'limit' => 10,
 			);
 		$project = $this->Project->find('first', array('conditions' => array('Project.id' =>  $projectId), 'contain' => 'Contact'));
 		$this->set('project', $project); 
@@ -399,7 +396,6 @@ class ProjectsController extends ProjectsAppController {
 			'order' => array(
 				'Task.created DESC'
 				),
-			'limit' => 10,
 			);
 		$project = $this->Project->find('first', array(
 			'conditions' => array('Project.id' =>  $projectId), 'contain' => 'Contact'));

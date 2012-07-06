@@ -22,22 +22,6 @@
   <!-- /info-block end -->
 </div>
 <?php
-# state which fields will be editable inline
-$editFields = array(
-	array(
-	  'name' => 'estimatedhours',
-	  'tagId' => $project['Project']['id'],
-	  'plugin' => 'projects',
-	  'controller' => 'projects',
-	  'fieldId' => 'data[Project][id]',
-	  'fieldName' => 'data[Project][estimated_hours]',
-	  'type' => 'text'
-	  ),
-	);
-
-echo $this->element('ajax_edit',  array('editFields' => $editFields));
-?>
-<?php
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
@@ -54,5 +38,4 @@ $this->set('context_menu', array('menus' => array(
 			$this->Html->link(__('Time', true), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id']), array('class' => 'add')),
 			)
 		),
-	))); 
-?>
+	))); ?>
