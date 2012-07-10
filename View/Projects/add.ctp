@@ -6,10 +6,9 @@ $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project Manager',
 		'items' => array(
-			$this->Html->link(__('List Projects', true), array('controller' => 'projects', 'action' => 'index')),
+			$this->Html->link(__('Projects'), array('controller' => 'projects', 'action' => 'index'), array('data-icon' => 'grid')),
 			)
 		),
-	)));
-?>
+	))); ?>
 
 
