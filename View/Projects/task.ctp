@@ -42,7 +42,7 @@
 			),
 		));	?>
 </div>
-<script type="text/javascript">
+<?php /* For sorting task priority <script type="text/javascript">
 $(function() {
 	$(".indexRow").parent().sortable({
 		delay: 300,
@@ -62,4 +62,4 @@ $(function() {
 		}
 	});
 });
-</script>
+</script> */ ?> 

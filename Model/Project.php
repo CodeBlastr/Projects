@@ -217,7 +217,7 @@ class Project extends ProjectsAppModel {
 	public function __construct($id = false, $table = null, $ds = null) {
     	parent::__construct($id, $table, $ds);
 	   	$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name, " <small>", Contact.name, "</small>")', $this->alias);
-	   	#$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name)', $this->alias);
+	   	// $this->virtualFields['displayName'] = sprintf('CONCAT(%s.name)', $this->alias);
 	    $this->virtualFields['displayDescription'] = $this->alias.'.quick_note';
 		$this->displayField = 'displayName';
 		$this->order = array("{$this->alias}.name");
@@ -245,14 +245,14 @@ class Project extends ProjectsAppModel {
 		return $queryData;
 	}
 	
-	public function afterFind($results, $primary) {		
-		if (!empty($this->listSearch)) : 
+	public function afterFind($results, $primary) {
+		if (!empty($this->listSearch)) {
 			$i = 0;
-			foreach ($results as $result) : 
+			foreach ($results as $result) {
 				$results[$i]['Project']['displayName'] = strip_tags(str_replace('<small>', ' : ', $result['Project']['displayName']));
 				$i++;
-			endforeach;
-		endif;
+			}
+		}
 		return $results;
 	}
 
@@ -301,4 +301,3 @@ class Project extends ProjectsAppModel {
 	}
 
 }
-?>
