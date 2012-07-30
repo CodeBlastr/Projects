@@ -257,6 +257,8 @@ class Project extends ProjectsAppModel {
 	}
 
 	public function find($type = null, $params = array()) {
+		// list is recursive -1 by default and we need it set to at least 0 for the contact name to be included with the project name.
+		$params = $type == 'list' ? Set::merge(array('recursive' => 0), $params) : $params;
 		$params = Set::merge(array('contain' => array('Contact.name')), $params);
 		return parent::find($type, $params);
 	}
