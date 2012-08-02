@@ -193,7 +193,8 @@ class ProjectsController extends ProjectsAppController {
 		for($i= 0 ;$i<sizeof($projects);$i++){
 			$this->str .= "<option value=".$projects[$i]['Project']['id'].">".$projects[$i]['Project']['displayName']."</option>";
 		}
-		$this->set('data', $this->str);  
+		$this->set('data', $this->str);
+		$this->layout = false;
 	}
 	
 	public function ajax_edit(){ 
