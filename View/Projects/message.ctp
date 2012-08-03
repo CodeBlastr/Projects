@@ -22,17 +22,24 @@
 <div id="post-comments">
   <?php $this->CommentWidget->options(array('allowAnonymousComment' => false));?>
   <?php echo $this->CommentWidget->display();?> </div>
+</div>
 
-<?php 
+<?php
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
-		'heading' => 'Projects',
+		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link(__('Add', true), array('action' => 'messages', $project['Project']['id']), array('class' => 'add')),
-			$this->Html->link('Delete', array('plugin' => 'messages', 'controller' => 'messages', 'action' => 'delete', $message['Message']['id']), array(), "Are you sure you want to delete {$message['Message']['subject']}")
+			$this->Html->link('<span>Dashboard</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'escape' => false)),
+			$this->Html->link('<span>Messages</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false, 'class' => 'ui-btn-active')),
+			$this->Html->link('<span>Tasks</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
+			$this->Html->link('<span>People</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
 			)
 		),
-	)));
-?>
-</div>
+	array(
+		'heading' => 'Message',
+		'items' => array(
+			$this->Html->link('Delete', array('plugin' => 'messages', 'controller' => 'messages', 'action' => 'delete', $message['Message']['id'])),
+			)
+		),
+	))); ?>

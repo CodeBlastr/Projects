@@ -22,20 +22,24 @@
   <!-- /info-block end -->
 </div>
 <?php
+$archiveStatusLink = !empty($project['is_archived']) ? $this->Html->link(__('Un-archive', true), array('controller' => 'projects', 'action' => 'unarchive', $project['Project']['id']), array('class' => 'archive')) : $this->Html->link(__('Archive', true), array('controller' => 'projects', 'action' => 'archive', $project['Project']['id']), array('class' => 'archive'));
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link(__('Edit', true), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id']), array('class' => 'edit')),
-			$this->Html->link(__('Archive', true), array('controller' => 'projects', 'action' => 'archive', $project['Project']['id']), array('class' => 'archive')),
-			$this->Html->link(__('Un-archive', true), array('controller' => 'projects', 'action' => 'unarchive', $project['Project']['id']), array('class' => 'archive')),
+			$this->Html->link('<span>Dashboard</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'escape' => false, 'class' => 'ui-btn-active')),
+			$this->Html->link('<span>Messages</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
+			$this->Html->link('<span>Tasks</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
+			$this->Html->link('<span>People</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
 			)
 		),
 	array(
 		'heading' => 'Timesheets',
 		'items' => array(
-			$this->Html->link(__('Time', true), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id']), array('class' => 'add')),
+			$this->Html->link(__('Edit'), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id']), array('class' => 'edit')),
+			$this->Html->link(__('Add Time'), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id']), array('class' => 'add')),
+			$archiveStatusLink,
 			)
 		),
 	))); ?>
