@@ -160,9 +160,11 @@ class ProjectsController extends ProjectsAppController {
 		}		
 	}	
 	
-	
-	# Desktop App Function
-	public function desktop_index($userId = null){
+
+/**
+ *  Desktop Index Method
+ */
+	public function desktop_index($userId = null) {
 		# find issues assigned to this user.
 		$userissues = $this->Project->Task->find('all', array(
 			'conditions' => array(
@@ -191,7 +193,7 @@ class ProjectsController extends ProjectsAppController {
 			'nocheck' => $userId,
 			));
 		for($i= 0 ;$i<sizeof($projects);$i++){
-			$this->str .= "<option value=".$projects[$i]['Project']['id'].">".$projects[$i]['Project']['displayName']."</option>";
+			$this->str .= '<option value="'.$projects[$i]['Project']['id'].'">'.$projects[$i]['Project']['displayName'].'</option>';
 		}
 		$this->set('data', $this->str);
 		$this->layout = false;
@@ -202,10 +204,10 @@ class ProjectsController extends ProjectsAppController {
 	} 
 
 	public function _testValidity($id = null) {
-		if (!$id) :
+		if (!$id) {
 			$this->Session->setFlash(__('Invalid Project', true));
 			$this->redirect(array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'index'), 'error');
-		endif;
+		}
 	}
 	
 	
