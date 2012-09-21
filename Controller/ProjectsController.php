@@ -262,10 +262,10 @@ class ProjectsController extends ProjectsAppController {
 	public function used() {
 		try {
 			$this->Project->addUsedUser($this->request->data);
-			$this->Session->setFlash(__('User Added', true));
+			$this->Session->setFlash(__('User Added'));
 			$this->redirect($this->referer());
 		} catch(Exception $e) {
-			$this->Session->setFlash(__($e->getMessage(), true));
+			$this->Session->setFlash(__($e->getMessage()));
 			$this->redirect($this->referer());
 		}
 	 }
