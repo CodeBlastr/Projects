@@ -1,4 +1,3 @@
-<h1>My Projects</h1>
 <?php echo $this->Element('scaffolds/index', array('data' => $projects)); ?> 
 
 <?php 
