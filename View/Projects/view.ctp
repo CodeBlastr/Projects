@@ -1,3 +1,9 @@
+
+<div class="hero-unit pull-right last">
+   <p>Put a graph here or some kind of visual information</p>
+</div>
+
+
 <div class="project view">
     <h2><?php echo __('%s Dashboard', $project['Project']['displayName']); ?></h2>
     <div id="n1" class="info-block">
@@ -21,6 +27,7 @@
     </div>
   <!-- /info-block end -->
 </div>
+
 <?php
 $archiveStatusLink = !empty($project['Project']['is_archived']) ? $this->Html->link(__('Un-archive'), array('controller' => 'projects', 'action' => 'unarchive', $project['Project']['id']), array('class' => 'archive')) : $this->Html->link(__('Arcshive'), array('controller' => 'projects', 'action' => 'archive', $project['Project']['id']), array('class' => 'archive'));
 // set the contextual menu items
