@@ -19,7 +19,7 @@ class ProjectsController extends ProjectsAppController {
 
 /**
  * Show only projects you have access to on the index.
- * Use admin_dashboard() for all projects
+ * (we'll use dashboard() for listing all projects)
  */
 	public function index() {
 		$this->paginate['fields'] = array('id', 'displayName', 'star', 'modified');
@@ -42,7 +42,10 @@ class ProjectsController extends ProjectsAppController {
 	}
 
 	public function view($id = null) {
-		$this->_testValidity($id);
+		$this->Project->id = $id;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
 		
 		$project = $this->Project->find('first', array(
 			'contain' => array(
@@ -54,33 +57,30 @@ class ProjectsController extends ProjectsAppController {
 			)
 		);
 		
-		if (!empty($project)) {
-			# find the number of hours that have been logged for this issue
-			$trackedTimes = $this->Project->TimesheetTime->find('all', array(
-				'conditions' => array(
-					'TimesheetTime.project_id' => $id
-					),
-				'fields' => 'hours',
-				));
-			if(!empty($trackedTimes)) : 
-				foreach ($trackedTimes as $trackedTime) :
-					$trackedHours[] = $trackedTime['TimesheetTime']['hours'];
-				endforeach;
-			endif;
-			
-			# average out the done ratio to get the project done ratio
-			foreach ($project['ProjectIssue'] as $projectIssue) {
-				$doneRatios[] = $projectIssue['done_ratio'];
-			}
-			
-			$trackedHoursSum = !empty($trackedHours) ? array_sum($trackedHours) : '0.00';
-			$percentComplete = !empty($doneRatios) ? number_format(array_sum($doneRatios) / count($doneRatios), 2, '.', ',') : 0;
-			
-			$this->set(compact('project', 'trackedHoursSum', 'percentComplete'));
-		} else {
-			$this->Session->setFlash(__('Invalid Project', true));
-			$this->redirect(array('controller' => 'projects', 'action'=>'index'));
+		// find the number of hours that have been logged for this issue
+		$trackedTimes = $this->Project->TimesheetTime->find('all', array(
+			'conditions' => array(
+				'TimesheetTime.project_id' => $id
+				),
+			'fields' => 'hours',
+			));
+		if(!empty($trackedTimes)) : 
+			foreach ($trackedTimes as $trackedTime) :
+				$trackedHours[] = $trackedTime['TimesheetTime']['hours'];
+			endforeach;
+		endif;
+		
+		// average out the done ratio to get the project done ratio
+		foreach ($project['ProjectIssue'] as $projectIssue) {
+			$doneRatios[] = $projectIssue['done_ratio'];
 		}
+		
+		$trackedHoursSum = !empty($trackedHours) ? array_sum($trackedHours) : '0.00';
+		$percentComplete = !empty($doneRatios) ? number_format(array_sum($doneRatios) / count($doneRatios), 2, '.', ',') : 0;
+		
+		$this->set(compact('project', 'trackedHoursSum', 'percentComplete'));
+		
+		
 		$this->set('page_title_for_layout', $project['Project']['displayName']);
 		$this->set('title_for_layout',  strip_tags($project['Project']['displayName']));
 		$this->set('tabsElement', '/projects');
@@ -107,6 +107,11 @@ class ProjectsController extends ProjectsAppController {
 	
 	 
 	public function edit($id = null) {
+		$this->Project->id = $id;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
+		
 		if (!empty($this->request->data)) {
 			try {
 				$result = $this->Project->add($this->request->data);
@@ -115,9 +120,8 @@ class ProjectsController extends ProjectsAppController {
 				$result = $e->getMessage();
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Project->read(null, $id);
-		}
+		
+		$this->request->data = $this->Project->read(null, $id);
 		
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
@@ -129,34 +133,44 @@ class ProjectsController extends ProjectsAppController {
 	
 	
 	public function delete($id = null) {
+		$this->Project->id = $id;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
 		$this->__delete('Project', $id);
 	}	
 		
 	
-	public function archive($id = null) {
-		if (!empty($id)) {
-			$this->request->data['Project']['id'] = $id;
-			$this->request->data['Project']['is_archived'] = 1;
-			if ($this->Project->save($this->request->data)) {
-				$this->Session->setFlash(__('The Project has been archived', true));
-				$this->redirect(array('controller' => 'projects', 'action'=>'index'), 'success');
-			} else {
-				$this->Session->setFlash(__('The Project could not be archived. Please, try again.', true), 'error');
-			}
+	public function archive($id) {
+		$this->Project->id = $id;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
+		
+		$this->request->data['Project']['id'] = $id;
+		$this->request->data['Project']['is_archived'] = 1;
+		if ($this->Project->save($this->request->data)) {
+			$this->Session->setFlash(__('The Project has been archived', true));
+			$this->redirect(array('controller' => 'projects', 'action'=>'index'), 'success');
+		} else {
+			$this->Session->setFlash(__('The Project could not be archived. Please, try again.', true), 'error');
 		}		
 	}
 	
 	
 	public function unarchive($id = null) {
-		if (!empty($id)) {
-			$this->request->data['Project']['id'] = $id;
-			$this->request->data['Project']['is_archived'] = 0;
-			if ($this->Project->save($this->request->data)) {
-				$this->Session->setFlash(__('The Project has been un-archived', true));
-				$this->redirect(array('controller' => 'projects', 'action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Project could not be un-archived. Please, try again.', true));
-			}
+		$this->Project->id = $id;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
+		
+		$this->request->data['Project']['id'] = $id;
+		$this->request->data['Project']['is_archived'] = 0;
+		if ($this->Project->save($this->request->data)) {
+			$this->Session->setFlash(__('The Project has been un-archived', true));
+			$this->redirect(array('controller' => 'projects', 'action'=>'index'));
+		} else {
+			$this->Session->setFlash(__('The Project could not be un-archived. Please, try again.', true));
 		}		
 	}	
 	
@@ -202,13 +216,6 @@ class ProjectsController extends ProjectsAppController {
 	public function ajax_edit(){ 
 		$this->__ajax_edit();
 	} 
-
-	public function _testValidity($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Project', true));
-			$this->redirect(array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'index'), 'error');
-		}
-	}
 	
 	
 
@@ -217,7 +224,11 @@ class ProjectsController extends ProjectsAppController {
  * @todo 	Make this so that it renders using an element from the contacts plugin
  */
 	public function people($projectId = null) {
-		$this->_testValidity($projectId);
+		$this->Project->id = $projectId;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
+		
 		$this->paginate = array(
 			'conditions' => array(
 				'Used.model' => 'Project',
@@ -290,7 +301,11 @@ class ProjectsController extends ProjectsAppController {
  * @todo 	Make this so that it renders using an element from the messages plugin
  */
 	public function messages($projectId = null) {
-		$this->_testValidity($projectId);
+		$this->Project->id = $projectId;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
+		
 		$this->paginate = array(
 			'conditions' => array(
 				'Message.model' => 'Project',
@@ -376,7 +391,11 @@ class ProjectsController extends ProjectsAppController {
  * @todo 	Make this so that it renders using an element from the tasks plugin
  */
 	public function tasks($projectId = null) {
-		$this->_testValidity($projectId);
+		$this->Project->id = $projectId;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
+		
 		$this->paginate = array(
 			'conditions' => array(
 				'Task.model' => 'Project',
@@ -431,7 +450,10 @@ class ProjectsController extends ProjectsAppController {
  * @todo 	Make this so that it renders using an element from the tasks plugin
  */
 	public function task($taskId = null) {		
-		$this->_testValidity($taskId);
+		$this->Project->Task->id = $taskId;
+		if (!$this->Project->Task->exists()) {
+			throw new NotFoundException(__('Task not found'));
+		}
 		
 		$task = $this->Project->Task->find('first', array(
 			'conditions' => array(
@@ -621,9 +643,5 @@ class ProjectsController extends ProjectsAppController {
 	    }
 	    return $this->Comments->callback_add($modelId, $commentId, $displayType, $data);
 	} 
-	
-	public function dashboard () {
-	}
 
 }
-?>

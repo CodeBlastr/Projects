@@ -5,7 +5,7 @@
 
 
 <div class="project view">
-    <h2><?php echo __('%s Dashboard', $project['Project']['displayName']); ?></h2>
+    <h2><?php echo __('Dashboard'); ?></h2>
     <div id="n1" class="info-block">
       <div class="viewRow">
         <?php if ($this->Session->read('Auth.User.user_role_id') == 1) : ?>
@@ -22,30 +22,32 @@
         <?php endif; ?>
         <div class="recordData">
           <h3><?php echo __('Latest Activities'); ?></h3>
-          <?php echo $this->Element('activities', array('parentForeignKey' => $project['Project']['id']), array('plugin' => 'activities')); ?> </div>
+          <?php echo $this->Element('activities', array('parentForeignKey' => $project['Project']['id']), array('plugin' => 'activities')); ?>
+        </div>
       </div>
     </div>
   <!-- /info-block end -->
 </div>
 
 <?php
-$archiveStatusLink = !empty($project['Project']['is_archived']) ? $this->Html->link(__('Un-archive'), array('controller' => 'projects', 'action' => 'unarchive', $project['Project']['id']), array('class' => 'archive')) : $this->Html->link(__('Arcshive'), array('controller' => 'projects', 'action' => 'archive', $project['Project']['id']), array('class' => 'archive'));
+$archiveStatusLink = !empty($project['Project']['is_archived']) ? $this->Html->link(__('Un-archive'), array('controller' => 'projects', 'action' => 'unarchive', $project['Project']['id']), array('class' => 'archive')) : $this->Html->link(__('Archive'), array('controller' => 'projects', 'action' => 'archive', $project['Project']['id']), array('class' => 'archive'));
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link('Dashboard', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'escape' => false, 'class' => 'ui-btn-active')),
-			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
-			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
-			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
+			$this->Html->link('Dashboard', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'class' => 'active')),
+			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages')),
+			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks')),
+			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People')),
 			)
 		),
 	array(
 		'heading' => 'Timesheets',
 		'items' => array(
-			$this->Html->link(__('Edit'), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id']), array('class' => 'edit')),
-			$this->Html->link(__('Add Time'), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id']), array('class' => 'add')),
+			$this->Html->link(__('Edit'), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id'])),
+			$this->Html->link($project['Contact']['name'], array('plugin' => 'contacts', 'controller' => 'contacts', 'action' => 'view', $project['Project']['contact_id'])),
+			$this->Html->link(__('Add Time'), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id'])),
 			$archiveStatusLink,
 			)
 		),
