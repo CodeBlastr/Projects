@@ -579,15 +579,17 @@ class ProjectsController extends ProjectsAppController {
 				$recipients[]['User'] = $task['Creator'];
 			endforeach;
 		endif;
-		# send the message via email
-		if (!empty($recipients)) : foreach ($recipients as $recipient) :
-			#remove the logged in user, they're the sender
-			if ($recipient['User']['id'] != $this->Session->read('Auth.User.id')) : 
-				$message = $options['data']['Comment']['body'];
-				$message .= '<p>You can reply to this message here: <a href="'.$_SERVER['HTTP_REFERER'].'">'.$_SERVER['HTTP_REFERER'].'</a></p>';
-				$this->__sendMail($recipient['User']['email'], 'Re: '.$options['data']['Comment']['title'], $message, $template = 'default');
-			endif;
-		endforeach; endif;
+		// send the message via email
+		if (!empty($recipients)) {
+			foreach ($recipients as $recipient) {
+				// remove the logged in user, they're the sender
+				if ($recipient['User']['id'] != $this->Session->read('Auth.User.id')) { 
+					$message = $options['data']['Comment']['body'];
+					$message .= '<p>You can reply to this message here: <a href="'.$_SERVER['HTTP_REFERER'].'">'.$_SERVER['HTTP_REFERER'].'</a></p>';
+					$this->__sendMail($recipient['User']['email'], 'Re: '.$options['data']['Comment']['title'], $message, $template = 'default');
+				}
+			} // end loop
+		}
 	}
 	
 	public function _callback_commentsFetchDataThreaded($options) {
