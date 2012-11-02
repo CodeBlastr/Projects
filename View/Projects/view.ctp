@@ -1,5 +1,4 @@
-
-<div class="hero-unit pull-right last">
+<div class="well well-large pull-right last span4">
    <p>Put a graph here or some kind of visual information</p>
 </div>
 
