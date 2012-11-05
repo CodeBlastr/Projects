@@ -42,12 +42,14 @@ $this->set('context_menu', array('menus' => array(
 			)
 		),
 	array(
-		'heading' => 'Timesheets',
+		'heading' => 'Projects',
 		'items' => array(
 			$this->Html->link(__('Edit'), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id'])),
-			$this->Html->link($project['Contact']['name'], array('plugin' => 'contacts', 'controller' => 'contacts', 'action' => 'view', $project['Project']['contact_id'])),
-			$this->Html->link(__('Add Time'), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id'])),
 			$archiveStatusLink,
+			$this->Html->link(__('<i class="icon-plus"></i> Time'), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id']), array('escape' => false)),
+			$this->Html->link(__('Projects'), array('controller' => 'projects', 'action' => 'index')),
+			//$this->Html->link($project['Contact']['name'], array('plugin' => 'contacts', 'controller' => 'contacts', 'action' => 'view', $project['Project']['contact_id'])),
 			)
 		),
+				
 	))); ?>
