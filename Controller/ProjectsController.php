@@ -87,13 +87,15 @@ class ProjectsController extends ProjectsAppController {
 	}
 
 	 
-	public function add($id = null) {
+	public function add() {
 		if (!empty($this->request->data)) {
 			try {
-				$result = $this->Project->add($this->request->data);
+				$this->Project->add($this->request->data);
+				$this->Session->setFlash(__('The Project has been added'), 'success');
 				$this->redirect(array('action' => 'view', $this->Project->id));
 			} catch(Exception $e) {
-				$result = $e->getMessage();
+				$this->Session->setFlash($e->getMessage());
+				$this->redirect(array('controller' => 'projects', 'action' => 'index'), 'error');
 			}
 		}
 		
@@ -101,8 +103,8 @@ class ProjectsController extends ProjectsAppController {
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups', 'contactId'));	
-		$this->set('page_title_for_layout', 'Create a new project');
-		$this->set('title_for_layout', 'New project form');
+		$this->set('page_title_for_layout', __('Create a new project'));
+		$this->set('title_for_layout', __('New project form'));
 	}
 	
 	 
@@ -114,20 +116,21 @@ class ProjectsController extends ProjectsAppController {
 		
 		if (!empty($this->request->data)) {
 			try {
-				$result = $this->Project->add($this->request->data);
+				$this->Project->add($this->request->data);
+				$this->Session->setFlash(__('The Project has been edited'), 'success');
 				$this->redirect(array('action' => 'view', $this->Project->id));
 			} catch(Exception $e) {
-				$result = $e->getMessage();
+				$this->Session->setFlash($e->getMessage());
+				$this->redirect(array('controller' => 'projects', 'action' => 'index'), 'error');
 			}
 		}
 		
 		$this->request->data = $this->Project->read(null, $id);
-		
 		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	
 		$this->set('page_title_for_layout', 'Edit '.$this->request->data['Project']['displayName']);
-		$this->set('title_for_layout', 'New project form');
+		$this->set('title_for_layout', __('New project form'));
 	}
 	
 	

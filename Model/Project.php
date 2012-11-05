@@ -279,7 +279,12 @@ class Project extends ProjectsAppModel {
 /** 
  * Take the input data and parse it for actual saving
  */
-	public function cleanInputData($data) {		
+	public function cleanInputData($data) {
+		if (empty($data['Contact']['name'])) {
+			// remove contact info if not set right
+			unset($data['Contact']);
+		}
+		
 		return $data;
 	}
 	
