@@ -2,14 +2,18 @@
 class ProjectsController extends ProjectsAppController {
 
 	public $name = 'Projects';
+    
 	public $uses = 'Projects.Project';
+    
 	public $paginate = array('order' => array('Project.created' => 'desc'));
+    
 	public $components = array(
 		'Comments.Comments' => array(
 			'userModelClass' => 'Users.User',
 			'actionNames' => array('message', 'messages', 'tasks', 'task')
 			)
 		);
+    
 	public $allowedActions = array('desktop_index');
 	
 	public function beforeFilter() {
