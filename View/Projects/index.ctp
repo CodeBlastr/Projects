@@ -1,4 +1,19 @@
 <?php
+// set the contextual sorting items
+echo $this->Element('context_sort', array(
+    'context_sort' => array(
+        'type' => 'select',
+        'sorter' => array(array(
+            'heading' => '',
+            'items' => array(
+                $this->Paginator->sort('name'),
+                $this->Paginator->sort('created'),
+                $this->Paginator->sort('modified'),
+                )
+            )), 
+        )
+	)); 
+
 echo $this->Element('forms/search', array(
 	'url' => '/projects/projects/index/', 
 	'inputs' => array(
@@ -13,7 +28,14 @@ echo $this->Element('forms/search', array(
 		)
 	));
 	
-echo $this->Element('scaffolds/index', array('data' => $projects));
+echo $this->Element('scaffolds/index', array(
+    'data' => $projects,
+	'actions' => array(
+		$this->Html->link('View', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', '{id}')),
+		$this->Html->link('Edit', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'edit', '{id}')),
+		$this->Html->link('Touch', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'touch', '{id}')),
+		)
+    ));
 
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(

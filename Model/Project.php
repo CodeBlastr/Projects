@@ -255,6 +255,21 @@ class Project extends ProjectsAppModel {
 		}
 		return $results;
 	}
+    
+    public function afterSave($created) {
+        if (!$created && in_array('Activities', CakePlugin::loaded())) {
+			// log when leads are created
+			$this->Behaviors->attach('Activities.Loggable', array(
+				'nameField' => 'name', 
+				'descriptionField' => '',
+				'actionDescription' => 'project touched', 
+				'userField' => '', 
+				'parentForeignKey' => ''
+				));
+            $this->triggerLog();
+        }
+        parent::afterSave($created);
+    }
 
 	public function find($type = null, $params = array()) {
 		// list is recursive -1 by default and we need it set to at least 0 for the contact name to be included with the project name.

@@ -27,7 +27,7 @@ class ProjectsController extends ProjectsAppController {
  */
 	public function index() {
 		$this->paginate['fields'] = array('id', 'displayName', 'star', 'modified');
-		$this->paginate['order'] = array('Project.modified');
+		$this->paginate['order'] = array('Project.modified' => 'ASC');
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'displayName');
 		$this->set('displayDescription', ''); 
@@ -146,8 +146,34 @@ class ProjectsController extends ProjectsAppController {
 		}
 		$this->__delete('Project', $id);
 	}	
+    
+/**
+ * Touch method
+ * 
+ * Makes a simple edit save to update the modified date, thus letting us know that the project was touched. 
+ * 
+ * @param string $id
+ */
+    public function touch($id) {
+		$this->Project->id = $id;
+		if (!$this->Project->exists()) {
+			throw new NotFoundException(__('Project not found'));
+		}
+        if ($this->Project->save(array('Project' => array('id' => $id, 'modified' => date('Y-m-d h:i:s'))), array('validate' => false))) {
+            $this->Session->setFlash('Touched');
+            $this->redirect($this->referer());
+        } else {
+            $this->Session->setFlash('Error, could not update modified date.');
+            $this->redirect($this->referer());
+        }
+    }
 		
-	
+/**
+ * Archive method
+ * 
+ * @param string $id
+ * @throws NotFoundException
+ */
 	public function archive($id) {
 		$this->Project->id = $id;
 		if (!$this->Project->exists()) {
@@ -501,7 +527,12 @@ class ProjectsController extends ProjectsAppController {
 			));
 	}
 	
-	
+/**
+ * Pending Child Tasks
+ * 
+ * @param string $parentTaskId
+ * @return array
+ */
 	protected function _pendingChildTasks($parentTaskId) {
 		unset($this->paginate);
 		$this->paginate = array(
