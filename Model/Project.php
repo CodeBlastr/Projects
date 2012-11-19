@@ -321,5 +321,34 @@ class Project extends ProjectsAppModel {
 		$params['conditions']['Contact.id'] = array_unique($contactIds);
 		return $this->Contact->find($type, $params);
 	}
+	
+/**
+ * Activities method
+ *
+ * @return array
+ */
+	public function activities($foreignKey = null) {
+		$return = null;
+		if (in_array('Activities', CakePlugin::loaded())) {
+            $this->Activity = ClassRegistry::init('Activities.Activity');
+			$conditions['Activity.action_description'] = 'project touched';
+			$conditions['Activity.model'] = 'Project';
+			!empty($foreignKey) ? $conditions['Activity.foreign_key'] = $foreignKey : null; 
+			$return = $this->Activity->find('all', array(
+				'conditions' => $conditions,
+				'fields' => array(
+					'*',
+					'COUNT(Activity.created)',
+					),
+				'group' =>  array(
+					'DATE(Activity.created)',
+					),
+				'order' => array(
+					'Activity.created' => 'ASC',
+					)
+				));
+		}
+		return $return;
+	}
 
 }

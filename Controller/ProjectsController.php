@@ -28,6 +28,7 @@ class ProjectsController extends ProjectsAppController {
 	public function index() {
 		$this->paginate['fields'] = array('id', 'displayName', 'star', 'modified');
 		$this->paginate['order'] = array('Project.modified' => 'ASC');
+		$this->set('loggedActivities', $this->Project->activities());
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'displayName');
 		$this->set('displayDescription', ''); 
