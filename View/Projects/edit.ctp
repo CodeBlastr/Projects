@@ -23,16 +23,28 @@
 <?php echo $this->Form->end('Submit');?>
 </div>
 
-<?php 
+<?php
+$archiveStatusLink = !empty($this->request->data['Project']['is_archived']) ? $this->Html->link(__('Un-archive'), array('controller' => 'projects', 'action' => 'unarchive', $this->request->data['Project']['id']), array('class' => 'archive')) : $this->Html->link(__('Archive'), array('controller' => 'projects', 'action' => 'archive', $this->request->data['Project']['id']), array('class' => 'archive'));
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Projects',
 		'items' => array(
-			$this->Html->link(__('List', true), array('controller' => 'projects', 'action' => 'index')),
-			$this->Html->link(__('Add', true), array('controller' => 'projects', 'action' => 'add')),
-			$this->Html->link('Delete', array('controller' => 'projects', 'action' => 'delete', $this->request->data['Project']['id']), array(), 'Are you sure you want to delete "'.strip_tags($this->request->data['Project']['displayName']).'"')
+			$this->Html->link('Dashboard', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'dashboard'), array('title' => 'Dashboard', 'escape' => false)),
 			)
 		),
-	)));
-?>
+	array(
+		'heading' => 'Projects',
+		'items' => array(
+			$archiveStatusLink,
+			$this->Html->link(__('Delete'), array('controller' => 'projects', 'action' => 'delete', $this->request->data['Project']['id'])),
+			)
+		),
+	array(
+		'heading' => 'Time',
+		'items' => array(
+			$this->Html->link(__('Time'), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $this->request->data['Project']['id']), array('escape' => false)),
+			)
+		),
+				
+	))); ?>

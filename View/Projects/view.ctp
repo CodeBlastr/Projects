@@ -29,27 +29,27 @@
 </div>
 
 <?php
-$archiveStatusLink = !empty($project['Project']['is_archived']) ? $this->Html->link(__('Un-archive'), array('controller' => 'projects', 'action' => 'unarchive', $project['Project']['id']), array('class' => 'archive')) : $this->Html->link(__('Archive'), array('controller' => 'projects', 'action' => 'archive', $project['Project']['id']), array('class' => 'archive'));
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
+		'heading' => 'Projects',
+		'items' => array(
+			$this->Html->link('Dashboard', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'dashboard'), array('title' => 'Dashboard', 'escape' => false)),
+			)
+		),
+	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link('Dashboard', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'class' => 'active')),
-			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages')),
-			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks')),
-			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People')),
+			$this->Html->link($project['Project']['displayName'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false, 'class' => 'active')),
+			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
+			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
+			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
 			)
 		),
 	array(
 		'heading' => 'Projects',
 		'items' => array(
 			$this->Html->link(__('Edit'), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id'])),
-			$archiveStatusLink,
-			$this->Html->link(__('<i class="icon-plus"></i> Time'), array('plugin' => 'timesheets', 'controller' => 'timesheet_times', 'action' => 'add', 'project_id' => $project['Project']['id']), array('escape' => false)),
-			$this->Html->link(__('Projects'), array('controller' => 'projects', 'action' => 'index')),
-			//$this->Html->link($project['Contact']['name'], array('plugin' => 'contacts', 'controller' => 'contacts', 'action' => 'view', $project['Project']['contact_id'])),
 			)
 		),
-				
 	))); ?>

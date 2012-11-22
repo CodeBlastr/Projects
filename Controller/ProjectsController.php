@@ -14,7 +14,7 @@ class ProjectsController extends ProjectsAppController {
 			)
 		);
     
-	public $allowedActions = array('desktop_index');
+	public $allowedActions = array('desktop_index', 'dashboard');
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -44,6 +44,10 @@ class ProjectsController extends ProjectsAppController {
 			$filterLink,
 			));
 		$this->set('page_title_for_layout', !empty($this->paginate['conditions']['Project.is_archived']) ? __('Archived Projects') : 'Projects');
+	}
+
+	public function dashboard() {
+		$this->redirect(array('action' => 'index'));
 	}
 
 	public function view($id = null) {
@@ -105,7 +109,7 @@ class ProjectsController extends ProjectsAppController {
 		}
 		
 		$contactId = !empty($this->request->params['named']['contact']) ? $this->request->params['named']['contact'] : null;
-		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
+		$contacts = $this->Project->Contact->findCompanies('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups', 'contactId'));	
 		$this->set('page_title_for_layout', __('Create a new project'));
@@ -448,6 +452,16 @@ class ProjectsController extends ProjectsAppController {
 						'full_name',
 						),
 					),
+				'ChildTask' => array(
+					'fields' => array(
+						'name',
+						'description',
+						'created'
+						),
+					'conditions' => array(
+						'is_completed' => 0,
+						)
+					)
 				),
 			'order' => array(
 				'Task.created DESC'

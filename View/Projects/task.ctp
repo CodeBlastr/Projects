@@ -3,7 +3,7 @@
   	<?php 
 	echo $this->Form->create('Task', array('url' => '/tasks/tasks/add'));?>
     <fieldset>
-      <legend class="toggleClick"><?php echo __('%s Task List', $task['Task']['name']); ?><span class="button"><?php echo __('Add a task to this list?');?></span></legend>
+      <legend class="toggleClick"><?php echo __('%s Task List', $task['Task']['name']); ?> <span class="btn"><?php echo __('Add a task to this list?');?></span></legend>
       <?php
 	  echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
 	  echo $this->Form->input('Task.name');
@@ -64,16 +64,23 @@ $(function() {
 });
 </script> */ ?> 
 
+
 <?php
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
+		'heading' => 'Projects',
+		'items' => array(
+			$this->Html->link('<span>Dashboard</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'dashboard'), array('title' => 'Dashboard', 'escape' => false)),
+			)
+		),
+	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link('<span>Dashboard</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'escape' => false)),
-			$this->Html->link('<span>Messages</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
-			$this->Html->link('<span>Tasks</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false, 'class' => 'ui-btn-active')),
-			$this->Html->link('<span>People</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
+			$this->Html->link($project['Project']['displayName'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false)),
+			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
+			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false, 'class' => 'active')),
+			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
 			)
 		),
 	))); ?>

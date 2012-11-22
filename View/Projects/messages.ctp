@@ -1,8 +1,8 @@
 <div class="messages index">
   <div class="messages form"> <?php echo $this->Form->create('Message' , array('url'=>'/messages/messages/send'));?>
-    <fieldset>
-      <legend class="toggleClick"><?php  echo __("{$project['Project']['displayName']} Messages "); ?> <span class="button"><?php echo 'Create a new message.'; ?></span></legend>
+    <fieldset> 
       <?php
+      echo __('<legend class="toggleClick">Messages <span class="btn">Create a Message</span></legend>');
 	  echo $this->Form->input('Message.title', array('label' => __('Subject', true)));
 	  echo $this->Form->input('Message.body', array('label' => '', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
 	  echo $this->Form->input('User', array('multiple' => 'checkbox', 'label' => 'Select users who will see this message in the list below, and be notified of every comment to this message.'));
@@ -25,16 +25,23 @@
 	)); ?> 
 </div>
 
+
 <?php
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
+		'heading' => 'Projects',
+		'items' => array(
+			$this->Html->link('Dashboard', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'dashboard'), array('title' => 'Dashboard', 'escape' => false)),
+			)
+		),
+	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link('<span>Dashboard</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('title' => 'Dashboard', 'escape' => false)),
-			$this->Html->link('<span>Messages</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false, 'class' => 'ui-btn-active')),
-			$this->Html->link('<span>Tasks</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
-			$this->Html->link('<span>People</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
+			$this->Html->link($project['Project']['displayName'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false)),
+			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false, 'class' => 'active')),
+			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
+			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
 			)
 		),
 	))); ?>
