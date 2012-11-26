@@ -135,7 +135,7 @@ class ProjectsController extends ProjectsAppController {
 		}
 		
 		$this->request->data = $this->Project->read(null, $id);
-		$contacts = $this->Project->Contact->findCompaniesWithRegisteredUsers('list');
+		$contacts = $this->Project->Contact->findCompanies('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	
 		$this->set('page_title_for_layout', 'Edit '.$this->request->data['Project']['displayName']);
