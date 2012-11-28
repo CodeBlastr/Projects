@@ -129,7 +129,7 @@ $this->set('context_menu', array('menus' => array(
 		'heading' => 'Projects',
 		'items' => array(
 			$this->Html->link(__('Archived Projects'), array('controller' => 'projects', 'action' => 'index', 'filter' => 'archived:1')),
-			$this->Html->link(__('Add Project'), array('controller' => 'projects', 'action' => 'add')),
+			$this->Html->link(__('Add'), array('controller' => 'projects', 'action' => 'add')),
 			)
 		),
 	))); ?>

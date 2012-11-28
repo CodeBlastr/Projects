@@ -1,22 +1,43 @@
-<div class="tasks view">
-  <div class="tasks form">
-  	<?php 
-	echo $this->Form->create('Task', array('url' => '/tasks/tasks/add'));?>
-    <fieldset>
-      <legend class="toggleClick"><?php echo __('%s Task List', $task['Task']['name']); ?> <span class="btn"><?php echo __('Add a task to this list?');?></span></legend>
-      <?php
-	  echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
-	  echo $this->Form->input('Task.name');
-	  echo $this->Form->input('Task.due_date', array('class' => 'test'));
-	  echo $this->Form->input('Task.assignee_id');
-	  echo $this->Form->input('Task.description', array('label' => 'Task details', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
-	  echo $this->Form->input('Task.model', array('type' => 'hidden', 'value' => $model));
-	  echo $this->Form->input('Task.foreign_key', array('type' => 'hidden', 'value' => $foreignKey));
-	  echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => '/projects/projects/task/'.$parentId));
-	  echo $this->Form->end('Submit'); ?>
-    </fieldset>
-  </div>
+<div class="well well-large pull-right last span4">
+	<div class="tasks form">
+		<?php echo $this->Form->create('Task', array('url' => array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'add')));?>
+	    <fieldset>
+	     	<legend><?php echo __('Add to %s Task List', $task['Task']['name']); ?></legend>
+	      	<?php
+		  	echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
+		  	echo $this->Form->input('Task.name');
+		  	echo $this->Form->input('Task.due_date');
+		  	echo $this->Form->input('Task.assignee_id');
+		  	echo $this->Form->input('Task.description', array('label' => 'Task details', 'type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
+		  	echo $this->Form->input('Task.model', array('type' => 'hidden', 'value' => $model));
+		  	echo $this->Form->input('Task.foreign_key', array('type' => 'hidden', 'value' => $foreignKey));
+		  	echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => '/projects/projects/task/'.$parentId));
+		  	echo $this->Form->end('Submit'); ?>
+	    </fieldset>
+	</div>
+  
+  	<hr />
+  
+  	<div class="tasks form">
+	<?php echo $this->Form->create('Task', array('url' => array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit')));?>
+		<fieldset>
+	 		<legend class="toggleClick"><?php echo __('Edit %s Task List', $task['Task']['name']);?></legend>
+			<?php
+			echo $this->Form->input('Task.id', array('type' => 'hidden', 'value' => $parentId));
+			echo $this->Form->input('Task.name', array('value' => $task['Task']['name']));
+			echo $this->Form->input('Task.description', array('value' => $task['Task']['description']));
+			echo $this->Form->input('Task.model', array('type' => 'hidden', 'value' => $model));
+			echo $this->Form->input('Task.foreign_key', array('type' => 'hidden', 'value' => $foreignKey));
+			echo $this->Form->end('Submit');?>
+		</fieldset>
+	</div>
 </div>
+	
+<div class="tasks view">
+ 	<p><?php echo $task['Task']['description']; ?></p>
+</div>
+  
+  
 <div class="tasks index">
   <h3 class="indexHead">Still pending tasks</h3>
   <?php

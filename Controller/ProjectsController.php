@@ -34,15 +34,6 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('displayDescription', ''); 
 		$this->set('indexClass', ''); 
 		$filterLink = !empty($this->paginate['conditions']['Project.is_archived']) ? array('linkText' => 'List','linkUrl' => array('action' => 'index')) : array('linkText' => 'Archived','linkUrl' => array('action' => 'index', 'filter' => 'isArchived:1'));
-		$this->set('pageActions', array(
-			array(
-				'linkText' => 'Add',
-				'linkUrl' => array(
-					'action' => 'add',
-					),
-				),
-			$filterLink,
-			));
 		$this->set('page_title_for_layout', !empty($this->paginate['conditions']['Project.is_archived']) ? __('Archived Projects') : 'Projects');
 	}
 
@@ -441,10 +432,11 @@ class ProjectsController extends ProjectsAppController {
 				'Task.parent_id' => null,
 				),
 			'fields' => array(
-				'id',
-				'name',
-				'is_completed',
-				'created',
+				'Task.id',
+				'Task.name',
+				'Task.is_completed',
+				'Task.created',
+				'Task.description',
 				),
 			'contain' => array(
 				'Assignee' => array(
@@ -454,6 +446,7 @@ class ProjectsController extends ProjectsAppController {
 					),
 				'ChildTask' => array(
 					'fields' => array(
+						'id',
 						'name',
 						'description',
 						'created'
@@ -467,15 +460,14 @@ class ProjectsController extends ProjectsAppController {
 				'Task.created DESC'
 				),
 			);
-		$project = $this->Project->find('first', array(
-			'conditions' => array('Project.id' =>  $projectId), 'contain' => 'Contact'));
+		$project = $this->Project->find('first', array('conditions' => array('Project.id' =>  $projectId), 'contain' => 'Contact'));
 		$this->set('project', $project); 
 		$foreignKey = !empty($projectId) ? $projectId : null;
 		$this->set('foreignKey', $foreignKey);
 		$this->set('tasks', $this->paginate('Task'));
 		$this->set('modelName', 'Task');
 		$this->set('pluginName', 'tasks');
-		$this->set('link', array('pluginName' => 'projects', 'controllerName' => 'projects', 'actionName' => 'task'));
+		$this->set('link', array('pluginName' => 'tasks', 'controllerName' => 'tasks', 'actionName' => 'view'));
 		$this->set('displayName', 'name');
 		$this->set('displayDescription', ''); 
 		$this->set('page_title_for_layout', $project['Project']['displayName']);

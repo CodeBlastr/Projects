@@ -4,8 +4,9 @@
 <div class="tasks form"> <?php echo $this->Form->create('Task' , array('url'=>'/tasks/tasks/add'));?>
   <fieldset>
     <?php
-    echo __('<legend class="toggleClick">Tasks <span class="btn">Create a Task List</span></legend>');
-	echo $this->Form->input('Task.name', array('label' => __('List Name', true)));
+    echo __('<legend class="toggleClick">Tasks Lists <span class="btn pull-right">Add New Task List</span></legend>');
+	echo $this->Form->input('Task.name', array('label' => __('New List Name')));
+	echo $this->Form->input('Task.description');
 	echo $this->Form->input('Success.redirect', array('type' => 'hidden', 'value' => $_SERVER['REQUEST_URI']));
 	echo $this->Form->input('Task.foreign_key', array('type' => 'hidden', 'value' => $foreignKey));
 	echo $this->Form->input('Task.model', array('type' => 'hidden', 'value' => 'Project'));
@@ -18,9 +19,23 @@ $expand = 'in';
 foreach ($tasks as $task) {
 	foreach ($task['ChildTask'] as $child) {
 		$children[]['Task'] = $child;
-	}
-	echo __('<div class="dashboardBox %s" data-toggle="collapse" data-target="#demo%s"><h3 class="title">%s</h3><div id="demo%s" class="collapse %s"> %s </div></div>', $expand, $task['Task']['id'], $task['Task']['name'], $task['Task']['id'], $expand, !empty($children) ? $this->Element('scaffolds/index', array('data' => $children)) : '<p>There are no unfinished tasks in this list.</p>');
+	} ?>
+	<div class="dashboardBox <?php echo $expand; ?>">
+		<h3 class="title" data-toggle="collapse" data-target="#demo<?php echo $task['Task']['id']; ?>"> <?php echo $task['Task']['name']; ?> </h3>
+		<p>
+			<small><?php echo __('<span class="badge badge-info">%s</span> unfinished tasks.  List created on %s. %s', count($children), ZuhaInflector::datify($task['Task']['created']), strip_tags($task['Task']['description'])); ?></smalL>
+			<?php echo $this->Html->link(__('Edit'), array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'task', $task['Task']['id']), array('class' => 'btn btn-mini pull-right')); ?>
+		</p>
+		<div id="demo<?php echo $task['Task']['id']; ?>" class="collapse <?php echo $expand; ?>"> 
+			<?php echo !empty($children) ? $this->Element('scaffolds/index', array('data' => $children, 'modelName' => 'Task', 'actions' => array(
+				$this->Html->link('Edit', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit', '{id}')),
+				$this->Html->link('Complete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'complete', '{id}')),
+				))) : null; ?>
+		</div>
+	</div>
+	<?php
 	$expand = 'collapsed';
+	unset($children);
 } ?>
 
 <?php 
