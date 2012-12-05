@@ -2,7 +2,7 @@
 	<div class="tasks form">
 		<?php echo $this->Form->create('Task', array('url' => array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'add')));?>
 	    <fieldset>
-	     	<legend><?php echo __('Add to %s Task List', $task['Task']['name']); ?></legend>
+	     	<legend><?php echo __('Add task to %s List', $task['Task']['name']); ?></legend>
 	      	<?php
 		  	echo $this->Form->input('Task.parent_id', array('type' => 'hidden', 'value' => $parentId));
 		  	echo $this->Form->input('Task.name');
@@ -50,8 +50,9 @@
 		$this->Html->link('Delete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'delete', '{id}'), array(), 'Are you sure you want to permanently delete?'),
 		)
 	)); ?>
-    
-  <h3 class="indexHead">Completed tasks</h3>
+   
+  <hr />
+  <h3 class="indexHead toggleClick" data-target=".tasks.index .tasks.index:last-child">Completed tasks</h3>
   <?php
   echo $this->Element('scaffolds/index', array(
 	'data' => $finishedChildTasks, 
