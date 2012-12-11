@@ -2,4 +2,3 @@
 class ProjectsAppModel extends AppModel {
 
 }
-?>

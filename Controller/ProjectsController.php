@@ -240,12 +240,7 @@ class ProjectsController extends ProjectsAppController {
 		}
 		$this->set('data', $this->str);
 		$this->layout = false;
-	}
-	
-	public function ajax_edit(){ 
-		$this->__ajax_edit();
-	} 
-	
+	}	
 	
 
 /**
