@@ -23,7 +23,7 @@ foreach ($tasks as $task) {
 	<div class="dashboardBox <?php echo $expand; ?>">
 		<h3 class="title" data-toggle="collapse" data-target="#demo<?php echo $task['Task']['id']; ?>"> <?php echo $task['Task']['name']; ?> </h3>
 		<p>
-			<small><?php echo __('<span class="badge badge-info">%s</span> unfinished tasks.  List created on %s. %s', count($children), ZuhaInflector::datify($task['Task']['created']), strip_tags($task['Task']['description'])); ?></smalL>
+			<small><?php echo __('<span class="badge badge-info">%s</span> unfinished tasks.  List created on %s. %s', @count($children), ZuhaInflector::datify($task['Task']['created']), strip_tags($task['Task']['description'])); ?></smalL>
 			<?php echo $this->Html->link(__('Edit'), array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'task', $task['Task']['id']), array('class' => 'btn btn-mini pull-right')); ?>
 		</p>
 		<div id="demo<?php echo $task['Task']['id']; ?>" class="collapse <?php echo $expand; ?>"> 
