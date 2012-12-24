@@ -55,12 +55,12 @@
                     <?php
                     $height = count($projects) * 50;
                     $today = time();
-                    $projects = array_reverse($projects);
-                    foreach ($projects as $project) {
-                      $modified = strtotime($project['Project']['modified']);
+                    $bars = array_reverse($projects);
+                    foreach ($bars as $bar) {
+                      $modified = strtotime($bar['Project']['modified']);
                       $elapsed = floor(($today - $modified) / (60 * 60 * 24));
 
-                      echo __('{name: \'%s\', data: [%s]},', strip_tags($project['Project']['displayName']), $elapsed); 
+                      echo __('{name: \'%s\', data: [%s]},', strip_tags($bar['Project']['displayName']), $elapsed); 
                     }?>
                 ]
             });
