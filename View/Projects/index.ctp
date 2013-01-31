@@ -59,8 +59,14 @@
                     foreach ($bars as $bar) {
                       $modified = strtotime($bar['Project']['modified']);
                       $elapsed = floor(($today - $modified) / (60 * 60 * 24));
-
-                      echo __('{name: \'%s\', data: [%s]},', strip_tags($bar['Project']['displayName']), $elapsed); 
+					  
+					  if ( $elapsed >= 28 ) $color = '#FF0000';
+					  elseif ( $elapsed >= 21 ) $color = '#FF5200';
+					  elseif ( $elapsed >= 14 ) $color = '#FFBB00';
+					  elseif ( $elapsed >= 7 ) $color = '#FFFE00';
+					  else $color = '#51FF00';
+					  
+                      echo __('{name: \'%s\', data: [%s], color: \'%s\'},', strip_tags($bar['Project']['displayName']), $elapsed, $color); 
                     }?>
                 ]
             });
