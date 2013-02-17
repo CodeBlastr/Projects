@@ -236,6 +236,11 @@ class Project extends ProjectsAppModel {
 		}
     }
     
+/**
+ * After Save Callback
+ * 
+ * @param bool $created
+ */
     public function afterSave($created) {
         if (!$created && in_array('Activities', CakePlugin::loaded())) {
 			// log when leads are created
@@ -250,13 +255,6 @@ class Project extends ProjectsAppModel {
         }
         parent::afterSave($created);
     }
-
-	public function find($type = null, $params = array()) {
-		// list is recursive -1 by default and we need it set to at least 0 for the contact name to be included with the project name.
-		$params = $type == 'list' ? Set::merge(array('recursive' => 0), $params) : $params;
-		$params = Set::merge(array('contain' => array('Contact.name')), $params);
-		return parent::find($type, $params);
-	}
 	
 /**
  * @todo		$data['Project']['manager_id'] should be $data['Project'][0]['manager_id'] if we're going to use saveAll
@@ -304,31 +302,45 @@ class Project extends ProjectsAppModel {
 	
 /**
  * Activities method
+ * 
+ * Returns the last 60 days of activity.
  *
  * @return array
  */
-	public function activities($foreignKey = null) {
+	public function activities($conditions = array()) {
 		$return = null;
 		if (in_array('Activities', CakePlugin::loaded())) {
-            $this->Activity = ClassRegistry::init('Activities.Activity');
-			$conditions['Activity.action_description'] = 'project touched';
-			$conditions['Activity.model'] = 'Project';
-			!empty($foreignKey) ? $conditions['Activity.foreign_key'] = $foreignKey : null; 
-			$return = $this->Activity->find('all', array(
-				'conditions' => $conditions,
-				'fields' => array(
-					'*',
-					'COUNT(Activity.created)',
-					),
-				'group' =>  array(
-					'DATE(Activity.created)',
-					),
-				'order' => array(
-					'Activity.created' => 'ASC',
-					)
-				));
+			!empty($conditions['foreign_key']) ? $foreignKeyQuery = "AND `Activity`.`foreign_key` = '". $conditions['foreign_key'] . "'" : $foreignKeyQuery = null;
+			$startDate = !empty($conditions['start_date']) ? $conditions['start_date'] : date('Y-m-d', strtotime('- 60 days'));
+			$result = $this->query("SELECT *, DATE_FORMAT(Activity.created, '%Y-%m-%d') AS formatted, COUNT(`Activity`.`created`) AS count FROM `activities` AS `Activity` WHERE `Activity`.`created` > '".$startDate."' AND `Activity`.`action_description` = 'project touched' AND `Activity`.`model` = 'Project' ".$foreignKeyQuery." GROUP BY DATE(`Activity`.`created`) ORDER BY `Activity`.`created` ASC");
+			$emptyDates = Zuha::date_slice($startDate, null, array('format' => 'Y-m-d'));
+			foreach ($emptyDates as $emptyDate) {
+				$key = array_search($emptyDate, Set::extract('/0/formatted', $result));
+				if ($key === 0 || $key > 0) {
+					$return[] = $result[$key];
+				} else {
+					$return[] = array(0 => array('count' => 0), 'Activity' => array('created' => $emptyDate));
+				}
+			}
 		}
 		return $return;
 	}
-
+	
+/**
+ * Origin After Find Callback
+ * 
+ */
+	public function origin_afterFind(Model $Model, $results = array()) {
+		if ($Model->name = 'Task' && !empty($results)) {
+			$i = 0;
+			foreach($results as $result) {
+				if ($result['Task']['model'] == 'Project' && !empty($result['Task']['foreign_key'])) {
+					$name = $this->field('name', array('Project.id' => $result['Task']['foreign_key']));
+					$results[$i]['Task']['name'] = __('%s -> %s', $name, $result['Task']['name']);
+				}
+				$i++;
+			}
+		}
+		return $results;
+	}
 }

@@ -4,7 +4,7 @@
 <div class="row projects index">
     <div class="well well-large pull-right last span5">
         <?php
-        echo '<h4>Time Since Last Touch</h4>'; ?>
+        echo '<h4>Who Needs Your Attention Today?</h4>'; ?>
         <script type="text/javascript">
         var chart;
         $(document).ready(function() {
@@ -66,7 +66,7 @@
 					  elseif ( $elapsed >= 7 ) $color = '#FFFE00';
 					  else $color = '#51FF00';
 					  
-                      echo __('{name: \'%s\', data: [%s], color: \'%s\'},', strip_tags($bar['Project']['displayName']), $elapsed, $color); 
+                      echo __('{name: \'%s\', data: [%s], color: \'%s\', dataLabels: { enabled: true, align: \'right\', formatter: function() {return "%s, <small>Last touched %s days ago</small>"}}},', strip_tags($bar['Project']['name']), $elapsed, $color, strip_tags($bar['Project']['name']), $elapsed); 
                     }?>
                 ]
             });
@@ -74,7 +74,7 @@
         </script>
         <div id="lastTouch" style="min-width: 100px; height: <?php echo $height; ?>px; margin: 0 auto;"></div>
     </div>
-    <div class="span6">
+    <div class="span6 first">
     <?php
     echo $this->Element('scaffolds/index', array(
         'data' => $projects,
@@ -124,7 +124,8 @@ $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Projects',
 		'items' => array(
-			$this->Html->link(__('Archived Projects'), array('controller' => 'projects', 'action' => 'index', 'filter' => 'archived:1')),
+			$this->Html->link(__('List'), array('controller' => 'projects', 'action' => 'index', 'filter' => 'archived:0')),
+			$this->Html->link(__('List Archived'), array('controller' => 'projects', 'action' => 'index', 'filter' => 'archived:1')),
 			$this->Html->link(__('Add'), array('controller' => 'projects', 'action' => 'add')),
 			)
 		),

@@ -1,54 +1,59 @@
-<div class="well well-large pull-right last span4">
-   <p>Put a graph here or some kind of visual information</p>
+<?php echo $this->Html->script('https://www.google.com/jsapi', array('inline' => false)); ?>
+
+<div class="well well-large pull-right last span3">
+	<span class="label label-info"><?php echo __('Launched: %s', ZuhaInflector::datify($project['Project']['created'])); ?></span>
+	<span class="label label-info"><?php echo __('Days Since Launch: %s', floor((time() - strtotime($project['Project']['created'])) / 86400)); ?></span>
+	<span class="label label-info"><?php echo __('Time Logged: %s', $trackedHoursSum); ?></span>
+	<?php
+	if (!empty($loggedActivities)) { ?>
+		<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawLeadsChart);
+			 
+		function drawLeadsChart() {
+			// Create and populate the data table.
+			var data = google.visualization.arrayToDataTable([
+			['x', 'Date'],
+			<?php 
+			foreach ($loggedActivities as $activity) { ?>
+				['<?php echo date('M d, Y', strtotime($activity['Activity']['created'])); ?>',   <?php echo $activity[0]['count']; ?>],
+			<?php } ?>
+			]);
+					
+			// Create and draw the visualization.
+			new google.visualization.LineChart(document.getElementById('activities_over_time')).
+				draw(data, {
+					curveType: "function",
+					width: '100%', height: 200,
+					legend: {position: 'none'},
+					chartArea: {width: '80%', height: '80%'}
+					}
+				);
+		}
+		</script>
+        
+        <h5>Activity since created</h5>
+		<div id="activities_over_time"></div>
+		
+	<?php } ?>
 </div>
 
 
-<div class="project view">
-    <h2><?php echo __('Dashboard'); ?></h2>
-    <div id="n1" class="info-block">
-      <div class="viewRow">
-        <?php if ($this->Session->read('Auth.User.user_role_id') == 1) { ?>
-        <ul class="metaData">
-          <li><span class="metaDataLabel"> <?php echo __('Days Since Launch: '); ?> </span><span class="metaDataDetail"><?php echo floor((time() - strtotime($project['Project']['created'])) / 86400); ?></span></li>
-          <!--li><span class="metaDataLabel">
-            <?php echo __('Estimated Hours: '); ?>
-            </span><span name="estimatedhours" class="edit metaDataDetail" id="<?php echo __($project['Project']['id']); ?>"><?php echo $project['Project']['estimated_hours']; ?></span></li-->
-          <li><span class="metaDataLabel"> <?php echo __('Time Logged: '); ?> </span><span id="spenthours<?php echo $project['Project']['id']; ?>" class="metaDataDetail"><?php echo $trackedHoursSum; ?></span></li>
-          <!--li><span class="metaDataLabel">
-            <?php echo __('Percent Complete: '); ?>
-            </span><span id="percentcomplete" class="metaDataDetail"><?php echo $percentComplete; __('%'); ?></span></li-->
-        </ul>
-        <?php } ?>
-        
-        <?php if(!empty($project['Project']['description'])) { ?>
-        <div class="recordData">
-          <h3><?php echo __('Project Scope'); ?></h3>
-          <?php echo $project['Project']['description']; ?>
-        </div>
-        <?php } ?>
-        <?php /*
-        <div class="recordData">
-          <h3><?php echo __('Latest Activities'); ?></h3>
-          <?php echo $this->Element('activities', array('parentForeignKey' => $project['Project']['id']), array('plugin' => 'activities')); ?>
-        </div> */ ?>
-      </div>
-    </div>
-  <!-- /info-block end -->
+<div class="project view span8 first pull-left">
+	<?php 
+	if(!empty($project['Project']['description'])) {
+		echo __('<h3>Project Scope</h3>');
+        echo __('<div class="truncate" data-truncate="700">%s</div>', $project['Project']['description']);
+	} ?>
 </div>
 
 <?php
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
-		'heading' => 'Projects',
-		'items' => array(
-			$this->Html->link('Dashboard', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'dashboard'), array('title' => 'Dashboard', 'escape' => false)),
-			)
-		),
-	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link($project['Project']['name'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false, 'class' => 'active')),
+			$this->Html->link($project['Project']['name'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false, 'class' => 'dashboard active')),
 			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
 			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
 			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),

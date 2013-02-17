@@ -29,6 +29,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->paginate['fields'] = array('id', 'name', 'modified');
 		$this->paginate['order'] = array('Project.modified' => 'ASC');
 		$this->set('loggedActivities', $this->Project->activities());
+		$this->paginate['limit'] = 5;
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'name');
 		$this->set('displayDescription', ''); 
@@ -41,6 +42,11 @@ class ProjectsController extends ProjectsAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * View method
+ * 
+ * @param string $id
+ */
 	public function view($id = null) {
 		$this->Project->id = $id;
 		if (!$this->Project->exists()) {
@@ -64,11 +70,11 @@ class ProjectsController extends ProjectsAppController {
 				),
 			'fields' => 'hours',
 			));
-		if(!empty($trackedTimes)) : 
-			foreach ($trackedTimes as $trackedTime) :
+		if(!empty($trackedTimes)) {
+			foreach ($trackedTimes as $trackedTime) {
 				$trackedHours[] = $trackedTime['TimesheetTime']['hours'];
-			endforeach;
-		endif;
+			}
+		}
 		
 		// average out the done ratio to get the project done ratio
 		foreach ($project['ProjectIssue'] as $projectIssue) {
@@ -79,10 +85,9 @@ class ProjectsController extends ProjectsAppController {
 		$percentComplete = !empty($doneRatios) ? number_format(array_sum($doneRatios) / count($doneRatios), 2, '.', ',') : 0;
 		
 		$this->set(compact('project', 'trackedHoursSum', 'percentComplete'));
-		
 		$this->set('page_title_for_layout', $project['Project']['name']);
 		$this->set('title_for_layout',  strip_tags($project['Project']['name']));
-		$this->set('tabsElement', '/projects');
+		$this->set('loggedActivities', $this->Project->activities(array('foreign_key' => $id, 'start_date' => $project['Project']['created'])));
 	}
 
 	 
