@@ -26,11 +26,11 @@
           <?php echo $project['Project']['description']; ?>
         </div>
         <?php } ?>
-        
+        <?php /*
         <div class="recordData">
           <h3><?php echo __('Latest Activities'); ?></h3>
           <?php echo $this->Element('activities', array('parentForeignKey' => $project['Project']['id']), array('plugin' => 'activities')); ?>
-        </div>
+        </div> */ ?>
       </div>
     </div>
   <!-- /info-block end -->
@@ -48,7 +48,7 @@ $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link($project['Project']['displayName'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false, 'class' => 'active')),
+			$this->Html->link($project['Project']['name'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false, 'class' => 'active')),
 			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
 			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false)),
 			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),

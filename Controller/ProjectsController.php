@@ -26,11 +26,11 @@ class ProjectsController extends ProjectsAppController {
  * (we'll use dashboard() for listing all projects)
  */
 	public function index() {
-		$this->paginate['fields'] = array('id', 'displayName', 'modified');
+		$this->paginate['fields'] = array('id', 'name', 'modified');
 		$this->paginate['order'] = array('Project.modified' => 'ASC');
 		$this->set('loggedActivities', $this->Project->activities());
 		$this->set('projects', $this->paginate());
-		$this->set('displayName', 'displayName');
+		$this->set('displayName', 'name');
 		$this->set('displayDescription', ''); 
 		$this->set('indexClass', ''); 
 		$filterLink = !empty($this->paginate['conditions']['Project.is_archived']) ? array('linkText' => 'List','linkUrl' => array('action' => 'index')) : array('linkText' => 'Archived','linkUrl' => array('action' => 'index', 'filter' => 'isArchived:1'));
@@ -80,9 +80,8 @@ class ProjectsController extends ProjectsAppController {
 		
 		$this->set(compact('project', 'trackedHoursSum', 'percentComplete'));
 		
-		
-		$this->set('page_title_for_layout', $project['Project']['displayName']);
-		$this->set('title_for_layout',  strip_tags($project['Project']['displayName']));
+		$this->set('page_title_for_layout', $project['Project']['name']);
+		$this->set('title_for_layout',  strip_tags($project['Project']['name']));
 		$this->set('tabsElement', '/projects');
 	}
 
@@ -129,7 +128,7 @@ class ProjectsController extends ProjectsAppController {
 		$contacts = $this->Project->Contact->findCompanies('list');
 		$userGroups = $this->Project->UserGroup->findRelated('Project', 'list');
 		$this->set(compact('contacts','userGroups'));	
-		$this->set('page_title_for_layout', 'Edit '.$this->request->data['Project']['displayName']);
+		$this->set('page_title_for_layout', 'Edit '.$this->request->data['Project']['name']);
 		$this->set('title_for_layout', __('New project form'));
 	}
 	
@@ -236,7 +235,7 @@ class ProjectsController extends ProjectsAppController {
 			'nocheck' => $userId,
 			));
 		for($i= 0 ;$i<sizeof($projects);$i++){
-			$this->str .= '<option value="'.$projects[$i]['Project']['id'].'">'.$projects[$i]['Project']['displayName'].'</option>';
+			$this->str .= '<option value="'.$projects[$i]['Project']['id'].'">'.$projects[$i]['Project']['name'].'</option>';
 		}
 		$this->set('data', $this->str);
 		$this->layout = false;
@@ -286,7 +285,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('showGallery', true);
 		$this->set('galleryModel', array('name' => 'User', 'alias' => 'Used'));
 		$this->set('galleryForeignKey', 'user_id');
-		$this->set('page_title_for_layout', $project['Project']['displayName']);
+		$this->set('page_title_for_layout', $project['Project']['name']);
 		$this->set('tabsElement', '/projects');
 	}
 	
@@ -367,7 +366,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('showGallery', true);
 		$this->set('galleryModel', array('name' => 'User', 'alias' => 'Sender'));
 		$this->set('galleryForeignKey', 'id');
-		$this->set('page_title_for_layout', $project['Project']['displayName']);
+		$this->set('page_title_for_layout', $project['Project']['name']);
 		$this->set('tabsElement', '/projects');
 		if (!empty($messages) && isset($this->request->params['requested'])) {
         	return $messages;
@@ -402,7 +401,7 @@ class ProjectsController extends ProjectsAppController {
 		$project = $this->Project->find('first', array(
 			'conditions' => array('Project.id' => $message['Message']['foreign_key']), 'contain' => 'Contact'));
 		$this->set('project', $project); 
-		$this->set('page_title_for_layout', $project['Project']['displayName']);
+		$this->set('page_title_for_layout', $project['Project']['name']);
 		$this->Project->Message->fullName = 'Messages.Message';
 		$comments->viewVariable = 'message';
 		$this->set('boxes', $this->Project->Message->boxes());
@@ -465,7 +464,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('link', array('pluginName' => 'tasks', 'controllerName' => 'tasks', 'actionName' => 'view'));
 		$this->set('displayName', 'name');
 		$this->set('displayDescription', ''); 
-		$this->set('page_title_for_layout', $project['Project']['displayName']);
+		$this->set('page_title_for_layout', $project['Project']['name']);
 		$this->set('tabsElement', '/projects');
 		$this->set('pageActions', array(
 			array(
@@ -515,7 +514,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->set('showGallery', true);
 		$this->set('galleryModel', array('name' => 'User', 'alias' => 'Assignee'));
 		$this->set('galleryForeignKey', 'id');
-		$this->set('page_title_for_layout', $project['Project']['displayName']);
+		$this->set('page_title_for_layout', $project['Project']['name']);
 		$this->set('tabsElement', '/projects');
 		$this->set('pageActions', array(
 			array(
