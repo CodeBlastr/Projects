@@ -1,3 +1,8 @@
+
+<div class="tasks view row">
+ 	<p><?php echo $task['Task']['description']; ?></p>
+</div>
+
 <div class="well well-large pull-right last span4">
 	<div class="tasks form">
 		<?php echo $this->Form->create('Task', array('url' => array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'add')));?>
@@ -32,13 +37,9 @@
 		</fieldset>
 	</div>
 </div>
-	
-<div class="tasks view">
- 	<p><?php echo $task['Task']['description']; ?></p>
-</div>
   
   
-<div class="tasks index">
+<div class="tasks index span7 pull-left first">
   <h3 class="indexHead">Still pending tasks</h3>
   <?php
   echo $this->Element('scaffolds/index', array(
@@ -91,15 +92,9 @@ $(function() {
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(
-		'heading' => 'Projects',
-		'items' => array(
-			$this->Html->link('<span>Dashboard</span>', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'dashboard'), array('title' => 'Dashboard', 'escape' => false)),
-			)
-		),
-	array(
 		'heading' => 'Project',
 		'items' => array(
-			$this->Html->link($project['Project']['displayName'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false)),
+			$this->Html->link($project['Project']['name'], array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', $project['Project']['id']), array('escape' => false, 'class' => 'dashboard')),
 			$this->Html->link('Messages', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'messages', $project['Project']['id']), array('title' => 'Messages', 'escape' => false)),
 			$this->Html->link('Tasks', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'tasks', $project['Project']['id']), array('title' => 'Tasks', 'escape' => false, 'class' => 'active')),
 			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
