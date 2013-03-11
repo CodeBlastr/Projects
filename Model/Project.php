@@ -336,7 +336,7 @@ class Project extends ProjectsAppModel {
 			foreach($results as $result) {
 				if ($result['Task']['model'] == 'Project' && !empty($result['Task']['foreign_key'])) {
 					$name = $this->field('name', array('Project.id' => $result['Task']['foreign_key']));
-					$results[$i]['Task']['name'] = __('%s -> %s', $name, $result['Task']['name']);
+					$results[$i]['Task']['displayName'] = __('%s -> %s', $name, $result['Task']['name']);
 				}
 				$i++;
 			}
