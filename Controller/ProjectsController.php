@@ -448,10 +448,15 @@ class ProjectsController extends ProjectsAppController {
 						'id',
 						'name',
 						'description',
+						'due_date',
+						'assignee_id',
 						'created'
 						),
 					'conditions' => array(
 						'is_completed' => 0,
+						),
+					'order' => array(
+						'due_date' => 'DESC'
 						)
 					)
 				),

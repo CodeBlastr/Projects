@@ -24,12 +24,21 @@ foreach ($tasks as $task) {
 		<h3 class="title" data-toggle="collapse" data-target="#demo<?php echo $task['Task']['id']; ?>"> <?php echo $task['Task']['name']; ?> </h3>
 		<p>
 			<small><?php echo __('<span class="badge badge-info">%s</span> unfinished tasks.  List created on %s. %s', @count($children), ZuhaInflector::datify($task['Task']['created']), strip_tags($task['Task']['description'])); ?></smalL>
-			<?php echo $this->Html->link(__('Edit'), array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'task', $task['Task']['id']), array('class' => 'btn btn-mini pull-right')); ?>
+			<?php echo $this->Html->link(__('Add Tasks'), array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'task', $task['Task']['id']), array('class' => 'btn btn-mini pull-right')); ?>
 		</p>
 		<div id="demo<?php echo $task['Task']['id']; ?>" class="collapse <?php echo $expand; ?>"> 
-			<?php echo !empty($children) ? $this->Element('scaffolds/index', array('data' => $children, 'modelName' => 'Task', 'actions' => array(
-				$this->Html->link('Edit', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit', '{id}')),
-				$this->Html->link('Complete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'complete', '{id}')),
+			<?php echo !empty($children) ? $this->Element('scaffolds/index', array(
+				'data' => $children, 
+				'modelName' => 'Task', 
+				'showGallery' => 1, 
+				'galleryModel' => array(
+					'name' => 'User', 
+					'alias' => 'Task'
+					), 
+				'galleryForeignKey' => 'assignee_id',
+				'actions' => array(
+					$this->Html->link('Edit', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'edit', '{id}')),
+					$this->Html->link('Complete', array('plugin' => 'tasks', 'controller' => 'tasks', 'action' => 'complete', '{id}')),
 				))) : null; ?>
 		</div>
 	</div>
