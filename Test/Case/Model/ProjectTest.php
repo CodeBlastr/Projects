@@ -68,4 +68,8 @@ class ProjectTestCase extends CakeTestCase {
         $this->assertEqual($result['Activity']['action_description'], 'project touched'); // was the project edit logged?
 	}
 	
+	public function testActivities() {
+		//debug($this->Project->activities());
+		//break;
+	}
 }
