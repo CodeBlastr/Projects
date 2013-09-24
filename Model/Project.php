@@ -63,19 +63,6 @@ class Project extends ProjectsAppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		// 'ProjectsMember' => array(
-			// 'className' => 'Projects.ProjectsMember',
-			// 'foreignKey' => 'project_id',
-			// 'dependent' => false,
-			// 'conditions' =>'',
-			// 'fields' => '',
-			// 'order' => '',
-			// 'limit' => '',
-			// 'offset' => '',
-			// 'exclusive' => '',
-			// 'finderQuery' => '',
-			// 'counterQuery' => ''
-		// ),
 		'UserGroup' => array(
 			'className' => 'Users.UserGroup',
 			'foreignKey' => '',
@@ -158,53 +145,8 @@ class Project extends ProjectsAppModel {
 			'finderQuery' => '',
 			'deleteQuery' => '',
 			'insertQuery' => ''
-		),
-		// 'Member' => array(
-			// 'className' => 'Users.User',
-			// 'joinTable' => 'projects_members',
-			// 'foreignKey' => 'project_id',
-			// 'associationForeignKey' => 'user_id',
-			// 'unique' => true,
-			// 'conditions' => '',
-			// 'fields' => '',
-			// 'order' => '',
-			// 'limit' => '',
-			// 'offset' => '',
-			// 'finderQuery' => '',
-			// 'deleteQuery' => '',
-			// 'insertQuery' => ''
-		// ),
-		// 'Watcher' => array(
-			// 'className' => 'Users.User',
-			// 'joinTable' => 'projects_watchers',
-			// 'foreignKey' => 'project_id',
-			// 'associationForeignKey' => 'user_id',
-			// 'unique' => true,
-			// 'conditions' => '',
-			// 'fields' => '',
-			// 'order' => '',
-			// 'limit' => '',
-			// 'offset' => '',
-			// 'finderQuery' => '',
-			// 'deleteQuery' => '',
-			// 'insertQuery' => ''
-		// ),
-		// 'Wiki' => array(
-			// 'className' => 'Wikis.Wiki',
-			// 'joinTable' => 'projects_wikis',
-			// 'foreignKey' => 'project_id',
-			// 'associationForeignKey' => 'wiki_id',
-			// 'unique' => true,
-			// 'conditions' => '',
-			// 'fields' => '',
-			// 'order' => '',
-			// 'limit' => '',
-			// 'offset' => '',
-			// 'finderQuery' => '',
-			// 'deleteQuery' => '',
-			// 'insertQuery' => ''
-		// ),
-        'Category' => array(
+		), 
+        'Category' => array(// put this in the constructor // categories isn't always loaded
             'className' => 'Categories.Category',
        		'joinTable' => 'categorized',
             'foreignKey' => 'foreign_key',
