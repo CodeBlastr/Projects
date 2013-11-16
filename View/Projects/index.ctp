@@ -2,93 +2,109 @@
 <?php echo $this->Html->script('http://code.highcharts.com/modules/exporting.js', array('inline' => false)); ?>
 
 <div class="row projects index">
-    <div class="well well-large pull-right last span5">
-        <?php
-        echo '<h4>Who Needs Your Attention Today?</h4>'; ?>
-        <script type="text/javascript">
-        var chart;
-        $(document).ready(function() {
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'lastTouch',
-                    type: 'bar',
-                    backgroundColor: '#F5F5F5',
-                },
-                title: {
-                    text: false
-                },
-                subtitle: {
-                    text: false
-                },
-                xAxis: {
-                    categories: [' '],
-                    title: {
-                        text: null
-                    }
-                },
-                yAxis: {
-                    min: 0,
-                    title: null,
-                    labels: {
-                        overflow: 'justify'
-                    }
-                },
-                tooltip: {
-                    formatter: function() {
-                        return ''+
-                            this.series.name +': '+ this.y +' days';
-                    }
-                },
-                plotOptions: {
-                    bar: {
-                        groupPadding: 0.02,
-                        dataLabels: {
-                            enabled: true
-                        }
-                    }
-                },
-                legend: false,
-                credits: {
-                    enabled: false
-                },
-                series: [
-                    <?php
-                    $height = count($projects) * 50;
-                    $today = time();
-                    $bars = array_reverse($projects);
-                    foreach ($bars as $bar) {
-                      $modified = strtotime($bar['Project']['modified']);
-                      $elapsed = floor(($today - $modified) / (60 * 60 * 24));
-					  
-					  if ( $elapsed >= 28 ) $color = '#FF0000';
-					  elseif ( $elapsed >= 21 ) $color = '#FF5200';
-					  elseif ( $elapsed >= 14 ) $color = '#FFBB00';
-					  elseif ( $elapsed >= 7 ) $color = '#FFFE00';
-					  else $color = '#51FF00';
-					  
-                      echo __('{name: \'%s\', data: [%s], color: \'%s\', dataLabels: { enabled: true, align: \'right\', formatter: function() {return "%s, <small>Last touched %s days ago</small>"}}},', strip_tags($bar['Project']['name']), $elapsed, $color, strip_tags($bar['Project']['name']), $elapsed); 
-                    }?>
-                ]
-            });
-        });
-        </script>
-        <div id="lastTouch" style="min-width: 100px; height: <?php echo $height; ?>px; margin: 0 auto;"></div>
+    <div class="span6 col-md-7">
+    	<?php if (!empty($projects)) : ?>
+    	<h4>Fulfill a Promise Today!</h4>
+    	<div class="list-group">
+    		<?php foreach ($projects as $project) : ?>
+    			<div class="list-group-item">
+    				<?php echo $this->Html->link($project['Project']['name'], array('action' => 'view', $project['Project']['id'])); ?>
+    				<?php echo $this->Html->link('Touch', array('action' => 'touch', $project['Project']['id']), array('class' => 'badge')); ?>
+    			</div>
+        	<?php endforeach; ?>
+        </div>
+        <?php echo $this->element('paging'); ?>
+        <?php else : ?>
+        	<h3>No results found.</h3>
+        <?php endif; ?>
     </div>
-    <div class="span6 first">
-    <?php
-    echo $this->Element('scaffolds/index', array(
-        'data' => $projects,
-        'actions' => array(
-            $this->Html->link('View', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'view', '{id}')),
-            $this->Html->link('Edit', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'edit', '{id}')),
-            $this->Html->link('Touch', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'touch', '{id}')),
-            )
-        )); ?>
+    
+    
+    <div class="col-lg-5">
+    	<h4>These People Would Love to Hear From You!</h4>
+        <div class="well well-large" id="lastTouch" style="min-width: 100px; height: <?php echo $height; ?>px; margin: 0 auto;"></div>
     </div>
 </div>
 
 
+
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'lastTouch',
+                type: 'bar',
+                backgroundColor: '#F5F5F5',
+            },
+            title: {
+                text: false
+            },
+            subtitle: {
+                text: false
+            },
+            xAxis: {
+                categories: [' '],
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: null,
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +' days';
+                }
+            },
+            plotOptions: {
+                bar: {
+                    groupPadding: 0.02,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: false,
+            credits: {
+                enabled: false
+            },
+            series: [
+                <?php
+                $height = count($projects) * 50;
+                $today = time();
+                $bars = array_reverse($projects);
+                foreach ($bars as $bar) {
+                  $modified = strtotime($bar['Project']['modified']);
+                  $elapsed = floor(($today - $modified) / (60 * 60 * 24));
+				  
+				  if ( $elapsed >= 28 ) $color = '#FF0000';
+				  elseif ( $elapsed >= 21 ) $color = '#FF5200';
+				  elseif ( $elapsed >= 14 ) $color = '#FFBB00';
+				  elseif ( $elapsed >= 7 ) $color = '#FFFE00';
+				  else $color = '#51FF00';
+				  
+                  echo __('{name: \'%s\', data: [%s], color: \'%s\', dataLabels: { enabled: true, align: \'right\', formatter: function() {return "%s, <small>Last touched %s days ago</small>"}}},', strip_tags($bar['Project']['name']), $elapsed, $color, strip_tags($bar['Project']['name']), $elapsed); 
+                }?>
+            ]
+        });
+    });
+</script>
+        
+        
+        
 <?php
+// set the contextual breadcrumb items
+$this->set('context_crumbs', array('crumbs' => array(
+	$this->Html->link(__('Admin Dashboard'), '/admin'),
+	'Projects Dashboard',
+)));
+
 // set the contextual sorting items
 //echo $this->Element('context_sort', array(
 //    'context_sort' => array(

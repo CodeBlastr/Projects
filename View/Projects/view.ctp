@@ -1,9 +1,18 @@
 <?php echo $this->Html->script('https://www.google.com/jsapi', array('inline' => false)); ?>
 
-<div class="well well-large pull-right last span3">
-	<span class="label label-info"><?php echo __('Launched: %s', ZuhaInflector::datify($project['Project']['created'])); ?></span>
-	<span class="label label-info"><?php echo __('Days Since Launch: %s', floor((time() - strtotime($project['Project']['created'])) / 86400)); ?></span>
-	<span class="label label-info"><?php echo __('Time Logged: %s', $trackedHoursSum); ?></span>
+<div class="project view span8 col-md-8">
+	<?php if(!empty($project['Project']['description'])) : ?>
+		<h3>Project Description</h3>
+        <div class="truncate" data-truncate="700"><?php echo $project['Project']['description']; ?></div>
+	<?php endif; ?>
+</div>
+
+<div class="well well-large span3 col-md-4">
+	<div class="list-group">
+		<div class="list-group-item"><?php echo __('%s <span class="badge">Launched</span>', ZuhaInflector::datify($project['Project']['created'])); ?></div>
+		<div class="list-group-item"><?php echo __('%s <span class="badge">Days Since Launch</span>', floor((time() - strtotime($project['Project']['created'])) / 86400)); ?></div>
+		<!--<span class="label label-info"><?php echo __('Time Logged: %s', $trackedHoursSum); ?></span>-->
+	</div>
 	<?php
 	if (!empty($loggedActivities)) { ?>
 		<script type="text/javascript">
@@ -38,16 +47,13 @@
 	<?php } ?>
 </div>
 
-
-<div class="project view span8 first pull-left">
-	<?php 
-	if(!empty($project['Project']['description'])) {
-		echo __('<h3>Project Scope</h3>');
-        echo __('<div class="truncate" data-truncate="700">%s</div>', $project['Project']['description']);
-	} ?>
-</div>
-
 <?php
+// set the contextual breadcrumb items
+$this->set('context_crumbs', array('crumbs' => array(
+	$this->Html->link(__('All Projects'), '/projects'),
+	$project['Project']['name'] . ' Homepage'
+)));
+
 // set the contextual menu items
 $this->set('context_menu', array('menus' => array(
 	array(

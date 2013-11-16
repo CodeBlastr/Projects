@@ -29,7 +29,7 @@ class ProjectsController extends ProjectsAppController {
 		$this->paginate['fields'] = array('id', 'name', 'modified');
 		$this->paginate['order'] = array('Project.modified' => 'ASC');
 		$this->set('loggedActivities', $this->Project->activities());
-		$this->paginate['limit'] = 5;
+		$this->paginate['limit'] = 10;
 		$this->set('projects', $this->paginate());
 		$this->set('displayName', 'name');
 		$this->set('displayDescription', ''); 
@@ -95,11 +95,11 @@ class ProjectsController extends ProjectsAppController {
 		if (!empty($this->request->data)) {
 			try {
 				$this->Project->add($this->request->data);
-				$this->Session->setFlash(__('The Project has been added'), 'success');
+				$this->Session->setFlash(__('The Project has been added'));
 				$this->redirect(array('action' => 'view', $this->Project->id));
 			} catch(Exception $e) {
 				$this->Session->setFlash($e->getMessage());
-				$this->redirect(array('controller' => 'projects', 'action' => 'index'), 'error');
+				$this->redirect(array('controller' => 'projects', 'action' => 'index'));
 			}
 		}
 		
@@ -121,11 +121,11 @@ class ProjectsController extends ProjectsAppController {
 		if (!empty($this->request->data)) {
 			try {
 				$this->Project->add($this->request->data);
-				$this->Session->setFlash(__('The Project has been edited'), 'success');
+				$this->Session->setFlash(__('The Project has been edited'));
 				$this->redirect(array('action' => 'view', $this->Project->id));
 			} catch(Exception $e) {
 				$this->Session->setFlash($e->getMessage());
-				$this->redirect(array('controller' => 'projects', 'action' => 'index'), 'error');
+				$this->redirect(array('controller' => 'projects', 'action' => 'index'));
 			}
 		}
 		
@@ -184,9 +184,9 @@ class ProjectsController extends ProjectsAppController {
 		$this->request->data['Project']['is_archived'] = 1;
 		if ($this->Project->save($this->request->data)) {
 			$this->Session->setFlash(__('The Project has been archived', true));
-			$this->redirect(array('controller' => 'projects', 'action'=>'index'), 'success');
+			$this->redirect(array('controller' => 'projects', 'action'=>'index'));
 		} else {
-			$this->Session->setFlash(__('The Project could not be archived. Please, try again.', true), 'error');
+			$this->Session->setFlash(__('The Project could not be archived. Please, try again.'));
 		}		
 	}
 	
