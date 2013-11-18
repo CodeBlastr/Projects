@@ -161,7 +161,7 @@ class Project extends ProjectsAppModel {
 	   	//$this->virtualFields['displayName'] = sprintf('CONCAT(%s.name, " <small>", Contact.name, "</small>")', $this->alias);
 	   	$this->order = array("{$this->alias}.name");
 		
-		if (in_array('Timesheets', CakePlugin::loaded())) {
+		if (CakePlugin::loaded('Timesheets')) {
 			$this->hasMany['TimesheetTime'] = array(
 				'className' => 'Timesheets.TimesheetTime',
 				'foreignKey' => 'project_id',
