@@ -71,4 +71,4 @@ $this->set('context_menu', array('menus' => array(
 			$this->Html->link(__('Edit'), array('controller' => 'projects', 'action' => 'edit', $project['Project']['id'])),
 			)
 		),
-	))); ?>
+	)));
