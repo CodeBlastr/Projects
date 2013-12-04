@@ -9,6 +9,6 @@ $this->set('context_menu', array('menus' => array(
 			$this->Html->link(__('Projects'), array('controller' => 'projects', 'action' => 'index'), array('data-icon' => 'grid')),
 			)
 		),
-	))); ?>
+	)));
 
 
