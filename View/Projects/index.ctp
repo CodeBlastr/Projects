@@ -121,7 +121,7 @@ $this->set('context_crumbs', array('crumbs' => array(
 //    )); 
     
 // set contextual search options
-$this->set('forms_search', array(
+$this->set('formsSearch', array(
     'url' => '/projects/projects/index/', 
 	'inputs' => array(
 		array(
