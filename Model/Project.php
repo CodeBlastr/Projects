@@ -50,19 +50,19 @@ class Project extends ProjectsAppModel {
 	);
 
 	public $hasMany = array(
-		'ProjectIssue' => array(
-			'className' => 'Projects.ProjectIssue',
-			'foreignKey' => 'project_id',
-			'dependent' => false,
-			'conditions' => array('parent_id' => NULL),
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
+		// 'ProjectIssue' => array(
+			// 'className' => 'Projects.ProjectIssue',
+			// 'foreignKey' => 'project_id',
+			// 'dependent' => false,
+			// 'conditions' => array('parent_id' => NULL),
+			// 'fields' => '',
+			// 'order' => '',
+			// 'limit' => '',
+			// 'offset' => '',
+			// 'exclusive' => '',
+			// 'finderQuery' => '',
+			// 'counterQuery' => ''
+		// ),
 		'UserGroup' => array(
 			'className' => 'Users.UserGroup',
 			'foreignKey' => '',

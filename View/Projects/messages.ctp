@@ -44,4 +44,4 @@ $this->set('context_menu', array('menus' => array(
 			$this->Html->link('People', array('plugin' => 'projects', 'controller' => 'projects', 'action' => 'people', $project['Project']['id']), array('title' => 'People', 'escape' => false)),
 			)
 		),
-	))); ?>
+	)));
